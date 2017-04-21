@@ -12,12 +12,23 @@ import xenocosm.universe.data.Universe
 
 object HomeService {
 
-  val screenStart:fansi.Str =
-    (0 to 255).
-      map(i ⇒ fansi.Color.True(i, 255 - i, 255)(".")).
-      grouped(32).
-      map(_.mkString).
+  private val title:String =
+    """################################################################
+      |################################################################
+      |#####     _  _____  ____  ____  _________  _________ ___   #####
+      |#####    | |/_/ _ \/ __ \/ __ \/ ___/ __ \/ ___/ __ `__ \  #####
+      |#####   _>  </  __/ / / / /_/ / /__/ /_/ (__  ) / / / / /  #####
+      |#####  /_/|_|\___/_/ /_/\____/\___/\____/____/_/ /_/ /_/   #####
+      |################################################################
+      |################################################################""".stripMargin
+
+  val colorized:fansi.Str =
+    title.
+      split("\n").
+      map(_.zipWithIndex.map({ case (c, i) ⇒ fansi.Color.True(i * 4, 255 - (i * 4), 255)(s"$c") }).mkString).
       mkString("\n")
+
+  val screenStart:fansi.Str = colorized
 
   def locUniverse(req:Request, path:Uri.Path):headers.Location =
     headers.Location(req.uri.withPath(path))

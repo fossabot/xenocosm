@@ -63,3 +63,9 @@ coverageEnabled := true
 coverageMinimum := 75
 coverageFailOnMinimum := true
 coverageHighlighting := false
+
+// sbt-buildinfo settings
+enablePlugins(BuildInfoPlugin)
+buildInfoKeys := Seq[BuildInfoKey](name, version)
+buildInfoPackage := "xenocosm"
+buildInfoObject := "XenocosmBuild"
