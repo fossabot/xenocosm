@@ -10,7 +10,7 @@ class Point3Spec extends XenocosmSuite {
   import Point3.instances._
   import xenocosm.instances.interop._
 
-  checkAll("Eq[Point3]", OrderLaws[Point3].eqv)
+  checkAll("PartialOrder[Point3]", OrderLaws[Point3].partialOrder)
   checkAll("MetricSpace[Point3]", VectorSpaceLaws[Point3, Length].metricSpace)
 
   test("Given a Point3, generate integer points in a cube") {
