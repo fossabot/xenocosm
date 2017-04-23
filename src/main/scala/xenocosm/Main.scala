@@ -12,7 +12,12 @@ import xenocosm.app.service._
 object Main extends StreamApp {
 
   val middleware:HttpService ⇒ HttpService = ServerHeader.wrap
-  val service:HttpService = HomeService.service |+| UniverseService.service
+  val service:HttpService =
+    HomeService.service |+|
+      MultiverseService.service |+|
+      UniverseService.service |+|
+      GalacticCoordinateService.service |+|
+      StellarCoordinateService.service
 
   override def main(args: List[String]): Stream[Task, Nothing] = {
     BlazeBuilder

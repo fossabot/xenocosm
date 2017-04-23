@@ -22,19 +22,17 @@ object HomeService {
       |################################################################
       |################################################################""".stripMargin
 
-  val colorized:fansi.Str =
+  val screen:fansi.Str =
     title.
       split("\n").
       map(_.zipWithIndex.map({ case (c, i) ⇒ fansi.Color.True(i * 4, 255 - (i * 4), 255)(s"$c") }).mkString).
       mkString("\n")
 
-  val screenStart:fansi.Str = colorized
-
   def locUniverse(req:Request, path:Uri.Path):headers.Location =
     headers.Location(req.uri.withPath(path))
 
   def locUniverse(req:Request, universe:Universe):headers.Location =
-    locUniverse(req, new Uri.Path(s"/multiverse/${universe.uuid.toString}/0,0,0"))
+    locUniverse(req, new Uri.Path(s"/multiverse/${universe.uuid.toString}"))
 
   def locUniverse(req:Request):headers.Location =
     locUniverse(req, Universe(UUID.randomUUID))
@@ -43,11 +41,11 @@ object HomeService {
     case req @ GET -> Root ⇒
       getSeed(req) match {
         case Some(_) ⇒
-          Ok(screenStart).
+          Ok(screen).
             putHeaders(locUniverse(req))
         case None ⇒
           val seed = Random.nextLong()
-          Ok(screenStart).
+          Ok(screen).
             addCookie(Cookie("seed", seed.toString)).
             putHeaders(locUniverse(req))
       }

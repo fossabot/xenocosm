@@ -15,8 +15,9 @@ class Point3Spec extends XenocosmSuite {
 
   test("Given a Point3, generate integer points in a cube") {
     val p3 = Point3(Parsecs(0), Parsecs(0), Parsecs(0))
-    val points = Point3.wholePointsInCube(Parsecs(1), p3)
+    val points = Point3.wholePointsInCube(Parsecs(4), Parsecs(2), p3).toVector
 
-    points.toVector.size should be (27)
+    points should contain (p3)
+    points.size should be (27)
   }
 }

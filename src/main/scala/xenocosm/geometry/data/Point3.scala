@@ -27,11 +27,11 @@ final case class Point3(x:Length, y:Length, z:Length) {
 
 object Point3 {
 
-  def wholePointsInCube(step:Length, origin:Point3):Iterator[Point3] =
+  def wholePointsInCube(side:Length, step:Length, origin:Point3):Iterator[Point3] =
     for {
-      x ← Bounded(origin.x - step, origin.x + step, 0).iterator(step)
-      y ← Bounded(origin.y - step, origin.y + step, 0).iterator(step)
-      z ← Bounded(origin.z - step, origin.z + step, 0).iterator(step)
+      x ← Bounded(origin.x - (side / 2), origin.x + (side / 2), 0).iterator(step)
+      y ← Bounded(origin.y - (side / 2), origin.y + (side / 2), 0).iterator(step)
+      z ← Bounded(origin.z - (side / 2), origin.z + (side / 2), 0).iterator(step)
     } yield Point3(x.rint, y.rint, z.rint)
 
   trait Instances {
