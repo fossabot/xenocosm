@@ -77,6 +77,9 @@ lazy val consoleScalacOptions = Seq(
     |import xenocosm.phonology.instances._
     |import xenocosm.phonology.syntax._
     |import xenocosm.universe.instances._
+    |
+    |val seed = spire.random.rng.BurtleRot2.randomSeed
+    |val gen = spire.random.rng.BurtleRot2.fromSeed(seed)
     |""".stripMargin
 )
 

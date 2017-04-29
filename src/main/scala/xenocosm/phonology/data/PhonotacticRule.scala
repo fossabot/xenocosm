@@ -2,9 +2,8 @@ package xenocosm
 package phonology
 package data
 
-import cats.{Eq, Show}
-
 import scala.annotation.tailrec
+import cats.{Eq, Show}
 import spire.random.Dist
 
 sealed trait PhonotacticRule extends Product with Serializable
@@ -18,24 +17,24 @@ final case class Concat(xs:List[PhonotacticRule]) extends PhonotacticRule
 
 object PhonotacticRule {
 
-  private def consonantsDist(pulmonics:Seq[Pulmonic]):Dist[PhonotacticRule] = Dist.gen { gen ⇒
+  def consonantsDist(pulmonics:Seq[Pulmonic]):Dist[PhonotacticRule] = Dist.gen { gen ⇒
     @tailrec
     def loop(acc:PhonotacticRule):PhonotacticRule = (acc, gen.nextBoolean()) match {
       case (Empty, true) ⇒ loop(AnyPulmonic)
-      case (AnyPulmonic, true) ⇒ loop(LiteralPulmonic(gen.chooseFromSeq(pulmonics)))
+      case (AnyPulmonic, true) ⇒ loop(LiteralPulmonic(pulmonics(gen.nextInt(pulmonics.length))))
       case (x:LiteralPulmonic, true) ⇒ loop(Choose(List(AnyPulmonic, x)))
       case (Choose(xs), true)  ⇒ loop(Concat(xs))
-      case (Concat(xs), true) ⇒ Concat(LiteralPulmonic(gen.chooseFromSeq(pulmonics)) :: xs)
+      case (Concat(xs), true) ⇒ Concat(LiteralPulmonic(pulmonics(gen.nextInt(pulmonics.length))) :: xs)
       case _ ⇒ acc
     }
 
     loop(Empty)
   }
 
-  private def vowelsDist(vowels:Seq[Vowel]):Dist[PhonotacticRule] = Dist.gen { gen ⇒
+  def vowelsDist(vowels:Seq[Vowel]):Dist[PhonotacticRule] = Dist.gen { gen ⇒
     @tailrec
     def loop(acc:PhonotacticRule):PhonotacticRule = (acc, gen.nextBoolean()) match {
-      case (AnyVowel, true) ⇒ loop(LiteralVowel(gen.chooseFromSeq(vowels)))
+      case (AnyVowel, true) ⇒ loop(LiteralVowel(vowels(gen.nextInt(vowels.length))))
       case (x:LiteralVowel, true) ⇒ loop(Choose(List(AnyVowel, x)))
       case _ ⇒ acc
     }
