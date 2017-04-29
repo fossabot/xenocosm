@@ -91,15 +91,16 @@ object PhonotacticRule {
       def loop(acc:List[Phone], rule:PhonotacticRule):List[Phone] =
         rule match {
           case Empty ⇒ acc
-          case AnyPulmonic ⇒ gen.chooseFromSeq(phonology.pulmonics) :: acc
-          case AnyVowel ⇒ gen.chooseFromSeq(phonology.vowels) :: acc
+          case AnyPulmonic ⇒ phonology.pulmonics(gen.nextInt(phonology.pulmonics.length)) :: acc
+          case AnyVowel ⇒ phonology.vowels(gen.nextInt(phonology.vowels.length)) :: acc
           case LiteralPulmonic(x) ⇒ x :: acc
           case LiteralVowel(x) ⇒ x :: acc
-          case Choose(xs) ⇒ loop(acc, gen.chooseFromSeq(xs))
+          case Choose(xs) ⇒ loop(acc, xs(gen.nextInt(xs.length)))
           case Concat(xs) ⇒ xs.flatMap(loop(acc, _))
         }
 
-      val phonotactic = gen.chooseFromIterable(phonology.phonotactics)
+      val phonotactics = phonology.phonotactics.toVector
+      val phonotactic = phonotactics(gen.nextInt(phonotactics.length))
       loop(List.empty[Phone], phonotactic).toVector
     }
 

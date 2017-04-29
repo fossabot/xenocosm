@@ -22,7 +22,7 @@ object HubbleSequence {
   trait Instances {
     implicit val hubbleSequenceHasShow:Show[HubbleSequence] = Show.show(_.get)
     implicit val hubbleSequenceHasOrder:Order[HubbleSequence] = Order.by(x ⇒ all.indexOf(x))
-    implicit val hubbleSequenceHasDist:Dist[HubbleSequence] = Dist.gen(_.chooseFromSeq(all))
+    implicit val hubbleSequenceHasDist:Dist[HubbleSequence] = Dist.gen(gen ⇒ all(gen.nextInt(all.length)))
   }
 
   object instances extends Instances
