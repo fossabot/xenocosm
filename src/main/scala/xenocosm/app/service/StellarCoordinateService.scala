@@ -15,27 +15,33 @@ import squants.thermal.Kelvin
 import xenocosm.geometry.data.Point3
 import xenocosm.geometry.syntax._
 import xenocosm.interop.instances._
+import xenocosm.phonology.Romanization
+import xenocosm.phonology.syntax._
 import xenocosm.universe.data._
 import xenocosm.universe.instances._
 
 object StellarCoordinateService extends CoordinateService[Galaxy, Star] {
 
+  implicit val romanization:Romanization = Romanization.default
   val scale:Length = Parsecs(1)
   val scaleUOM:UnitOfMeasure[Length] = Parsecs
 
   def body(star:Star):String =
-    """A Star
+    """The %s System
       |  Morgan-Keenan: %s
       |  Mass: %s
       |  Luminosity: %s
       |  Radius: %s
       |  Temperature: %s
+      |  System Common: %s
       |""".stripMargin.format(
+      star.phonology.translate("star").romanize.capitalize,
       star.morganKeenan.show,
-      star.mass.toString(SolarMasses),
-      star.luminosity.toString(SolarLuminosities),
-      star.radius.toString(SolarRadii),
-      star.temperature.toString(Kelvin)
+      star.mass.toString(SolarMasses, "%e"),
+      star.luminosity.toString(SolarLuminosities, "%e"),
+      star.radius.toString(SolarRadii, "%e"),
+      star.temperature.toString(Kelvin, "%e"),
+      star.phonology.translate("language").romanize.capitalize
     )
 
   def screen(star:Star):fansi.Str =

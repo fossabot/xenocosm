@@ -14,25 +14,31 @@ import squants.thermal.Kelvin
 import xenocosm.geometry.data.Point3
 import xenocosm.geometry.syntax._
 import xenocosm.interop.instances._
+import xenocosm.phonology.Romanization
+import xenocosm.phonology.syntax._
 import xenocosm.universe.data._
 import xenocosm.universe.instances._
 
 object GalacticCoordinateService extends CoordinateService[Universe, Galaxy] {
 
+  implicit val romanization:Romanization = Romanization.default
   val scale:Length = Parsecs(10000)
   val scaleUOM:UnitOfMeasure[Length] = Parsecs
 
   def body(galaxy:Galaxy):String =
-    """A Galaxy
+    """The %s Galaxy
       |  Hubble Sequence: %s
       |  Luminosity: %s
       |  Diameter: %s
       |  Mean Temperature: %s
+      |  Galactic Common: %s
       |""".stripMargin.format(
+      galaxy.phonology.translate("galaxy").romanize.capitalize,
       galaxy.hubbleSequence.show,
       galaxy.luminosity.toString(SolarLuminosities, "%e"),
       galaxy.diameter.toString(Parsecs, "%e"),
-      galaxy.temperature.toString(Kelvin, "%e")
+      galaxy.temperature.toString(Kelvin, "%e"),
+      galaxy.phonology.translate("language").romanize.capitalize
     )
 
   def screen(galaxy:Galaxy):fansi.Str =

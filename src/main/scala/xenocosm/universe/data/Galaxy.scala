@@ -12,7 +12,8 @@ import squants.thermal.{Kelvin, Temperature}
 import xenocosm.app.config
 import xenocosm.geometry.data.{Point3, SparseSpace3}
 import xenocosm.interop.instances._
-
+import xenocosm.phonology.data.Phonology
+import xenocosm.phonology.instances._
 import HubbleSequence.instances._
 import MorganKeenan.instances._
 
@@ -22,6 +23,7 @@ final case class Galaxy(universe:Universe, loc:Point3) { self ⇒
   val luminosity:Power = config.galaxy.luminosity.dist(SolarLuminosities(1))(gen)
   val diameter:Length = config.galaxy.diameter.dist(Parsecs(1))(gen)
   val temperature:Temperature = Galaxy.galacticMeanTemperature(gen)
+  val phonology:Phonology = gen.next[Phonology]
 }
 
 object Galaxy {

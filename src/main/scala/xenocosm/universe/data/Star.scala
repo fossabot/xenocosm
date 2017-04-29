@@ -12,18 +12,19 @@ import squants.thermal.{Kelvin, Temperature}
 
 import xenocosm.geometry.data.Point3
 import xenocosm.interop.instances._
+import xenocosm.phonology.data.Phonology
+import xenocosm.phonology.instances._
 
 import MorganKeenan.instances._
 
 final case class Star(galaxy:Galaxy, loc:Point3) { self ⇒
   private val gen:Generator = Star.gen(self)
-
   val morganKeenan:MorganKeenan = implicitly[Dist[MorganKeenan]].apply(gen)
   val mass:Mass = Star.stellarMass(morganKeenan)(gen)
   val luminosity:Power = Star.stellarPower(morganKeenan)(gen)
   val radius:Length = Star.stellarRadius(morganKeenan)(gen)
   val temperature:Temperature = Star.stellarTemperature(morganKeenan)(gen)
-
+  val phonology:Phonology = gen.next[Phonology]
 }
 
 object Star {

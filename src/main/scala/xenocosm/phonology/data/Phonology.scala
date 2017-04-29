@@ -3,7 +3,8 @@ package phonology
 package data
 
 import cats.Eq
-import spire.random.Dist
+import spire.random.{Dist, Generator}
+import spire.random.rng.BurtleRot2
 
 import Pulmonic.instances._
 import Vowel.instances._
@@ -11,9 +12,18 @@ import Vowel.instances._
 /**
   * Represents a phonology for a language
   */
-final case class Phonology(pulmonics: Vector[Pulmonic], vowels: Vector[Vowel], phonotactics: Set[PhonotacticRule])
+final case class Phonology(
+  pulmonics: Vector[Pulmonic],
+  vowels: Vector[Vowel],
+  phonotactics: Set[PhonotacticRule]) { self ⇒
+  val translate:String ⇒ Vector[Phone] = Phonology.translate(self)
+}
 
 object Phonology {
+  private val md5Gen:Array[Byte] ⇒ Generator = BurtleRot2.fromBytes _ compose Digest.md5
+
+  val translate:Phonology ⇒ String ⇒ Vector[Phone] = phonology ⇒ source ⇒
+    word(phonology)(md5Gen(source.getBytes("UTF-8")))
 
   def word(phonology:Phonology):Dist[Vector[Phone]] =
     Dist.gen { gen ⇒
