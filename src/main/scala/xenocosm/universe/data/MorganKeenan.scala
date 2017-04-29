@@ -11,7 +11,7 @@ import squants.mass._
 import squants.space._
 import squants.thermal.{Kelvin, Temperature}
 
-import xenocosm.instances.interop._
+import xenocosm.interop.instances._
 
 /** Morgan-Keenan Stellar Classification
   *

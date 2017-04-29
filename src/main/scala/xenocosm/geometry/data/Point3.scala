@@ -3,29 +3,26 @@ package geometry
 package data
 
 import java.nio.ByteBuffer
-import java.security.MessageDigest
-
 import cats.PartialOrder
 import spire.algebra.MetricSpace
 import spire.math.Bounded
 import spire.random.Dist
 import squants.UnitOfMeasure
 import squants.space.Length
-import xenocosm.instances.interop._
 
-final case class Point3(x:Length, y:Length, z:Length) {
-  private def bytes(uom:UnitOfMeasure[Length]):Array[Byte] =
-    ByteBuffer.
-      allocate(24).
-      putDouble(x to uom).
-      putDouble(y to uom).
-      putDouble(z to uom).
-      array()
+import xenocosm.interop.instances._
 
-  def digest(uom:UnitOfMeasure[Length]):Array[Byte] = MessageDigest.getInstance("MD5").digest(bytes(uom))
-}
+final case class Point3(x:Length, y:Length, z:Length)
 
 object Point3 {
+
+  val bytes:UnitOfMeasure[Length] ⇒ Point3 ⇒ Array[Byte] = uom ⇒ loc ⇒
+    ByteBuffer.
+      allocate(24).
+      putDouble(loc.x to uom).
+      putDouble(loc.y to uom).
+      putDouble(loc.z to uom).
+      array()
 
   def wholePointsInCube(side:Length, step:Length, origin:Point3):Iterator[Point3] =
     for {

@@ -1,5 +1,5 @@
 package xenocosm
-package instances
+package interop
 
 import cats.Order
 import cats.instances.double._

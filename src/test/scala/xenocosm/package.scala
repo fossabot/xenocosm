@@ -6,7 +6,7 @@ import spire.random.rng.BurtleRot2
 import spire.random.{Dist, Generator}
 
 import xenocosm.geometry.data.Point3
-import xenocosm.instances.interop._
+import xenocosm.interop.instances._
 import xenocosm.universe.data.{Galaxy, Star, Universe}
 import Point3.instances._
 

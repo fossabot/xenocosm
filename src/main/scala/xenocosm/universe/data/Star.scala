@@ -2,7 +2,6 @@ package xenocosm
 package universe
 package data
 
-import java.security.MessageDigest
 import cats.Eq
 import spire.random.{Dist, Generator}
 import spire.random.rng.BurtleRot2
@@ -12,14 +11,12 @@ import squants.space._
 import squants.thermal.{Kelvin, Temperature}
 
 import xenocosm.geometry.data.Point3
-import xenocosm.instances.interop._
+import xenocosm.interop.instances._
 
 import MorganKeenan.instances._
 
-final case class Star(galaxy:Galaxy, loc:Point3) {
-  private def bytes:Array[Byte] = galaxy.digest ++ loc.digest(Parsecs)
-  val digest:Array[Byte] = MessageDigest.getInstance("MD5").digest(bytes)
-  private val gen:Generator = BurtleRot2.fromBytes(digest)
+final case class Star(galaxy:Galaxy, loc:Point3) { self ⇒
+  private val gen:Generator = Star.gen(self)
 
   val morganKeenan:MorganKeenan = implicitly[Dist[MorganKeenan]].apply(gen)
   val mass:Mass = Star.stellarMass(morganKeenan)(gen)
@@ -30,6 +27,10 @@ final case class Star(galaxy:Galaxy, loc:Point3) {
 }
 
 object Star {
+  val bytes:Star ⇒ Array[Byte] = star ⇒
+    Galaxy.bytes(star.galaxy) ++ Point3.bytes(AstronomicalUnits)(star.loc)
+
+  val gen:Star ⇒ Generator = BurtleRot2.fromBytes _ compose Digest.md5 compose bytes
 
   def stellarMass(morganKeenan:MorganKeenan):Dist[Mass] = {
     val range = MorganKeenan.massRangeOf(morganKeenan)

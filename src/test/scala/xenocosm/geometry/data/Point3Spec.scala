@@ -8,7 +8,7 @@ import squants.space.{Length, Parsecs}
 
 class Point3Spec extends XenocosmSuite {
   import Point3.instances._
-  import xenocosm.instances.interop._
+  import xenocosm.interop.instances._
 
   checkAll("PartialOrder[Point3]", OrderLaws[Point3].partialOrder)
   checkAll("MetricSpace[Point3]", VectorSpaceLaws[Point3, Length].metricSpace)

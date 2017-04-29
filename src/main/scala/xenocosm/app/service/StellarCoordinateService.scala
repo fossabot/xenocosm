@@ -13,17 +13,17 @@ import squants.space.{Length, Parsecs, SolarRadii}
 import squants.thermal.Kelvin
 
 import xenocosm.geometry.data.Point3
-import xenocosm.instances.interop._
+import xenocosm.geometry.syntax._
+import xenocosm.interop.instances._
 import xenocosm.universe.data._
+import xenocosm.universe.instances._
 
-import MorganKeenan.instances._
-
-object StellarCoordinateService extends CoordinateService[Star, Galaxy] {
+object StellarCoordinateService extends CoordinateService[Galaxy, Star] {
 
   val scale:Length = Parsecs(1)
   val scaleUOM:UnitOfMeasure[Length] = Parsecs
 
-  def show(star:Star):String =
+  def body(star:Star):String =
     """A Star
       |  Morgan-Keenan: %s
       |  Mass: %s
@@ -39,7 +39,7 @@ object StellarCoordinateService extends CoordinateService[Star, Galaxy] {
     )
 
   def screen(star:Star):fansi.Str =
-    show(star).
+    body(star).
       split("\n").
       map(_.zipWithIndex.map({ case (c, i) ⇒ fansi.Color.True(i * 4, 255 - (i * 4), 255)(s"$c") }).mkString).
       mkString("\n")
@@ -50,7 +50,7 @@ object StellarCoordinateService extends CoordinateService[Star, Galaxy] {
   def nearby(galaxy:Galaxy, loc:Point3):Iterator[Point3] =
     Point3.
       wholePointsInCube(scale * 2, scale, loc).
-      flatMap(xenocosm.universe.proof(galaxy, _))
+      flatMap(x ⇒ galaxy.locate(x) map (_.loc))
 
   val service = HttpService {
     case req @ GET -> Root / "multiverse" / uuid / locGalactic / locStellar ⇒
@@ -61,11 +61,10 @@ object StellarCoordinateService extends CoordinateService[Star, Galaxy] {
           val galaxy = Galaxy(universe, locGalactic)
           val locStellar = scaled(x2, y2, z2)
           (for {
-            _ ← xenocosm.universe.proof(universe, locGalactic)
-            b ← xenocosm.universe.proof(galaxy, locStellar)
+            _ ← universe.locate(locGalactic)
+            b ← galaxy.locate(locStellar)
           } yield b) match {
-            case Some(_) ⇒
-              val star = Star(galaxy, locStellar)
+            case Some(star) ⇒
               Ok(screen(star)).putHeaders(scaleHeader)
             case None ⇒
               Ok("You are in interstellar space. The stars splay out before you like a painting by some Power.").

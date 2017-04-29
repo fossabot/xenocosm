@@ -7,7 +7,7 @@ import scala.util.Random
 import org.http4s._
 import org.http4s.dsl._
 
-import xenocosm.instances.interop._
+import xenocosm.interop.instances._
 import xenocosm.universe.data.Universe
 
 object HomeService {

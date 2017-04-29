@@ -3,12 +3,12 @@ package app
 package service
 
 import java.util.UUID
-
 import scala.util.matching.Regex
 import org.http4s._
 import org.http4s.dsl._
 import squants.space.Parsecs
-import xenocosm.instances.interop._
+
+import xenocosm.interop.instances._
 import xenocosm.universe.data.Universe
 
 object UniverseService {

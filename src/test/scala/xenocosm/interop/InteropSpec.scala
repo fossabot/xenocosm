@@ -1,5 +1,5 @@
 package xenocosm
-package instances
+package interop
 
 import cats.kernel.laws.OrderLaws
 import spire.laws.GroupLaws
@@ -9,7 +9,7 @@ import squants.space.Length
 import squants.thermal.Temperature
 
 class InteropSpec extends XenocosmSuite {
-  import interop._
+  import instances._
 
   checkAll("Order[Length]", OrderLaws[Length].order)
   checkAll("AdditiveGroup[Length]", GroupLaws[Length].additiveGroup)

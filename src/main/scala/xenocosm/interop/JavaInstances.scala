@@ -1,5 +1,5 @@
 package xenocosm
-package instances
+package interop
 
 import java.util.UUID
 import spire.random.Dist

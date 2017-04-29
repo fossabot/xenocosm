@@ -1,4 +1,5 @@
-package xenocosm.syntax
+package xenocosm
+package interop
 
 import spire.math.UByte
 import squants.thermal.Temperature
@@ -11,7 +12,7 @@ object SquantsSyntax {
         *
         * http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
         */
-      def rgb = {
+      def rgb:(UByte, UByte, UByte) = {
         val t = underlying.toKelvinDegrees / 100d
 
         val r = if (t <= 66) {

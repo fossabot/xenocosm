@@ -12,7 +12,7 @@ import squants.energy._
 import squants.mass._
 import squants.space._
 
-import instances.interop._
+import interop.instances._
 
 final case class XenocosmConfig(
   universe:XenocosmConfig.Universe,

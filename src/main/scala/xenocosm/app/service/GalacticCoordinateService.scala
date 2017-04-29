@@ -12,17 +12,17 @@ import squants.energy.SolarLuminosities
 import squants.thermal.Kelvin
 
 import xenocosm.geometry.data.Point3
-import xenocosm.instances.interop._
+import xenocosm.geometry.syntax._
+import xenocosm.interop.instances._
 import xenocosm.universe.data._
+import xenocosm.universe.instances._
 
-import HubbleSequence.instances._
-
-object GalacticCoordinateService extends CoordinateService[Galaxy, Universe] {
+object GalacticCoordinateService extends CoordinateService[Universe, Galaxy] {
 
   val scale:Length = Parsecs(10000)
   val scaleUOM:UnitOfMeasure[Length] = Parsecs
 
-  def show(galaxy:Galaxy):String =
+  def body(galaxy:Galaxy):String =
     """A Galaxy
       |  Hubble Sequence: %s
       |  Luminosity: %s
@@ -36,7 +36,7 @@ object GalacticCoordinateService extends CoordinateService[Galaxy, Universe] {
     )
 
   def screen(galaxy:Galaxy):fansi.Str =
-    show(galaxy).
+    body(galaxy).
       split("\n").
       map(_.zipWithIndex.map({ case (c, i) ⇒ fansi.Color.True(i * 4, 255 - (i * 4), 255)(s"$c") }).mkString).
       mkString("\n")
@@ -47,7 +47,7 @@ object GalacticCoordinateService extends CoordinateService[Galaxy, Universe] {
   def nearby(universe:Universe, loc:Point3):Iterator[Point3] =
     Point3.
       wholePointsInCube(scale * 2, scale, loc).
-      flatMap(xenocosm.universe.proof(universe, _))
+      flatMap(x ⇒ universe.locate(x) map (_.loc))
 
   val service = HttpService {
     case req @ GET -> Root / "multiverse" / uuid / loc ⇒
@@ -55,9 +55,8 @@ object GalacticCoordinateService extends CoordinateService[Galaxy, Universe] {
         case (_, UniverseService.regex(uuidStr), regex(x, y, z)) ⇒
           val universe = Universe(UUID.fromString(uuidStr))
           val loc = scaled(x, y, z)
-          xenocosm.universe.proof(universe, loc) match {
-            case Some(_) ⇒
-              val galaxy = Galaxy(universe, loc)
+          universe.locate(loc) match {
+            case Some(galaxy) ⇒
               Ok(screen(galaxy)).
                 putHeaders(scaleHeader, headers.Location(req.uri / "0,0,0"))
             case None ⇒

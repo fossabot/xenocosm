@@ -1,5 +1,5 @@
 package xenocosm
-package instances
+package interop
 
 import cats.Show
 import org.http4s.{Charset, EntityEncoder}

@@ -7,10 +7,10 @@ val versions = new {
   val fansi = "0.2.3"
   val fastparse = "0.4.2"
   val http4s = "0.17.0-M1"
-  val logback = "1.1.3"
+  val logback = "1.2.3"
   val pureconfig = "0.7.0"
   val scalacheck = "1.13.5"
-  val scalatest = "3.0.1"
+  val scalatest = "3.0.3"
   val spire = "0.14.1"
   val squants = "1.3.0-SNAPSHOT"
 }
