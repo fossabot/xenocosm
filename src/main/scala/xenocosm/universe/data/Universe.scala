@@ -14,8 +14,8 @@ import xenocosm.geometry.data.SparseSpace3
 
 final case class Universe(uuid:UUID) { self ⇒
   private val gen:Generator = Universe.gen(self)
-  val age:Long = config.universe.age.dist(10L)(gen)
-  val diameter:Length = config.universe.diameter.dist(Parsecs(100))(gen)
+  val age:Long = config.universe.age.dist(gen)
+  val diameter:Length = config.universe.diameter.dist(gen)
 }
 
 object Universe {

@@ -18,7 +18,7 @@ object Point3 {
 
   val bytes:UnitOfMeasure[Length] ⇒ Point3 ⇒ Array[Byte] = uom ⇒ loc ⇒
     ByteBuffer.
-      allocate(24).
+      allocate(8 * 3).
       putDouble(loc.x to uom).
       putDouble(loc.y to uom).
       putDouble(loc.z to uom).

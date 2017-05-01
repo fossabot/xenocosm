@@ -2,13 +2,11 @@ package xenocosm
 package app
 package service
 
-import java.util.UUID
 import scala.util.Random
 import org.http4s._
 import org.http4s.dsl._
 
 import xenocosm.interop.instances._
-import xenocosm.universe.data.Universe
 
 object HomeService {
 
@@ -28,26 +26,16 @@ object HomeService {
       map(_.zipWithIndex.map({ case (c, i) ⇒ fansi.Color.True(i * 4, 255 - (i * 4), 255)(s"$c") }).mkString).
       mkString("\n")
 
-  def locUniverse(req:Request, path:Uri.Path):headers.Location =
-    headers.Location(req.uri.withPath(path))
-
-  def locUniverse(req:Request, universe:Universe):headers.Location =
-    locUniverse(req, new Uri.Path(s"/multiverse/${universe.uuid.toString}"))
-
-  def locUniverse(req:Request):headers.Location =
-    locUniverse(req, Universe(UUID.randomUUID))
-
   val service = HttpService {
     case req @ GET -> Root ⇒
       getSeed(req) match {
         case Some(_) ⇒
-          Ok(screen).
-            putHeaders(locUniverse(req))
+          Ok(screen).putHeaders(MultiverseService.location(req))
         case None ⇒
           val seed = Random.nextLong()
           Ok(screen).
             addCookie(Cookie("seed", seed.toString)).
-            putHeaders(locUniverse(req))
+            putHeaders(MultiverseService.location(req))
       }
   }
 }

@@ -16,12 +16,13 @@ object Main extends StreamApp {
     HomeService.service |+|
       MultiverseService.service |+|
       UniverseService.service |+|
-      GalacticCoordinateService.service |+|
-      StellarCoordinateService.service
+      IntergalacticCoordinateService.service |+|
+      InterstellarCoordinateService.service |+|
+      InterplanetaryCoordinateService.service
 
   override def main(args: List[String]): Stream[Task, Nothing] = {
     BlazeBuilder
-      .bindHttp(8080, "localhost")
+      .bindHttp(app.config.http.port, app.config.http.host)
       .mountService(middleware(service), "/")
       .serve
   }

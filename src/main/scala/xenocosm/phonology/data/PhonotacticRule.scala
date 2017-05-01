@@ -68,18 +68,14 @@ object PhonotacticRule {
   // Try to collapse generated rules into a canonical form
   def simplify(rule:PhonotacticRule):PhonotacticRule =
     rule match {
-      case Concat(Nil) ⇒ Empty
-      case Concat(x :: Nil) ⇒ simplify(x)
       case Concat(xs) ⇒ simplify(xs) match {
         case Nil ⇒ Empty
-        case x :: Nil ⇒ x
+        case x :: Nil ⇒ simplify(x)
         case ys ⇒ Concat(ys)
       }
-      case Choose(Nil) ⇒ Empty
-      case Choose(x :: Nil) ⇒ simplify(x)
       case Choose(xs) ⇒ simplify(xs) match {
         case Nil ⇒ Empty
-        case x :: Nil ⇒ x
+        case x :: Nil ⇒ simplify(x)
         case ys ⇒ Choose(ys)
       }
       case x ⇒ x

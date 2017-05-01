@@ -11,38 +11,73 @@ import spire.std.long._
 import squants.energy._
 import squants.mass._
 import squants.space._
+import squants.thermal.Temperature
 
-import interop.instances._
+import xenocosm.interop.instances._
 
 final case class XenocosmConfig(
-  universe:XenocosmConfig.Universe,
-  galaxy:XenocosmConfig.Galaxy
+  http:XenocosmConfig.HttpConfig,
+  services:XenocosmConfig.ServiceConfig,
+  universe:XenocosmConfig.UniverseConfig,
+  galaxy:XenocosmConfig.GalaxyConfig,
+  morganKeenan:XenocosmConfig.MorganKeenanConfig,
+  stellarSystemBody:XenocosmConfig.StellarSystemBodyConfig
 )
 
 object XenocosmConfig {
 
-  final case class AgeRange(min:Long, max:Long) {
-    def interval:Bounded[Long] = Bounded(min, max, 0)
-    def dist(epsilon:Long):Dist[Long] = interval.dist(min, max, epsilon)
+  final case class AgeRange(min:Long, max:Long, epsilon:Long) {
+    val interval:Bounded[Long] = Bounded(min, max, 0)
+    val dist:Dist[Long] = interval.dist(min, max, epsilon)
   }
 
-  final case class LengthRange(min:Length, max:Length) {
-    def interval:Bounded[Length] = Bounded(min, max, 0)
-    def dist(epsilon:Length):Dist[Length] = interval.dist(min, max, epsilon)
+  final case class LengthRange(min:Length, max:Length, epsilon:Length) {
+    val interval:Bounded[Length] = Bounded(min, max, 0)
+    val dist:Dist[Length] = interval.dist(min, max, epsilon)
   }
 
-  final case class PowerRange(min:Power, max:Power) {
-    def interval:Bounded[Power] = Bounded(min, max, 0)
-    def dist(epsilon:Power):Dist[Power] = interval.dist(min, max, epsilon)
+  final case class PowerRange(min:Power, max:Power, epsilon:Power) {
+    val interval:Bounded[Power] = Bounded(min, max, 0)
+    val dist:Dist[Power] = interval.dist(min, max, epsilon)
   }
 
-  final case class MassRange(min:Mass, max:Mass) {
-    def interval:Bounded[Mass] = Bounded(min, max, 0)
-    def dist(epsilon:Mass):Dist[Mass] = interval.dist(min, max, epsilon)
+  final case class MassRange(min:Mass, max:Mass, epsilon:Mass) {
+    val interval:Bounded[Mass] = Bounded(min, max, 0)
+    val dist:Dist[Mass] = interval.dist(min, max, epsilon)
   }
 
-  final case class Galaxy(diameter:LengthRange, luminosity:PowerRange, mass:MassRange)
-  final case class Universe(age:AgeRange, diameter:LengthRange)
+  final case class TemperatureRange(min:Temperature, max:Temperature, epsilon:Temperature) {
+    val interval:Bounded[Temperature] = Bounded(min, max, 0)
+    val dist:Dist[Temperature] = interval.dist(min, max, epsilon)
+  }
+
+  final case class MorganKeenanConfig(
+    frequencies:Map[String,Double],
+    temperatures:Map[String, TemperatureRange],
+    luminosities:Map[String, PowerRange],
+    radii:Map[String, LengthRange],
+    masses:Map[String, MassRange]
+  )
+
+  final case class StellarSystemBodyConfig(
+    semiMajorAxis:LengthRange,
+    planetRadius:LengthRange,
+    planetMass:MassRange
+  )
+
+  final case class GalaxyConfig(diameter:LengthRange, luminosity:PowerRange, mass:MassRange)
+  final case class UniverseConfig(age:AgeRange, diameter:LengthRange)
+  final case class HttpConfig(host:String, port:Int)
+
+  final case class IntergalacticCoordinateServiceConfig(scale:Length)
+  final case class InterstellarCoordinateServiceConfig(scale:Length)
+  final case class InterplanetaryCoordinateServiceConfig(scale:Length)
+
+  final case class ServiceConfig(
+    intergalacticCoordinates:IntergalacticCoordinateServiceConfig,
+    interstellarCoordinates:InterstellarCoordinateServiceConfig,
+    interplanetaryCoordinates:InterplanetaryCoordinateServiceConfig
+  )
 
   def load:Either[ConfigReaderFailures, XenocosmConfig] = loadConfig[XenocosmConfig]
 }

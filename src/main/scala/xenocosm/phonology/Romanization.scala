@@ -12,7 +12,7 @@ object Romanization {
   def closestIn[A](a:A, in:Int, map:Map[A, String])(implicit ms:MetricSpace[A, Int]):Option[String] =
     map.
       toVector.
-      map({ case (key, value) ⇒ (key, value, key distance[Int] a)}).
+      map({ case (key, value) ⇒ (key, value, key.distance[Int](a)) }).
       sortBy(_._3).
       headOption.
       filter(_._3 < in).
@@ -61,8 +61,8 @@ object Romanization {
   )
 
   val enUS:Phone ⇒ Option[String] = {
-    case p:Pulmonic ⇒ enUSPulmonics.get(p).orElse(closestIn(p, 5, enUSPulmonics))
-    case v:Vowel ⇒ enUSVowels.get(v).orElse(closestIn(v, 5, enUSVowels))
+    case p:Pulmonic ⇒ enUSPulmonics.get(p).orElse(closestIn(p, 4, enUSPulmonics))
+    case v:Vowel ⇒ enUSVowels.get(v).orElse(closestIn(v, 4, enUSVowels))
   }
 
   val default:Romanization = _.flatMap(x ⇒ enUS(x)).mkString
