@@ -84,7 +84,7 @@ lazy val consoleScalacOptions = Seq(
 )
 
 lazy val scoverageSettings = Seq(
-  coverageMinimum := 75,
+  coverageMinimum := 50,
   coverageFailOnMinimum := true,
   coverageHighlighting := false
 )
@@ -94,3 +94,5 @@ lazy val buildInfoSettings = Seq(
   buildInfoPackage := "xenocosm",
   buildInfoObject := "XenocosmBuild"
 )
+
+addCommandAlias("validate", ";clean;scalastyle;coverage;compile;test;coverageReport")

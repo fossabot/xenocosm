@@ -61,8 +61,8 @@ object Romanization {
   )
 
   val enUS:Phone ⇒ Option[String] = {
-    case p:Pulmonic ⇒ enUSPulmonics.get(p).orElse(closestIn(p, 4, enUSPulmonics))
-    case v:Vowel ⇒ enUSVowels.get(v).orElse(closestIn(v, 4, enUSVowels))
+    case p:Pulmonic ⇒ enUSPulmonics.get(p).orElse(closestIn(p, app.config.romanization.tolerance, enUSPulmonics))
+    case v:Vowel ⇒ enUSVowels.get(v).orElse(closestIn(v, app.config.romanization.tolerance, enUSVowels))
   }
 
   val default:Romanization = _.flatMap(x ⇒ enUS(x)).mkString

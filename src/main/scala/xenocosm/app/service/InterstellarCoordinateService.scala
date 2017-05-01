@@ -34,6 +34,7 @@ object InterstellarCoordinateService extends CoordinateService[Galaxy, Star] {
   def discover(req:Request, galaxy:Galaxy, loc:Point3):headers.Location =
     headers.Location(req.uri.withPath(path(galaxy)(loc) ++ "/0,0,0"))
 
+  // scalastyle:off magic.number
   private def screen:fansi.Str =
     fansi.Color.True(64, 255 - 64, 255) {
       """You are in interstellar space.
@@ -62,6 +63,7 @@ object InterstellarCoordinateService extends CoordinateService[Galaxy, Star] {
         star.phonology.translate("language").romanize.capitalize
       )
     }
+  // scalastyle:on magic.number
 
   val service = HttpService {
     case req @ GET -> Root / "multiverse" / ♈(universe) / ♉(locU) / ♊(locG) ⇒

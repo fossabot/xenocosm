@@ -17,6 +17,7 @@ import xenocosm.interop.instances._
 
 final case class XenocosmConfig(
   http:XenocosmConfig.HttpConfig,
+  romanization:XenocosmConfig.RomanizationConfig,
   services:XenocosmConfig.ServiceConfig,
   universe:XenocosmConfig.UniverseConfig,
   galaxy:XenocosmConfig.GalaxyConfig,
@@ -67,6 +68,7 @@ object XenocosmConfig {
 
   final case class GalaxyConfig(diameter:LengthRange, luminosity:PowerRange, mass:MassRange)
   final case class UniverseConfig(age:AgeRange, diameter:LengthRange)
+  final case class RomanizationConfig(tolerance:Int)
   final case class HttpConfig(host:String, port:Int)
 
   final case class IntergalacticCoordinateServiceConfig(scale:Length)

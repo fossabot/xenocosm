@@ -20,12 +20,14 @@ final case class Universe(uuid:UUID) { self ⇒
 
 object Universe {
 
+  // scalastyle:off magic.number
   val bytes:Universe ⇒ Array[Byte] = universe ⇒
     ByteBuffer.
       allocate(16).
       putLong(universe.uuid.getMostSignificantBits).
       putLong(universe.uuid.getLeastSignificantBits).
       array()
+  // scalastyle:on magic.number
 
   val gen:Universe ⇒ Generator = BurtleRot2.fromBytes _ compose Digest.md5 compose bytes
 

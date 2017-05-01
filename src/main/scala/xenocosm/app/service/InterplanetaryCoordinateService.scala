@@ -27,6 +27,7 @@ object InterplanetaryCoordinateService extends CoordinateService[Star, StellarSy
       wholePointsInCube(scale * 2, scale, loc).
       flatMap(x ⇒ star.locate(x) map (_.loc))
 
+  // scalastyle:off magic.number
   def screen:fansi.Str =
     fansi.Color.True(128, 128, 255) {
       """You are in interplanetary space.
@@ -97,6 +98,7 @@ object InterplanetaryCoordinateService extends CoordinateService[Star, StellarSy
         smallBody.orbitalPeriod.toString(Days, "%e")
       )
     }
+  // scalastyle:on magic.number
 
   val service = HttpService {
     case req @ GET -> Root / "multiverse" / ♈(universe) / ♉(locU) / ♊(locG) / ♋(locS) ⇒

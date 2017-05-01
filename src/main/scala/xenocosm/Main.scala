@@ -20,7 +20,7 @@ object Main extends StreamApp {
       InterstellarCoordinateService.service |+|
       InterplanetaryCoordinateService.service
 
-  override def main(args: List[String]): Stream[Task, Nothing] = {
+  override def stream(args:List[String]):Stream[Task, Nothing] = {
     BlazeBuilder
       .bindHttp(app.config.http.port, app.config.http.host)
       .mountService(middleware(service), "/")
