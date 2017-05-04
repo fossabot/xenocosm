@@ -20,17 +20,8 @@ object MultiverseService {
     headers.Location(req.uri.withPath(UniverseService.path(universe)))
   }
 
-  // scalastyle:off magic.number
-  val screen:fansi.Str =
-    fansi.Color.True(0, 255, 255)(
-      """You behold the multiverse.
-        |Your mind boggles and threatens to tear itself apart.
-        |""".stripMargin
-    )
-  // scalastyle:on magic.number
-
   val service = HttpService {
     case req @ GET -> Root / "multiverse" ⇒
-      Ok(screen).putHeaders(discover(req))
+      Ok(screen.Multiverse.screen).putHeaders(discover(req))
   }
 }
