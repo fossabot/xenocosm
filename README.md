@@ -1,7 +1,8 @@
 # Xenocosm
 
 [![Build Status](https://api.travis-ci.org/robotsnowfall/xenocosm.svg)](https://travis-ci.org/robotsnowfall/xenocosm)
-[![codecov.io](http://codecov.io/github/robotsnowfall/xenocosm/coverage.svg?branch=master)](http://codecov.io/github/robotsnowfall/xenocosm?branch=master)
+[![Code Coverage](http://codecov.io/github/robotsnowfall/xenocosm/coverage.svg?branch=master)](http://codecov.io/github/robotsnowfall/xenocosm?branch=master)
+[![Chat](https://badges.gitter.im/xenocosm.svg)](https://gitter.im/robotsnowfall/xenocosm)
 
 A lonely-space sim for HTTP.
 
