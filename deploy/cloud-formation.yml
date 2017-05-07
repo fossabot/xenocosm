@@ -1,0 +1,463 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Xenocosm: A lonely-space sim for HTTP"
+Parameters:
+  XenocosmHttpPort:
+    Description: Enter the TCP port on which the web server will listen
+    Type: Number
+    Default: 8080
+  XenocosmKeyPair:
+    Description: Enter the name of the EC2 Key Pair to use
+    Type: String
+    Default: xenocosm
+  XenocosmAMI:
+    Description: Enter the identifier of the AMI to use
+    Type: String
+    Default: ami-80861296
+  XenocosmReleaseBucketName:
+    Description: Enter the name of the S3 bucket to use for releases
+    Type: String
+    Default: xenocosm-release
+Resources:
+  XenocosmIGW:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+      - Key: Name
+        Value: xenocosm
+  XenocosmDHCP:
+      Type: AWS::EC2::DHCPOptions
+      Properties:
+        DomainName: ec2.internal
+        DomainNameServers:
+        - AmazonProvidedDNS
+        Tags:
+        - Key: Name
+          Value: xenocosm
+  XenocosmVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: 'true'
+      EnableDnsHostnames: 'true'
+      InstanceTenancy: default
+      Tags:
+      - Key: Name
+        Value: xenocosm
+  XenocosmVPCDHCP:
+    Type: AWS::EC2::VPCDHCPOptionsAssociation
+    Properties:
+      VpcId:
+        Ref: XenocosmVPC
+      DhcpOptionsId:
+        Ref: XenocosmDHCP
+  XenocosmVPCRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: XenocosmVPC
+      Tags:
+      - Key: Name
+        Value: xenocosm-routes
+  XenocosmVPCGW:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId:
+        Ref: XenocosmVPC
+      InternetGatewayId:
+        Ref: XenocosmIGW
+  XenocosmVPCGWRoute:
+    Type: AWS::EC2::Route
+    DependsOn: XenocosmVPCGW
+    Properties:
+      RouteTableId:
+        Ref: XenocosmVPCRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: XenocosmIGW
+  XenocosmSubnet1A:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-1a
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: 'true'
+      VpcId:
+        Ref: XenocosmVPC
+      Tags:
+      - Key: Name
+        Value: xenocosm-1a
+  XenocosmSubnet1B:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-1b
+      CidrBlock: 10.0.2.0/24
+      MapPublicIpOnLaunch: 'true'
+      VpcId:
+        Ref: XenocosmVPC
+      Tags:
+      - Key: Name
+        Value: xenocosm-1b
+  XenocosmSubnet1C:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-1c
+      CidrBlock: 10.0.3.0/24
+      MapPublicIpOnLaunch: 'true'
+      VpcId:
+        Ref: XenocosmVPC
+      Tags:
+      - Key: Name
+        Value: xenocosm-1c
+  XenocosmSubnet1D:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-1d
+      CidrBlock: 10.0.4.0/24
+      MapPublicIpOnLaunch: 'true'
+      VpcId:
+        Ref: XenocosmVPC
+      Tags:
+      - Key: Name
+        Value: xenocosm-1d
+  XenocosmSubnet1E:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-1e
+      CidrBlock: 10.0.5.0/24
+      MapPublicIpOnLaunch: 'true'
+      VpcId:
+        Ref: XenocosmVPC
+      Tags:
+      - Key: Name
+        Value: xenocosm-1e
+  XenocosmSubnet1ARoutes:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: XenocosmSubnet1A
+      RouteTableId:
+        Ref: XenocosmVPCRouteTable
+  XenocosmSubnet1BRoutes:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: XenocosmSubnet1B
+      RouteTableId:
+        Ref: XenocosmVPCRouteTable
+  XenocosmSubnet1CRoutes:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: XenocosmSubnet1C
+      RouteTableId:
+        Ref: XenocosmVPCRouteTable
+  XenocosmSubnet1DRoutes:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: XenocosmSubnet1D
+      RouteTableId:
+        Ref: XenocosmVPCRouteTable
+  XenocosmSubnet1ERoutes:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: XenocosmSubnet1E
+      RouteTableId:
+        Ref: XenocosmVPCRouteTable
+  XenocosmInstanceSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow http access
+      VpcId:
+        Ref: XenocosmVPC
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort:
+          Ref: XenocosmHttpPort
+        ToPort:
+          Ref: XenocosmHttpPort
+        CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+      - IpProtocol: -1
+        FromPort: 0
+        ToPort: 65535
+        CidrIp: 0.0.0.0/0
+      Tags:
+      - Key: Name
+        Value: xenocosm-instance
+  XenocosmLBSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow https access
+      VpcId:
+        Ref: XenocosmVPC
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 443
+        ToPort: 443
+        CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+      - IpProtocol: -1
+        FromPort: 0
+        ToPort: 65535
+        CidrIp: 0.0.0.0/0
+      Tags:
+      - Key: Name
+        Value: xenocosm-elb
+  XenocosmSSL:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: xenocosm.com
+      DomainValidationOptions:
+      - DomainName: xenocosm.com
+        ValidationDomain: xenocosm.com
+      SubjectAlternativeNames:
+      - www.xenocosm.com
+      Tags:
+      - Key: Name
+        Value: xenocosm
+  XenocosmELB:
+    Type: AWS::ElasticLoadBalancing::LoadBalancer
+    Properties:
+      SecurityGroups:
+      - Ref: XenocosmLBSG
+      Subnets:
+      - Ref: XenocosmSubnet1A
+      - Ref: XenocosmSubnet1B
+      - Ref: XenocosmSubnet1C
+      - Ref: XenocosmSubnet1D
+      - Ref: XenocosmSubnet1E
+      CrossZone: 'true'
+      HealthCheck:
+        Target:
+          Fn::Join:
+          - ''
+          - - 'HTTP:'
+            - Ref: XenocosmHttpPort
+            - "/"
+        HealthyThreshold: 3
+        UnhealthyThreshold: 5
+        Interval: 30
+        Timeout: 5
+      LoadBalancerName: xenocosm
+      Listeners:
+      - LoadBalancerPort: 443
+        Protocol: HTTPS
+        InstancePort:
+          Ref: XenocosmHttpPort
+        InstanceProtocol: HTTP
+        SSLCertificateId:
+          Ref: XenocosmSSL
+  XenocosmInstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - ec2.amazonaws.com
+          Action:
+          - "sts:AssumeRole"
+      RoleName: xenocosm-instance
+      Policies:
+      - PolicyName: InlinePolicy
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Action: "s3:Get*"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "s3:List*"
+              Resource: "*"
+  XenocosmInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - Ref: XenocosmInstanceRole
+      InstanceProfileName: xenocosm
+  XenocosmLC:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    DependsOn: XenocosmVPCGW
+    Properties:
+      KeyName:
+        Ref: XenocosmKeyPair
+      ImageId:
+        Ref: XenocosmAMI
+      SecurityGroups:
+      - Ref: XenocosmInstanceSG
+      IamInstanceProfile:
+        Ref: XenocosmInstanceProfile
+      UserData:
+        Fn::Base64:
+          Fn::Join:
+          - "\n"
+          - - '#!/bin/bash'
+            - 'apt-get -y update'
+            - 'apt-get -y install ruby wget openjdk-8-jre'
+            - 'cd /home/ubuntu'
+            - 'wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install'
+            - 'chmod +x ./install'
+            - './install auto'
+            - 'service codedeploy-agent start'
+            - 'rm install'
+      InstanceType: "m3.medium"
+      EbsOptimized: 'false'
+      InstanceMonitoring: 'false'
+      SpotPrice: 0.05
+      AssociatePublicIpAddress: 'true'
+  XenocosmASG:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      VPCZoneIdentifier:
+      - Ref: XenocosmSubnet1A
+      - Ref: XenocosmSubnet1B
+      - Ref: XenocosmSubnet1C
+      - Ref: XenocosmSubnet1D
+      - Ref: XenocosmSubnet1E
+      LaunchConfigurationName:
+        Ref: XenocosmLC
+      LoadBalancerNames:
+      - Ref: XenocosmELB
+      MinSize: 3
+      MaxSize: 3
+      Tags:
+      - Key: Name
+        Value: xenocosm
+        PropagateAtLaunch: 'true'
+  XenocosmZone:
+    Type: AWS::Route53::HostedZone
+    Properties:
+      Name: "xenocosm.com"
+  XenocosmAliasRecord:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        AliasTarget:
+          EvaluateTargetHealth: 'false'
+          DNSName: !GetAtt XenocosmELB.DNSName
+          HostedZoneId: !GetAtt XenocosmELB.CanonicalHostedZoneNameID
+        HostedZoneId:
+          Ref: XenocosmZone
+        Name: "xenocosm.com."
+        Type: A
+  XenocosmAliasRecordWWW:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        AliasTarget:
+          EvaluateTargetHealth: 'false'
+          DNSName: !GetAtt XenocosmELB.DNSName
+          HostedZoneId: !GetAtt XenocosmELB.CanonicalHostedZoneNameID
+        HostedZoneId:
+          Ref: XenocosmZone
+        Name: "www.xenocosm.com."
+        Type: A
+  XenocosmServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - codedeploy.amazonaws.com
+          Action:
+          - "sts:AssumeRole"
+      RoleName: xenocosm-service
+      Policies:
+      - PolicyName: InlinePolicy
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Action: "autoscaling:*"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "codedeploy:*"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "ec2:*"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "elasticloadbalancing:*"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "iam:AddRoleToInstanceProfile"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "iam:CreateInstanceProfile"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "iam:CreateRole"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "iam:DeleteInstanceProfile"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "iam:DeleteRole"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "iam:DeleteRolePolicy"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "iam:GetInstanceProfile"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "iam:GetRole"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "iam:GetRolePolicy"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "iam:ListInstanceProfilesForRole"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "iam:ListRolePolicies"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "iam:ListRoles"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "iam:PassRole"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "iam:PutRolePolicy"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "iam:RemoveRoleFromInstanceProfile"
+              Resource: "*"
+            - Effect: "Allow"
+              Action: "s3:*"
+              Resource: "*"
+  XenocosmReleaseBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+      BucketName:
+        Ref: XenocosmReleaseBucketName
+  XenocosmApp:
+    Type: AWS::CodeDeploy::Application
+    Properties:
+      ApplicationName: xenocosm
+  XenocosmDeploymentGroup:
+    Type: AWS::CodeDeploy::DeploymentGroup
+    DependsOn: XenocosmServiceRole
+    Properties:
+      DeploymentGroupName: xenocosm-initial-deploy
+      DeploymentConfigName: "CodeDeployDefault.AllAtOnce"
+      ApplicationName:
+        Ref: XenocosmApp
+      AutoScalingGroups:
+      - Ref: XenocosmASG
+      Deployment:
+        IgnoreApplicationStopFailures: 'true'
+        Revision:
+          RevisionType: S3
+          S3Location:
+            BundleType: zip
+            Bucket:
+              Ref: XenocosmReleaseBucketName
+            Key: xenocosm.zip
+      ServiceRoleArn: !GetAtt XenocosmServiceRole.Arn

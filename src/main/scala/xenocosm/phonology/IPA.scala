@@ -7,7 +7,7 @@ import xenocosm.phonology.data._
   * Lookups for the IPA
   *
   * Since this mapping is used to test the isomorphism between phonotactic rules
-  * ([[PhonotacticRule]]) and the phonotactic rule parser ([[PhonotacticRuleNotation]]),
+  * ([[data.PhonotacticRule]]) and the phonotactic rule parser ([[PhonotacticRuleNotation]]),
   * it's important that there be a unique value for each key.
   */
 object IPA {

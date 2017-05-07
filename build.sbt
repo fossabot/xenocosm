@@ -1,9 +1,12 @@
+import NativePackagerHelper._
 
 lazy val xenocosm = (project in file("."))
   .enablePlugins(BuildInfoPlugin)
+  .enablePlugins(JavaAppPackaging)
   .settings(commonSettings)
   .settings(scoverageSettings)
   .settings(buildInfoSettings)
+  .settings(distSettings)
 
 lazy val commonSettings = Seq(
   name := "xenocosm",
@@ -93,6 +96,13 @@ lazy val buildInfoSettings = Seq(
   buildInfoKeys := Seq[BuildInfoKey](name, version),
   buildInfoPackage := "xenocosm",
   buildInfoObject := "XenocosmBuild"
+)
+
+lazy val distSettings = Seq(
+  topLevelDirectory := None,
+  packageName in Universal := "xenocosm",
+  mappings in Universal in packageBin += file("deploy/appspec.yml") -> "appspec.yml",
+  mappings in Universal in packageBin ++= directory("deploy")
 )
 
 addCommandAlias("validate", ";clean;scalastyle;coverage;compile;test;coverageReport")
