@@ -37,8 +37,8 @@ object Home {
   private val highlight:fansi.Str =
     fansi.Color.White(blurb).overlay(
       fansi.Color.True(255, 0, 255),
-      blurb.length - 72,
-      blurb.length - 59
+      blurb.length - 73,
+      blurb.length - 60
     )
   // scalastyle:on magic.number
 
