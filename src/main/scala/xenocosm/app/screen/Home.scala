@@ -21,7 +21,8 @@ object Home {
       |Having wounded me.
       |I ran after You, crying; but You were gone.
       |
-      |St. John of the Cross, "A Spiritual Canticle", ca. 01578""".stripMargin
+      |St. John of the Cross, "A Spiritual Canticle", ca. 01578
+      |""".stripMargin
 
   // scalastyle:off magic.number
   private val rainbow:fansi.Str =

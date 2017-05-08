@@ -19,7 +19,6 @@ curl -i https://xenocosm.com
 
 URL=$1
 curl --include --cookie xenocosm.txt --cookie-jar xenocosm.txt https://xenocosm.com"${1}"
-echo ""
 ```
 
 ## Implementors
