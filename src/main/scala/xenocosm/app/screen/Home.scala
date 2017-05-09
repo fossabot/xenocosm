@@ -25,23 +25,28 @@ object Home {
       |""".stripMargin
 
   // scalastyle:off magic.number
-  private val rainbow:fansi.Str =
-    title.
-      split("\n").
-      map(_.
-        zipWithIndex.
-        map({ case (c, i) ⇒ fansi.Color.True(i * 4, 255 - (i * 4), 255)(s"$c") }).
-        mkString).
-      mkString("\n")
-
-  private val highlight:fansi.Str =
-    fansi.Color.White(blurb).overlay(
-      fansi.Color.True(255, 0, 255),
-      blurb.length - 73,
-      blurb.length - 60
-    )
+  private val rainbow:(Char, Int) ⇒ fansi.Str = (c, i) ⇒ fansi.Color.True(i * 4, 255 - (i * 4), 255)(s"$c")
   // scalastyle:on magic.number
 
-  val screen:fansi.Str =
-    rainbow ++ "\n\n" ++ highlight
+  private val splash:fansi.Str =
+    title.
+      split("\n").
+      map(_.zipWithIndex.map(rainbow.tupled).mkString).
+      mkString("\n")
+
+  private val highlight:String ⇒ fansi.Str = section ⇒
+    blurb.split("\n").
+      map({
+        case line if line contains section ⇒
+          val start = line indexOf section
+          val end = start + section.length
+          line.zipWithIndex.map({
+            case (c, i) if i >= start && i < end ⇒ rainbow(c, i)
+            case (c, _) ⇒ fansi.Color.White(s"$c")
+          }).mkString
+        case line => fansi.Color.White(line)
+      }).
+      mkString("\n")
+
+  val screen:fansi.Str = splash ++ "\n\n" ++ highlight("You were gone") + "\n"
 }
