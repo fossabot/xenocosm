@@ -19,7 +19,7 @@ class PhonotacticRuleNotationSpec extends XenocosmSuite {
 
   checkAll("Eq[PhonotacticRuleNotation]", OrderLaws[PhonotacticRuleNotation].eqv)
 
-  test("DiceNotation.Roll.isomorphism") {
+  test("PhonotacticRule.show.parse.isomorphism") {
     forAll { (a:PhonotacticRule) ⇒ a.show.parsePhonotactics should be(PhonotacticRuleNotationParsed(a)) }
   }
 

@@ -22,6 +22,6 @@ object MultiverseService {
 
   val service = HttpService {
     case req @ GET -> Root / "multiverse" ⇒
-      Ok(screen.Multiverse.screen).putHeaders(discover(req))
+      Ok(screen.Multiverse.apply).putHeaders(discover(req))
   }
 }

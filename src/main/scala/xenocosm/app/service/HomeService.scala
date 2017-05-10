@@ -14,11 +14,11 @@ object HomeService {
     case req @ GET -> Root ⇒
       getSeed(req) match {
         case Some(_) ⇒
-          Ok(screen.Home.screen).
+          Ok(screen.Home.apply).
             putHeaders(MultiverseService.location(req))
         case None ⇒
           val seed = Random.nextLong()
-          Ok(screen.Home.screen).
+          Ok(screen.Home.apply).
             addCookie(Cookie("seed", seed.toString)).
             putHeaders(MultiverseService.location(req))
       }
