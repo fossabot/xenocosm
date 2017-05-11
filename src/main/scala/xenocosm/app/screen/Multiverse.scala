@@ -22,7 +22,6 @@ object Multiverse {
 
   // scalastyle:off magic.number
   def apply:fansi.Str =
-    fansi.Color.True(0, 255, 255)(poem).
-      overlay(fansi.Color.White, 227, 236)
+    fansi.Color.True(0, 255, 255)(poem).overlay(fansi.Color.White, 227, 236)
   // scalastyle:on magic.number
 }

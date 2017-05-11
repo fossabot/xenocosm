@@ -18,7 +18,7 @@ object HomeService {
             putHeaders(MultiverseService.location(req))
         case None ⇒
           val seed = Random.nextLong()
-          Ok(screen.Home.apply).
+          Ok.apply(screen.Home.apply).
             addCookie(Cookie("seed", seed.toString)).
             putHeaders(MultiverseService.location(req))
       }

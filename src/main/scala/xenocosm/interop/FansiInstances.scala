@@ -7,7 +7,7 @@ import fansi.Str
 
 object FansiInstances {
   trait Instances {
-    implicit val fansiStrShow:Show[Str] = Show.fromToString[Str]
+    implicit val fansiStrShow:Show[Str] = Show.show(_.plainText)
     implicit val fansiStrEntityEncoder:EntityEncoder[Str] =
       EntityEncoder.showEncoder[Str](Charset.`UTF-8`, fansiStrShow)
   }

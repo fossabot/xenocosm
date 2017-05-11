@@ -48,5 +48,5 @@ object Home {
       }).
       mkString("\n")
 
-  val screen:fansi.Str = splash ++ "\n\n" ++ highlight("You were gone") + "\n"
+  def apply:fansi.Str = splash ++ "\n\n" ++ highlight("You were gone") + "\n"
 }

@@ -87,7 +87,7 @@ lazy val consoleScalacOptions = Seq(
 )
 
 lazy val scoverageSettings = Seq(
-  coverageMinimum := 50,
+  coverageMinimum := 70,
   coverageFailOnMinimum := true,
   coverageHighlighting := false
 )
