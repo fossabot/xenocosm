@@ -5,6 +5,7 @@ import squants.energy.SolarLuminosities
 import squants.space.Parsecs
 import squants.thermal.Kelvin
 
+import xenocosm.chapbook.data.Stanza
 import xenocosm.phonology.Romanization
 import xenocosm.phonology.syntax._
 import xenocosm.universe.data.Galaxy
@@ -13,7 +14,7 @@ import xenocosm.universe.instances._
 object IntergalacticSpace {
   private implicit val romanization = Romanization.default
 
-  val show:Galaxy ⇒ String = galaxy ⇒
+  def show(galaxy:Galaxy):String =
     """The %s Galaxy
       |  Hubble Sequence: %s
       |  Luminosity: %s
@@ -29,13 +30,13 @@ object IntergalacticSpace {
       galaxy.phonology.translate("language").romanize.capitalize
     )
 
+  def show(stanza:Stanza):String =
+    ("You are in intergalactic space.\n" +: (stanza.get map ("::  " ++ _))
+      mkString "\n") ++ "\n"
+
   // scalastyle:off magic.number
-  def apply:fansi.Str =
-    fansi.Color.True(32, 255 - 32, 255) {
-      """You are in intergalactic space.
-        |The galaxies splay out before you like a painting by some Power.
-        |""".stripMargin
-    }
+  def apply(stanza:Stanza):fansi.Str =
+    fansi.Color.True(32, 255 - 32, 255)(show(stanza))
 
   def apply(galaxy:Galaxy):fansi.Str =
     fansi.Color.True(32, 255 - 32, 255)(show(galaxy))

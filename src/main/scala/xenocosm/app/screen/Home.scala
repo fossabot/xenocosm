@@ -12,16 +12,17 @@ object Home {
       |#####   _>  </  __/ / / / /_/ / /__/ /_/ (__  ) / / / / /  #####
       |#####  /_/|_|\___/_/ /_/\____/\___/\____/____/_/ /_/ /_/   #####
       |################################################################
-      |################################################################""".stripMargin
+      |################################################################
+      |""".stripMargin
 
   private val blurb:String =
-    """Where have You hidden Yourself,
-      |And abandoned me in my groaning, O my Beloved?
-      |You have fled like the hart,
-      |Having wounded me.
-      |I ran after You, crying; but You were gone.
+    """:: Where have You hidden Yourself,
+      |:: And abandoned me in my groaning, O my Beloved?
+      |:: You have fled like the hart,
+      |:: Having wounded me.
+      |:: I ran after You, crying; but You were gone.
       |
-      |St. John of the Cross, "A Spiritual Canticle", ca. 01578
+      |— St. John of the Cross, "A Spiritual Canticle", ca. 01578
       |""".stripMargin
 
   // scalastyle:off magic.number
@@ -48,5 +49,5 @@ object Home {
       }).
       mkString("\n")
 
-  def apply:fansi.Str = splash ++ "\n\n" ++ highlight("You were gone") + "\n"
+  val apply:fansi.Str = splash ++ "\n\n" ++ highlight("You were gone") ++ "\n"
 }

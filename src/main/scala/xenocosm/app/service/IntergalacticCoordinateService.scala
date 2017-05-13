@@ -6,6 +6,7 @@ import org.http4s._
 import org.http4s.dsl._
 import squants.space.Length
 
+import xenocosm.chapbook.GalacticForge
 import xenocosm.geometry.data.Point3
 import xenocosm.geometry.syntax._
 import xenocosm.interop.instances._
@@ -37,7 +38,8 @@ object IntergalacticCoordinateService extends CoordinateService[Universe, Galaxy
             putHeaders(scaleHeader).
             putHeaders(discover(req, universe, locU))
         case _ ⇒
-          Ok(screen.IntergalacticSpace.apply).
+          val stanza = GalacticForge.fromIntergalacticSpace((universe, locU))
+          Ok(screen.IntergalacticSpace(stanza)).
             putHeaders(scaleHeader).
             putHeaders(nearbyLocations(req, universe, locU):_*)
       }
