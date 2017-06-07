@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-URL=$1
-curl --include --cookie xenocosm.txt --cookie-jar xenocosm.txt https://xenocosm.com"${1}"
+URL="http://127.0.0.1:8080${1}"
+curl --include --cookie xenocosm.txt --cookie-jar xenocosm.txt "${URL}"
