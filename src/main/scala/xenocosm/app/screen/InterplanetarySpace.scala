@@ -1,15 +1,15 @@
-package xenocosm.app.screen
+package xenocosm
+package app
+package screen
 
 import squants.mass.{Kilograms, KilogramsPerCubicMeter}
 import squants.space.{AstronomicalUnits, CubicMeters, Kilometers}
 import squants.time.Days
 
-import xenocosm.phonology.Romanization
 import xenocosm.phonology.syntax._
 import xenocosm.universe.data.{DwarfPlanet, Planet, SmallBody}
 
 object InterplanetarySpace {
-  private implicit val romanization = Romanization.default
 
   def show(planet:Planet): String =
     """%s (Planet)

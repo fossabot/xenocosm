@@ -1,4 +1,6 @@
-package xenocosm.app.screen
+package xenocosm
+package app
+package screen
 
 import cats.syntax.show._
 import squants.energy.SolarLuminosities
@@ -6,13 +8,11 @@ import squants.mass.SolarMasses
 import squants.space.SolarRadii
 import squants.thermal.Kelvin
 
-import xenocosm.phonology.Romanization
 import xenocosm.phonology.syntax._
 import xenocosm.universe.data.Star
 import xenocosm.universe.instances._
 
 object InterstellarSpace {
-  private implicit val romanization = Romanization.default
 
   val show:Star ⇒ String = star ⇒
     """The %s System

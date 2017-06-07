@@ -3,6 +3,8 @@ package phonology
 
 import spire.algebra.MetricSpace
 import spire.syntax.metricSpace._
+
+import xenocosm.app.data.XenocosmConfig
 import xenocosm.phonology.data._
 import xenocosm.phonology.data.Pulmonic.instances._
 import xenocosm.phonology.data.Vowel.instances._
@@ -57,15 +59,15 @@ object Romanization {
     Vowel(Rounded, NearClose, NearBack) → "oo",
     Vowel(Rounded, Close, Back) → "ew",
     Vowel(Unrounded, OpenMid, Back) → "u",
-    Vowel(Unrounded,Mid,Central) → "u"
+    Vowel(Unrounded, Mid, Central) → "u"
   )
 
-  val enUS:Phone ⇒ Option[String] = {
-    case p:Pulmonic ⇒ enUSPulmonics.get(p).orElse(closestIn(p, app.config.romanization.tolerance, enUSPulmonics))
-    case v:Vowel ⇒ enUSVowels.get(v).orElse(closestIn(v, app.config.romanization.tolerance, enUSVowels))
+  val enUSPhone:XenocosmConfig ⇒ Phone ⇒ Option[String] = config ⇒ {
+    case p:Pulmonic ⇒ enUSPulmonics.get(p).orElse(closestIn(p, config.romanization.tolerance, enUSPulmonics))
+    case v:Vowel ⇒ enUSVowels.get(v).orElse(closestIn(v, config.romanization.tolerance, enUSVowels))
   }
 
-  val default:Romanization = _.flatMap(x ⇒ enUS(x)).mkString
+  val enUS:XenocosmConfig ⇒ Romanization = config ⇒ _.flatMap(x ⇒ enUSPhone(config)(x)).mkString
 
   trait Syntax {
     implicit class PhoneSeqOps(underlying:Seq[Phone])(implicit rom:Romanization) {

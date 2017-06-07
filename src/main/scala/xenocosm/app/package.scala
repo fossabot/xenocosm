@@ -9,8 +9,8 @@ import xenocosm.phonology.Romanization
 import xenocosm.universe.data.Universe
 
 package object app {
-  implicit val romanization:Romanization = Romanization.default
-  val config:XenocosmConfig = XenocosmConfig.load.toOption.get
+  val config:XenocosmConfig = XenocosmConfig.load.get
+  implicit val romanization:Romanization = Romanization.enUS(config)
 
   def getSeed(req:Request):Option[Long] =
     for {
