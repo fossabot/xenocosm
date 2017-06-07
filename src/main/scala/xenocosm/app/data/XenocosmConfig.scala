@@ -2,8 +2,8 @@ package xenocosm
 package app
 package data
 
+import scala.util.Try
 import pureconfig._
-import pureconfig.error.ConfigReaderFailures
 import pureconfig.module.squants._
 import spire.math.Bounded
 import spire.random.Dist
@@ -17,6 +17,7 @@ import xenocosm.interop.instances._
 
 final case class XenocosmConfig(
   http:XenocosmConfig.HttpConfig,
+  riak:XenocosmConfig.RiakConfig,
   romanization:XenocosmConfig.RomanizationConfig,
   services:XenocosmConfig.ServiceConfig,
   universe:XenocosmConfig.UniverseConfig,
@@ -70,6 +71,14 @@ object XenocosmConfig {
   final case class UniverseConfig(age:AgeRange, diameter:LengthRange)
   final case class RomanizationConfig(tolerance:Int)
   final case class HttpConfig(host:String, port:Int)
+  final case class RiakNodeConfig(host:String, port:Int)
+
+  final case class RiakConfig(
+    nodes:Vector[RiakNodeConfig],
+    minConnections:Int,
+    maxConnections:Int,
+    executionAttempts:Int
+  )
 
   final case class IntergalacticCoordinateServiceConfig(scale:Length)
   final case class InterstellarCoordinateServiceConfig(scale:Length)
@@ -81,5 +90,5 @@ object XenocosmConfig {
     interplanetaryCoordinates:InterplanetaryCoordinateServiceConfig
   )
 
-  def load:Either[ConfigReaderFailures, XenocosmConfig] = loadConfig[XenocosmConfig]
+  def load:Try[XenocosmConfig] = Try(loadConfigOrThrow[XenocosmConfig])
 }
