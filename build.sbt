@@ -1,58 +1,60 @@
 import NativePackagerHelper._
+import microsites.ExtraMdFileConfig
 
-lazy val xenocosm = (project in file("."))
-  .enablePlugins(BuildInfoPlugin)
-  .enablePlugins(JavaAppPackaging)
-  .settings(commonSettings)
-  .settings(scoverageSettings)
-  .settings(buildInfoSettings)
-  .settings(distSettings)
-
-lazy val commonSettings = Seq(
-  name := "xenocosm",
-  organization := "com.robotsnowfall",
-  scalaVersion := "2.12.2",
-  libraryDependencies ++= commonDependencies,
-  parallelExecution in Test := false,
-  scalacOptions ++= commonScalacOptions
-) ++ consoleScalacOptions
+organization in ThisBuild := "com.robotsnowfall"
+scalaVersion in ThisBuild := "2.12.5"
 
 lazy val versions = new {
-  val cats       = "0.9.0"
-  val circe      = "0.8.0"
-  val fansi      = "0.2.4"
-  val fastparse  = "0.4.3"
-  val http4s     = "0.17.0-M3"
+  val cats       = "1.1.0"
+  val circe      = "0.9.2"
+  val economancy = "0.0-20180320T024007"
+  val galaxique  = "0.0-245ab536ce204516d2764a3a555241094b9c096c"
+  val http4s     = "0.18.3"
   val logback    = "1.2.3"
-  val pureconfig = "0.7.2"
-  val riak       = "2.1.1"
+  val pseudoglot = "0.0-88bd905302831628441b54fb5efbe9850d917af6"
+  val pureconfig = "0.9.0"
   val scalacheck = "1.13.5"
-  val scalatest  = "3.0.3"
-  val spire      = "0.14.1"
-  val squants    = "1.3.0"
+  val scalatest  = "3.0.5"
+  val spire      = "0.15.0"
 }
 
 lazy val commonDependencies = Seq(
   "org.typelevel"         %% "cats-core"           % versions.cats,
-  "org.typelevel"         %% "spire"               % versions.spire,
-  "org.typelevel"         %% "squants"             % versions.squants,
   "io.circe"              %% "circe-core"          % versions.circe,
   "io.circe"              %% "circe-generic"       % versions.circe,
   "io.circe"              %% "circe-parser"        % versions.circe,
-  "com.lihaoyi"           %% "fansi"               % versions.fansi,
-  "com.lihaoyi"           %% "fastparse"           % versions.fastparse,
   "org.http4s"            %% "http4s-dsl"          % versions.http4s,
   "org.http4s"            %% "http4s-blaze-server" % versions.http4s,
   "org.http4s"            %% "http4s-blaze-client" % versions.http4s,
   "com.github.pureconfig" %% "pureconfig"          % versions.pureconfig,
   "com.github.pureconfig" %% "pureconfig-squants"  % versions.pureconfig,
-  "com.basho.riak"         % "riak-client"         % versions.riak,
   "ch.qos.logback"         % "logback-classic"     % versions.logback,
-  "org.typelevel"         %% "cats-laws"           % versions.cats       % "test",
-  "org.typelevel"         %% "spire-laws"          % versions.spire      % "test",
-  "org.scalacheck"        %% "scalacheck"          % versions.scalacheck % "test",
-  "org.scalatest"         %% "scalatest"           % versions.scalatest  % "test"
+  "com.robotsnowfall"     %% "economancy-core"     % versions.economancy,
+  "com.robotsnowfall"     %% "economancy-json"     % versions.economancy,
+  "com.robotsnowfall"     %% "galaxique-core"      % versions.galaxique,
+  "com.robotsnowfall"     %% "galaxique-json"      % versions.galaxique,
+  "com.robotsnowfall"     %% "pseudoglot-core"     % versions.pseudoglot,
+  "com.robotsnowfall"     %% "pseudoglot-json"     % versions.pseudoglot,
+
+  "org.typelevel"         %% "cats-laws"           % versions.cats       % Test,
+  "org.typelevel"         %% "spire-laws"          % versions.spire      % Test,
+  "org.scalacheck"        %% "scalacheck"          % versions.scalacheck % Test,
+  "org.scalatest"         %% "scalatest"           % versions.scalatest  % Test
 )
+
+lazy val xenocosm = project.in(file("."))
+  .enablePlugins(GitVersioning, BuildInfoPlugin)
+  .enablePlugins(JavaAppPackaging)
+  .settings(name := "xenocosm")
+  .settings(xenocosmSettings)
+
+lazy val commonSettings = Seq(
+  libraryDependencies ++= commonDependencies,
+  parallelExecution in Test := false,
+  scalacOptions ++= commonScalacOptions
+) ++ consoleScalacOptions
+
+lazy val xenocosmSettings = commonSettings ++ warnUnusedImport ++ scoverageSettings ++ gitSettings ++ buildInfoSettings
 
 lazy val commonScalacOptions = Seq(
   "-deprecation",
@@ -70,22 +72,20 @@ lazy val commonScalacOptions = Seq(
   "-Ywarn-value-discard",
   "-Xfatal-warnings",
   "-Xfuture",
-  "-Xlint"
+  "-Xlint:-unused,_"
+)
+
+lazy val warnUnusedImport = Seq(
+  scalacOptions ++= Seq("-Ywarn-unused-import"),
+  scalacOptions in (Compile, console) ~= {_.filterNot("-Ywarn-unused-import" == _)},
+  scalacOptions in (Test, console) := (scalacOptions in (Compile, console)).value
 )
 
 lazy val consoleScalacOptions = Seq(
-  scalacOptions in (Compile, console) ~= (_.filterNot("-Xlint" == _)),
-  scalacOptions in (Test, console) := (scalacOptions in (Compile, console)).value,
   initialCommands in console := """
     |import cats.implicits._
+    |import io.circe.syntax._
     |import spire.random.rng.BurtleRot2
-    |import xenocosm.geometry.instances._
-    |import xenocosm.geometry.syntax._
-    |import xenocosm.interop.instances._
-    |import xenocosm.interop.syntax._
-    |import xenocosm.phonology.instances._
-    |import xenocosm.phonology.syntax._
-    |import xenocosm.universe.instances._
     |
     |val seed = BurtleRot2.randomSeed
     |val gen = BurtleRot2.fromSeed(seed)
@@ -93,9 +93,61 @@ lazy val consoleScalacOptions = Seq(
 )
 
 lazy val scoverageSettings = Seq(
-  coverageMinimum := 70,
+  coverageMinimum := 80,
   coverageFailOnMinimum := true,
-  coverageHighlighting := false
+  coverageHighlighting := true
+)
+
+lazy val gitSettings = Seq(
+  git.useGitDescribe := true,
+  git.baseVersion := "0.0.0",
+  coverageHighlighting := true
+)
+
+lazy val micrositeSettings = Seq(
+  micrositeName := "Xenocosm",
+  micrositeDescription := "procedural space trader",
+  micrositeBaseUrl := "/xenocosm",
+  micrositeTwitterCreator := "@robotsnowfall",
+  micrositeGithubOwner := "robotsnowfall",
+  micrositeGithubRepo := "xenocosm",
+  micrositeGithubLinks := true,
+  micrositePalette := Map(
+    "brand-primary" ->   "#7EBB16",
+    "brand-secondary" -> "#475A2B",
+    "brand-tertiary" ->  "#475A2B",
+    "gray-dark" ->       "#49494B",
+    "gray" ->            "#7B7B7E",
+    "gray-light" ->      "#E9F9CE",
+    "gray-lighter" ->    "#F4F3F4",
+    "white-color" ->     "#FFFFFF"),
+  micrositeExtraMdFiles := Map(
+    file("README.md") -> ExtraMdFileConfig(
+      "index.md",
+      "home",
+      Map("title" -> "Home", "section" -> "home", "position" -> "0")
+    )
+  ),
+  micrositeDocumentationUrl := "/xenocosm/api/xenocosm/index.html",
+  micrositePushSiteWith := GitHub4s,
+  micrositeGithubToken := Option(System.getenv().get("GITHUB_TOKEN"))
+)
+
+lazy val docsMappingsAPIDir = settingKey[String]("Name of subdirectory in site target directory for api docs")
+
+lazy val unidocSettings = Seq(
+  autoAPIMappings := true,
+  docsMappingsAPIDir := "api",
+  fork in (ScalaUnidoc, unidoc) := true,
+  addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), docsMappingsAPIDir),
+  unidocProjectFilter in (ScalaUnidoc, unidoc) := inAnyProject,
+  fork in (ScalaUnidoc, unidoc) := true,
+  scalacOptions in (ScalaUnidoc, unidoc) ++= Seq(
+    "-Xfatal-warnings",
+    "-groups",
+    "-doc-source-url", "https://github.com/robotsnowfall/xenocosm/tree/master€{FILE_PATH}.scala",
+    "-sourcepath", baseDirectory.in(LocalRootProject).value.getAbsolutePath
+  )
 )
 
 lazy val buildInfoSettings = Seq(

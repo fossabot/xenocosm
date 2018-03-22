@@ -1,43 +1,30 @@
 package xenocosm
 
 import scala.concurrent.ExecutionContext
-import cats.implicits._
-import fs2.{Strategy, Stream, Task}
-import org.http4s.HttpService
+import cats.effect.IO
+import fs2.{Stream, StreamApp}
+import fs2.StreamApp.ExitCode
+import org.http4s._
+import org.http4s.server.middleware.GZip
 import org.http4s.server.blaze._
-import org.http4s.util.StreamApp
 
-import xenocosm.app.client._
-import xenocosm.app.middleware._
 import xenocosm.app.service._
 
-object Main extends StreamApp {
+object Main extends StreamApp[IO] {
   import ExecutionContext.Implicits.global
   java.security.Security.setProperty("networkaddress.cache.ttl", "60")
-  implicit val strategy:Strategy = Strategy.fromExecutionContext(implicitly[ExecutionContext])
-  val riak = new RiakClientWrapper(app.config.riak)
 
-  val middleware:HttpService ⇒ HttpService = ServerHeader.wrap
+  val services:HttpService[IO] =
+    HomeService.service
 
-  val service:HttpService =
-    HomeService.service |+|
-    MultiverseService.service |+|
-    UniverseService.service |+|
-    IntergalacticCoordinateService.service |+|
-    InterstellarCoordinateService.service |+|
-    InterplanetaryCoordinateService.service
+  val gzip:HttpService[IO] => HttpService[IO] = http => GZip(http)
 
-  val acquire:Task[Unit] = Task.fromFuture { riak.startup }
+  val wrapper:HttpService[IO] => HttpService[IO] =
+    gzip compose app.middleware.ServerHeader.wrap
 
-  val use:Unit ⇒ Stream[Task, Nothing] = _ ⇒ {
-    BlazeBuilder
-      .bindHttp(app.config.http.port, app.config.http.host)
-      .mountService(middleware(service), "/")
+  override def stream(args: List[String], requestShutdown: IO[Unit]): Stream[IO, ExitCode] =
+    BlazeBuilder[IO]
+      .bindHttp(8080, "localhost")
+      .mountService(wrapper(services), "/")
       .serve
-  }
-
-  val release:Unit ⇒ Task[Unit] = _ ⇒ Task.fromFuture(riak.shutdown.map(_ ⇒ ()))
-
-  override def stream(args:List[String]):Stream[Task, Nothing] =
-    Stream.bracket(acquire)(use, release)
 }
