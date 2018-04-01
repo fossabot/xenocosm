@@ -1,0 +1,13 @@
+This is the API documentation for [[https://github.com/robotsnowfall/xenocosm Xenocosm]]
+a procedural space trader.
+
+The game's codebase is divided into a number of modules.
+
+ - [[pseudoglot]]: logic and data types for procedural phonologies
+ - [[galaxique]]: logic and data types for the procedural multiverse
+ - [[economancy]]: logic and data types for the procedural markets
+ - [[xenocosm]]: logic and data types combining the above into a space trader
+ - [[xenocosm.http]]: An HTTP application of the game via [[https://github.com/http4s/http4s http4s]]
+
+Please refer to the [[https://robotsnowfall.github.io/xenocosm/ documentation]]
+for a more details about the application.
