@@ -1,0 +1,223 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+          <title></title>
+          <meta name="description" content="" />
+          <meta name="keywords" content="" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="lib/index.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="lib/jquery.js"></script>
+      <script type="text/javascript" src="lib/jquery.panzoom.min.js"></script>
+      <script type="text/javascript" src="lib/jquery.mousewheel.min.js"></script>
+      <script type="text/javascript" src="lib/index.js"></script>
+      <script type="text/javascript" src="index.js"></script>
+      <script type="text/javascript" src="lib/scheduler.js"></script>
+      <script type="text/javascript" src="lib/template.js"></script>
+      <script type="text/javascript" src="lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+        /* this variable can be used by the JS to determine the path to the root document */
+        var toRoot = '';
+      </script>
+    
+        </head>
+        <body>
+      <div id="search">
+        <span id="doc-title"><span id="doc-version"></span></span>
+        <span class="close-results"><span class="left">&lt;</span> Back</span>
+        <div id="textfilter">
+          <span class="input">
+            <input autocapitalize="none" placeholder="Search" id="index-input" type="text" accesskey="/" />
+            <i class="clear material-icons"></i>
+            <i id="search-icon" class="material-icons"></i>
+          </span>
+        </div>
+    </div>
+      <div id="search-results">
+        <div id="search-progress">
+          <div id="progress-fill"></div>
+        </div>
+        <div id="results-content">
+          <div id="entity-results"></div>
+          <div id="member-results"></div>
+        </div>
+      </div>
+      <div id="content-scroll-container" style="-webkit-overflow-scrolling: touch;">
+        <div id="content-container" style="-webkit-overflow-scrolling: touch;">
+          <div id="subpackage-spacer">
+            <div id="packages">
+              <h1>Packages</h1>
+              <ul>
+                <li name="_root_.root" visbl="pub" class="indented0 current" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="_root_"></a><a id="root:_root_"></a>
+      <span class="permalink">
+      <a href="index.html#_root_" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">root</span>
+      </span>
+      
+      <p class="shortcomment cmt">This is the API documentation for <a href="https://github.com/robotsnowfall/xenocosm" target="_blank">Xenocosm</a>
+a procedural space trader.</p><div class="fullcomment"><div class="comment cmt"><p>This is the API documentation for <a href="https://github.com/robotsnowfall/xenocosm" target="_blank">Xenocosm</a>
+a procedural space trader.</p><p>The game's codebase is divided into a number of modules.</p><ul><li><a href="pseudoglot/index.html" class="extype" name="pseudoglot">pseudoglot</a>: logic and data types for procedural phonologies</li><li><a href="galaxique/index.html" class="extype" name="galaxique">galaxique</a>: logic and data types for the procedural multiverse</li><li><a href="economancy/index.html" class="extype" name="economancy">economancy</a>: logic and data types for the procedural markets</li><li><a href="xenocosm/index.html" class="extype" name="xenocosm">xenocosm</a>: logic and data types combining the above into a space trader</li><li><a href="xenocosm/http/index.html" class="extype" name="xenocosm.http">xenocosm.http</a>: An HTTP application of the game via <a href="https://github.com/http4s/http4s" target="_blank">http4s</a></li></ul><p>Please refer to the <a href="https://robotsnowfall.github.io/xenocosm/" target="_blank">documentation</a>
+for a more details about the application.</p></div></div>
+    </li><li name="_root_.economancy" visbl="pub" class="indented1 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="economancy"></a><a id="economancy:economancy"></a>
+      <span class="permalink">
+      <a href="index.html#economancy" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title=" Provides data types and typeclasses for procedurally-generated markets" href="economancy/index.html"><span class="name">economancy</span></a>
+      </span>
+      
+      <p class="shortcomment cmt"><img src="/xenocosm/img/economancy-128.png" />
+Provides data types and typeclasses for procedurally-generated markets</p><div class="fullcomment"><div class="comment cmt"><p><img src="/xenocosm/img/economancy-128.png" />
+Provides data types and typeclasses for procedurally-generated markets</p><h4>Overview</h4><p>As much as possible, all data types have an instance of <code>spire.random.Dist</code>
+in the companion object.
+</p></div></div>
+    </li><li name="_root_.galaxique" visbl="pub" class="indented1 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="galaxique"></a><a id="galaxique:galaxique"></a>
+      <span class="permalink">
+      <a href="index.html#galaxique" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title=" Provides data types and typeclasses for procedurally-generated universes" href="galaxique/index.html"><span class="name">galaxique</span></a>
+      </span>
+      
+      <p class="shortcomment cmt"><img src="/xenocosm/img/galaxique-128.png" />
+Provides data types and typeclasses for procedurally-generated universes</p><div class="fullcomment"><div class="comment cmt"><p><img src="/xenocosm/img/galaxique-128.png" />
+Provides data types and typeclasses for procedurally-generated universes</p><h4>Overview</h4><p>As much as possible, all data types have an instance of <code>spire.random.Dist</code>
+in the companion object.
+</p></div></div>
+    </li><li name="_root_.pseudoglot" visbl="pub" class="indented1 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="pseudoglot"></a><a id="pseudoglot:pseudoglot"></a>
+      <span class="permalink">
+      <a href="index.html#pseudoglot" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title=" Provides data types and typeclasses for procedurally-generated phonologies" href="pseudoglot/index.html"><span class="name">pseudoglot</span></a>
+      </span>
+      
+      <p class="shortcomment cmt"><img src="/xenocosm/img/pseudoglot-128.png" />
+Provides data types and typeclasses for procedurally-generated phonologies</p><div class="fullcomment"><div class="comment cmt"><p><img src="/xenocosm/img/pseudoglot-128.png" />
+Provides data types and typeclasses for procedurally-generated phonologies</p><h4>Overview</h4><p>As much as possible, all data types have an instance of <code>spire.random.Dist</code>
+in the companion object.
+</p></div></div>
+    </li><li name="_root_.xenocosm" visbl="pub" class="indented1 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="xenocosm"></a><a id="xenocosm:xenocosm"></a>
+      <span class="permalink">
+      <a href="index.html#xenocosm" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="xenocosm/index.html"><span class="name">xenocosm</span></a>
+      </span>
+      
+      
+    </li>
+              </ul>
+            </div>
+          </div>
+          <div id="content">
+            <body class="package value">
+      <div id="definition">
+        <div class="big-circle package">p</div>
+        
+        <h1>root package<span class="permalink">
+      <a href="index.html" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span></h1>
+        
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">root</span>
+      </span>
+      </h4>
+
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>This is the API documentation for <a href="https://github.com/robotsnowfall/xenocosm" target="_blank">Xenocosm</a>
+a procedural space trader.</p><p>The game's codebase is divided into a number of modules.</p><ul><li><a href="pseudoglot/index.html" class="extype" name="pseudoglot">pseudoglot</a>: logic and data types for procedural phonologies</li><li><a href="galaxique/index.html" class="extype" name="galaxique">galaxique</a>: logic and data types for the procedural multiverse</li><li><a href="economancy/index.html" class="extype" name="economancy">economancy</a>: logic and data types for the procedural markets</li><li><a href="xenocosm/index.html" class="extype" name="xenocosm">xenocosm</a>: logic and data types combining the above into a space trader</li><li><a href="xenocosm/http/index.html" class="extype" name="xenocosm.http">xenocosm.http</a>: An HTTP application of the game via <a href="https://github.com/http4s/http4s" target="_blank">http4s</a></li></ul><p>Please refer to the <a href="https://robotsnowfall.github.io/xenocosm/" target="_blank">documentation</a>
+for a more details about the application.</p></div></div>
+        
+
+      
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+    </body>
+          </div>
+        </div>
+      </div>
+    </body>
+      </html>

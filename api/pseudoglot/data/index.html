@@ -1,0 +1,1582 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+          <title></title>
+          <meta name="description" content="" />
+          <meta name="keywords" content="" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../lib/index.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../lib/jquery.js"></script>
+      <script type="text/javascript" src="../../lib/jquery.panzoom.min.js"></script>
+      <script type="text/javascript" src="../../lib/jquery.mousewheel.min.js"></script>
+      <script type="text/javascript" src="../../lib/index.js"></script>
+      <script type="text/javascript" src="../../index.js"></script>
+      <script type="text/javascript" src="../../lib/scheduler.js"></script>
+      <script type="text/javascript" src="../../lib/template.js"></script>
+      <script type="text/javascript" src="../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+        /* this variable can be used by the JS to determine the path to the root document */
+        var toRoot = '../../';
+      </script>
+    
+        </head>
+        <body>
+      <div id="search">
+        <span id="doc-title"><span id="doc-version"></span></span>
+        <span class="close-results"><span class="left">&lt;</span> Back</span>
+        <div id="textfilter">
+          <span class="input">
+            <input autocapitalize="none" placeholder="Search" id="index-input" type="text" accesskey="/" />
+            <i class="clear material-icons"></i>
+            <i id="search-icon" class="material-icons"></i>
+          </span>
+        </div>
+    </div>
+      <div id="search-results">
+        <div id="search-progress">
+          <div id="progress-fill"></div>
+        </div>
+        <div id="results-content">
+          <div id="entity-results"></div>
+          <div id="member-results"></div>
+        </div>
+      </div>
+      <div id="content-scroll-container" style="-webkit-overflow-scrolling: touch;">
+        <div id="content-container" style="-webkit-overflow-scrolling: touch;">
+          <div id="subpackage-spacer">
+            <div id="packages">
+              <h1>Packages</h1>
+              <ul>
+                <li name="_root_.root" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="_root_"></a><a id="root:_root_"></a>
+      <span class="permalink">
+      <a href="index.html#_root_" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="This is the API documentation for Xenocosm a procedural space trader." href="../../index.html"><span class="name">root</span></a>
+      </span>
+      
+      <p class="shortcomment cmt">This is the API documentation for <a href="https://github.com/robotsnowfall/xenocosm" target="_blank">Xenocosm</a>
+a procedural space trader.</p><div class="fullcomment"><div class="comment cmt"><p>This is the API documentation for <a href="https://github.com/robotsnowfall/xenocosm" target="_blank">Xenocosm</a>
+a procedural space trader.</p><p>The game's codebase is divided into a number of modules.</p><ul><li><a href="../index.html" class="extype" name="pseudoglot">pseudoglot</a>: logic and data types for procedural phonologies</li><li><a href="../../galaxique/index.html" class="extype" name="galaxique">galaxique</a>: logic and data types for the procedural multiverse</li><li><a href="../../economancy/index.html" class="extype" name="economancy">economancy</a>: logic and data types for the procedural markets</li><li><a href="../../xenocosm/index.html" class="extype" name="xenocosm">xenocosm</a>: logic and data types combining the above into a space trader</li><li><a href="../../xenocosm/http/index.html" class="extype" name="xenocosm.http">xenocosm.http</a>: An HTTP application of the game via <a href="https://github.com/http4s/http4s" target="_blank">http4s</a></li></ul><p>Please refer to the <a href="https://robotsnowfall.github.io/xenocosm/" target="_blank">documentation</a>
+for a more details about the application.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../index.html" class="extype" name="_root_">root</a></dd></dl></div>
+    </li><li name="_root_.pseudoglot" visbl="pub" class="indented1 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="pseudoglot"></a><a id="pseudoglot:pseudoglot"></a>
+      <span class="permalink">
+      <a href="index.html#pseudoglot" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title=" Provides data types and typeclasses for procedurally-generated phonologies" href="../index.html"><span class="name">pseudoglot</span></a>
+      </span>
+      
+      <p class="shortcomment cmt"><img src="/xenocosm/img/pseudoglot-128.png" />
+Provides data types and typeclasses for procedurally-generated phonologies</p><div class="fullcomment"><div class="comment cmt"><p><img src="/xenocosm/img/pseudoglot-128.png" />
+Provides data types and typeclasses for procedurally-generated phonologies</p><h4>Overview</h4><p>As much as possible, all data types have an instance of <code>spire.random.Dist</code>
+in the companion object.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../index.html" class="extype" name="_root_">root</a></dd></dl></div>
+    </li><li name="pseudoglot.data" visbl="pub" class="indented2 current" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="data"></a><a id="data:data"></a>
+      <span class="permalink">
+      <a href="../pseudoglot/index.html#data" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">data</span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="pseudoglot">pseudoglot</a></dd></dl></div>
+    </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Alveolar$.html" title=""></a>
+                        <a href="Alveolar$.html" title="">Alveolar</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="AnyPulmonic$.html" title=""></a>
+                        <a href="AnyPulmonic$.html" title="">AnyPulmonic</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="AnyVowel$.html" title=""></a>
+                        <a href="AnyVowel$.html" title="">AnyVowel</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Approximant$.html" title=""></a>
+                        <a href="Approximant$.html" title="">Approximant</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Back$.html" title=""></a>
+                        <a href="Back$.html" title="">Back</a>
+                      </li><li class="current-entities indented2">
+                        <a class="object" href="Backness$.html" title=""></a>
+                        <a class="class" href="Backness.html" title=""></a>
+                        <a href="Backness.html" title="">Backness</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Bilabial$.html" title=""></a>
+                        <a href="Bilabial$.html" title="">Bilabial</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Central$.html" title=""></a>
+                        <a href="Central$.html" title="">Central</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="class" href="Choose.html" title=""></a>
+                        <a href="Choose.html" title="">Choose</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Close$.html" title=""></a>
+                        <a href="Close$.html" title="">Close</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="CloseMid$.html" title=""></a>
+                        <a href="CloseMid$.html" title="">CloseMid</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="class" href="Concat.html" title=""></a>
+                        <a href="Concat.html" title="">Concat</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Dental$.html" title=""></a>
+                        <a href="Dental$.html" title="">Dental</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Empty$.html" title=""></a>
+                        <a href="Empty$.html" title="">Empty</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Fricative$.html" title=""></a>
+                        <a href="Fricative$.html" title="">Fricative</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Front$.html" title=""></a>
+                        <a href="Front$.html" title="">Front</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Glottal$.html" title=""></a>
+                        <a href="Glottal$.html" title="">Glottal</a>
+                      </li><li class="current-entities indented2">
+                        <a class="object" href="Height$.html" title=""></a>
+                        <a class="class" href="Height.html" title=""></a>
+                        <a href="Height.html" title="">Height</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="LabioDental$.html" title=""></a>
+                        <a href="LabioDental$.html" title="">LabioDental</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="LateralApproximant$.html" title=""></a>
+                        <a href="LateralApproximant$.html" title="">LateralApproximant</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="LateralFricative$.html" title=""></a>
+                        <a href="LateralFricative$.html" title="">LateralFricative</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="class" href="Literal.html" title=""></a>
+                        <a href="Literal.html" title="">Literal</a>
+                      </li><li class="current-entities indented2">
+                        <a class="object" href="Manner$.html" title=""></a>
+                        <a class="class" href="Manner.html" title=""></a>
+                        <a href="Manner.html" title="">Manner</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Mid$.html" title=""></a>
+                        <a href="Mid$.html" title="">Mid</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Murmered$.html" title=""></a>
+                        <a href="Murmered$.html" title="">Murmered</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Nasal$.html" title=""></a>
+                        <a href="Nasal$.html" title="">Nasal</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="NearBack$.html" title=""></a>
+                        <a href="NearBack$.html" title="">NearBack</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="NearClose$.html" title=""></a>
+                        <a href="NearClose$.html" title="">NearClose</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="NearFront$.html" title=""></a>
+                        <a href="NearFront$.html" title="">NearFront</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="NearOpen$.html" title=""></a>
+                        <a href="NearOpen$.html" title="">NearOpen</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="NullPhoneme$.html" title=""></a>
+                        <a href="NullPhoneme$.html" title="">NullPhoneme</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Open$.html" title=""></a>
+                        <a href="Open$.html" title="">Open</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="OpenMid$.html" title=""></a>
+                        <a href="OpenMid$.html" title="">OpenMid</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Palatal$.html" title=""></a>
+                        <a href="Palatal$.html" title="">Palatal</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Pharyngeal$.html" title=""></a>
+                        <a href="Pharyngeal$.html" title="">Pharyngeal</a>
+                      </li><li class="current-entities indented2">
+                        <a class="object" href="Phone$.html" title=""></a>
+                        <a class="trait" href="Phone.html" title=""></a>
+                        <a href="Phone.html" title="">Phone</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="PhoneSeq$.html" title=""></a>
+                        <a href="PhoneSeq$.html" title="">PhoneSeq</a>
+                      </li><li class="current-entities indented2">
+                        <a class="object" href="Phonology$.html" title=""></a>
+                        <a class="class" href="Phonology.html" title=""></a>
+                        <a href="Phonology.html" title="">Phonology</a>
+                      </li><li class="current-entities indented2">
+                        <a class="object" href="PhonotacticRule$.html" title=""></a>
+                        <a class="trait" href="PhonotacticRule.html" title=""></a>
+                        <a href="PhonotacticRule.html" title="">PhonotacticRule</a>
+                      </li><li class="current-entities indented2">
+                        <a class="object" href="Place$.html" title=""></a>
+                        <a class="class" href="Place.html" title=""></a>
+                        <a href="Place.html" title="">Place</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Plosive$.html" title=""></a>
+                        <a href="Plosive$.html" title="">Plosive</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="PostAlveolar$.html" title=""></a>
+                        <a href="PostAlveolar$.html" title="">PostAlveolar</a>
+                      </li><li class="current-entities indented2">
+                        <a class="object" href="Prosody$.html" title=""></a>
+                        <a class="class" href="Prosody.html" title=""></a>
+                        <a href="Prosody.html" title="">Prosody</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="class" href="Pulmonic.html" title=""></a>
+                        <a href="Pulmonic.html" title="">Pulmonic</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Retroflex$.html" title=""></a>
+                        <a href="Retroflex$.html" title="">Retroflex</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Rounded$.html" title=""></a>
+                        <a href="Rounded$.html" title="">Rounded</a>
+                      </li><li class="current-entities indented2">
+                        <a class="object" href="Roundedness$.html" title=""></a>
+                        <a class="class" href="Roundedness.html" title=""></a>
+                        <a href="Roundedness.html" title="">Roundedness</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="TapOrFlap$.html" title=""></a>
+                        <a href="TapOrFlap$.html" title="">TapOrFlap</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Transcription$.html" title=""></a>
+                        <a href="Transcription$.html" title="">Transcription</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Trill$.html" title=""></a>
+                        <a href="Trill$.html" title="">Trill</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Unrounded$.html" title=""></a>
+                        <a href="Unrounded$.html" title="">Unrounded</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Uvular$.html" title=""></a>
+                        <a href="Uvular$.html" title="">Uvular</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Velar$.html" title=""></a>
+                        <a href="Velar$.html" title="">Velar</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Voiced$.html" title=""></a>
+                        <a href="Voiced$.html" title="">Voiced</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="Voiceless$.html" title=""></a>
+                        <a href="Voiceless$.html" title="">Voiceless</a>
+                      </li><li class="current-entities indented2">
+                        <a class="object" href="Voicing$.html" title=""></a>
+                        <a class="class" href="Voicing.html" title=""></a>
+                        <a href="Voicing.html" title="">Voicing</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="class" href="Vowel.html" title=""></a>
+                        <a href="Vowel.html" title="">Vowel</a>
+                      </li><li name="pseudoglot.json" visbl="pub" class="indented2 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="json"></a><a id="json:json"></a>
+      <span class="permalink">
+      <a href="../pseudoglot/index.html#json" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../json/index.html"><span class="name">json</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="pseudoglot">pseudoglot</a></dd></dl></div>
+    </li><li name="pseudoglot.parser" visbl="pub" class="indented2 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="parser"></a><a id="parser:parser"></a>
+      <span class="permalink">
+      <a href="../pseudoglot/index.html#parser" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../parser/index.html"><span class="name">parser</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="pseudoglot">pseudoglot</a></dd></dl></div>
+    </li>
+              </ul>
+            </div>
+          </div>
+          <div id="content">
+            <body class="package value">
+      <div id="definition">
+        <div class="big-circle package">p</div>
+        <p id="owner"><a href="../index.html" class="extype" name="pseudoglot">pseudoglot</a></p>
+        <h1>data<span class="permalink">
+      <a href="../../pseudoglot/data/index.html" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span></h1>
+        
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">data</span>
+      </span>
+      </h4>
+
+      
+          <div id="comment" class="fullcommenttop"><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/robotsnowfall/xenocosm/tree/master/core/src/main/scala/pseudoglot/data/package.scala" target="_blank">package.scala</a></dd></dl><div class="toggleContainer block">
+          <span class="toggle">
+            Linear Supertypes
+          </span>
+          <div class="superTypes hiddenContent"><a href="http://www.scala-lang.org/api/2.12.5/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a>, <a href="http://www.scala-lang.org/api/2.12.5/scala/Any.html#scala.Any" class="extype" name="scala.Any">Any</a></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div class="toggle"></div>
+        <div id="memberfilter">
+          <i class="material-icons arrow"></i>
+          <span class="input">
+            <input id="mbrsel-input" placeholder="Filter all members" type="text" accesskey="/" />
+          </span>
+          <i class="clear material-icons"></i>
+        </div>
+        <div id="filterby">
+          <div id="order">
+            <span class="filtertype">Ordering</span>
+            <ol>
+              
+              <li class="alpha in"><span>Alphabetic</span></li>
+              <li class="inherit out"><span>By Inheritance</span></li>
+            </ol>
+          </div>
+          <div class="ancestors">
+                  <span class="filtertype">Inherited<br />
+                  </span>
+                  <ol id="linearization">
+                    <li class="in" name="pseudoglot.data"><span>data</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  </ol>
+                </div><div class="ancestors">
+              <span class="filtertype"></span>
+              <ol>
+                <li class="hideall out"><span>Hide All</span></li>
+                <li class="showall in"><span>Show All</span></li>
+              </ol>
+            </div>
+          <div id="visbl">
+              <span class="filtertype">Visibility</span>
+              <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+            </div>
+        </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="pseudoglot.data.Backness" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="BacknessextendsProductwithSerializable"></a><a id="Backness:Backness"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#BacknessextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">sealed abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Backness.html"><span class="name">Backness</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Choose" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ChooseextendsPhonotacticRulewithProductwithSerializable"></a><a id="Choose:Choose"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#ChooseextendsPhonotacticRulewithProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Choose.html"><span class="name">Choose</span></a><span class="params">(<span name="xs">xs: <span class="extype" name="scala.List">List</span>[<a href="PhonotacticRule.html" class="extype" name="pseudoglot.data.PhonotacticRule">PhonotacticRule</a>]</span>)</span><span class="result"> extends <a href="PhonotacticRule.html" class="extype" name="pseudoglot.data.PhonotacticRule">PhonotacticRule</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Concat" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ConcatextendsPhonotacticRulewithProductwithSerializable"></a><a id="Concat:Concat"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#ConcatextendsPhonotacticRulewithProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Concat.html"><span class="name">Concat</span></a><span class="params">(<span name="xs">xs: <span class="extype" name="scala.List">List</span>[<a href="PhonotacticRule.html" class="extype" name="pseudoglot.data.PhonotacticRule">PhonotacticRule</a>]</span>)</span><span class="result"> extends <a href="PhonotacticRule.html" class="extype" name="pseudoglot.data.PhonotacticRule">PhonotacticRule</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Height" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="HeightextendsProductwithSerializable"></a><a id="Height:Height"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#HeightextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">sealed abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Height.html"><span class="name">Height</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Literal" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Literal[T&lt;:pseudoglot.data.Phone]extendsPhonotacticRulewithProductwithSerializable"></a><a id="Literal[T&lt;:Phone]:Literal[T]"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Literal[T&lt;:pseudoglot.data.Phone]extendsPhonotacticRulewithProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Literal.html"><span class="name">Literal</span></a><span class="tparams">[<span name="T">T &lt;: <a href="Phone.html" class="extype" name="pseudoglot.data.Phone">Phone</a></span>]</span><span class="params">(<span name="t">t: <span class="extype" name="pseudoglot.data.Literal.T">T</span></span>)</span><span class="result"> extends <a href="PhonotacticRule.html" class="extype" name="pseudoglot.data.PhonotacticRule">PhonotacticRule</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Manner" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="MannerextendsProductwithSerializable"></a><a id="Manner:Manner"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#MannerextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">sealed abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Manner.html"><span class="name">Manner</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Phone" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="PhoneextendsAnywithProductwithSerializable"></a><a id="Phone:Phone"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#PhoneextendsAnywithProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">sealed </span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Phone.html"><span class="name">Phone</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Phonology" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="PhonologyextendsProductwithSerializable"></a><a id="Phonology:Phonology"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#PhonologyextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Phonology.html"><span class="name">Phonology</span></a><span class="params">(<span name="pulmonics">pulmonics: <span class="extype" name="scala.Vector">Vector</span>[<a href="Pulmonic.html" class="extype" name="pseudoglot.data.Pulmonic">Pulmonic</a>]</span>, <span name="vowels">vowels: <span class="extype" name="scala.Vector">Vector</span>[<a href="Vowel.html" class="extype" name="pseudoglot.data.Vowel">Vowel</a>]</span>, <span name="phonotactics">phonotactics: <span class="extype" name="scala.Predef.Set">Set</span>[<a href="PhonotacticRule.html" class="extype" name="pseudoglot.data.PhonotacticRule">PhonotacticRule</a>]</span>)</span><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.PhonotacticRule" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="PhonotacticRuleextendsProductwithSerializable"></a><a id="PhonotacticRule:PhonotacticRule"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#PhonotacticRuleextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">sealed </span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="PhonotacticRule.html"><span class="name">PhonotacticRule</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Place" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="PlaceextendsProductwithSerializable"></a><a id="Place:Place"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#PlaceextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">sealed abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Place.html"><span class="name">Place</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Prosody" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ProsodyextendsProductwithSerializable"></a><a id="Prosody:Prosody"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#ProsodyextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Prosody.html"><span class="name">Prosody</span></a><span class="params">(<span name="phonology">phonology: <a href="Phonology.html" class="extype" name="pseudoglot.data.Phonology">Phonology</a></span>)</span><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Pulmonic" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="PulmonicextendsPhonewithProductwithSerializable"></a><a id="Pulmonic:Pulmonic"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#PulmonicextendsPhonewithProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Pulmonic.html"><span class="name">Pulmonic</span></a><span class="params">(<span name="voicing">voicing: <a href="Voicing.html" class="extype" name="pseudoglot.data.Voicing">Voicing</a></span>, <span name="place">place: <a href="Place.html" class="extype" name="pseudoglot.data.Place">Place</a></span>, <span name="manner">manner: <a href="Manner.html" class="extype" name="pseudoglot.data.Manner">Manner</a></span>)</span><span class="result"> extends <a href="Phone.html" class="extype" name="pseudoglot.data.Phone">Phone</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Roundedness" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="RoundednessextendsProductwithSerializable"></a><a id="Roundedness:Roundedness"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#RoundednessextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">sealed abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Roundedness.html"><span class="name">Roundedness</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Transcription" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Transcription=Map[List[pseudoglot.data.Phone],String]"></a><a id="Transcription:Transcription"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Transcription=Map[List[pseudoglot.data.Phone],String]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">Transcription</span><span class="result alias"> = <a href="http://www.scala-lang.org/api/2.12.5/scala/collection/immutable/Map.html#scala.collection.immutable.Map" class="extype" name="scala.collection.immutable.Map">Map</a>[<span class="extype" name="scala.List">List</span>[<a href="Phone.html" class="extype" name="pseudoglot.data.Phone">Phone</a>], <span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Voicing" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="VoicingextendsProductwithSerializable"></a><a id="Voicing:Voicing"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#VoicingextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">sealed abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Voicing.html"><span class="name">Voicing</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Vowel" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="VowelextendsPhonewithProductwithSerializable"></a><a id="Vowel:Vowel"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#VowelextendsPhonewithProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Vowel.html"><span class="name">Vowel</span></a><span class="params">(<span name="roundedness">roundedness: <a href="Roundedness.html" class="extype" name="pseudoglot.data.Roundedness">Roundedness</a></span>, <span name="height">height: <a href="Height.html" class="extype" name="pseudoglot.data.Height">Height</a></span>, <span name="backness">backness: <a href="Backness.html" class="extype" name="pseudoglot.data.Backness">Backness</a></span>)</span><span class="result"> extends <a href="Phone.html" class="extype" name="pseudoglot.data.Phone">Phone</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li></ol>
+            </div>
+
+        
+
+        <div class="values members">
+              <h3>Value Members</h3>
+              <ol>
+                <li name="pseudoglot.data.Alveolar" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Alveolar"></a><a id="Alveolar:Alveolar"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Alveolar" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Alveolar$.html"><span class="name">Alveolar</span></a><span class="result"> extends <a href="Place.html" class="extype" name="pseudoglot.data.Place">Place</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.AnyPulmonic" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="AnyPulmonic"></a><a id="AnyPulmonic:AnyPulmonic"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#AnyPulmonic" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="AnyPulmonic$.html"><span class="name">AnyPulmonic</span></a><span class="result"> extends <a href="PhonotacticRule.html" class="extype" name="pseudoglot.data.PhonotacticRule">PhonotacticRule</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.AnyVowel" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="AnyVowel"></a><a id="AnyVowel:AnyVowel"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#AnyVowel" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="AnyVowel$.html"><span class="name">AnyVowel</span></a><span class="result"> extends <a href="PhonotacticRule.html" class="extype" name="pseudoglot.data.PhonotacticRule">PhonotacticRule</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Approximant" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Approximant"></a><a id="Approximant:Approximant"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Approximant" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Approximant$.html"><span class="name">Approximant</span></a><span class="result"> extends <a href="Manner.html" class="extype" name="pseudoglot.data.Manner">Manner</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Back" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Back"></a><a id="Back:Back"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Back" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Back$.html"><span class="name">Back</span></a><span class="result"> extends <a href="Backness.html" class="extype" name="pseudoglot.data.Backness">Backness</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Backness" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Backness"></a><a id="Backness:Backness"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Backness" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Backness$.html"><span class="name">Backness</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Bilabial" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Bilabial"></a><a id="Bilabial:Bilabial"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Bilabial" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Bilabial$.html"><span class="name">Bilabial</span></a><span class="result"> extends <a href="Place.html" class="extype" name="pseudoglot.data.Place">Place</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Central" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Central"></a><a id="Central:Central"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Central" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Central$.html"><span class="name">Central</span></a><span class="result"> extends <a href="Backness.html" class="extype" name="pseudoglot.data.Backness">Backness</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Close" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Close"></a><a id="Close:Close"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Close" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Close$.html"><span class="name">Close</span></a><span class="result"> extends <a href="Height.html" class="extype" name="pseudoglot.data.Height">Height</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.CloseMid" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="CloseMid"></a><a id="CloseMid:CloseMid"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#CloseMid" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="CloseMid$.html"><span class="name">CloseMid</span></a><span class="result"> extends <a href="Height.html" class="extype" name="pseudoglot.data.Height">Height</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Dental" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Dental"></a><a id="Dental:Dental"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Dental" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Dental$.html"><span class="name">Dental</span></a><span class="result"> extends <a href="Place.html" class="extype" name="pseudoglot.data.Place">Place</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Empty" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Empty"></a><a id="Empty:Empty"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Empty" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Empty$.html"><span class="name">Empty</span></a><span class="result"> extends <a href="PhonotacticRule.html" class="extype" name="pseudoglot.data.PhonotacticRule">PhonotacticRule</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Fricative" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Fricative"></a><a id="Fricative:Fricative"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Fricative" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Fricative$.html"><span class="name">Fricative</span></a><span class="result"> extends <a href="Manner.html" class="extype" name="pseudoglot.data.Manner">Manner</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Front" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Front"></a><a id="Front:Front"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Front" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Front$.html"><span class="name">Front</span></a><span class="result"> extends <a href="Backness.html" class="extype" name="pseudoglot.data.Backness">Backness</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Glottal" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Glottal"></a><a id="Glottal:Glottal"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Glottal" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Glottal$.html"><span class="name">Glottal</span></a><span class="result"> extends <a href="Place.html" class="extype" name="pseudoglot.data.Place">Place</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Height" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Height"></a><a id="Height:Height"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Height" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Height$.html"><span class="name">Height</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.LabioDental" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LabioDental"></a><a id="LabioDental:LabioDental"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#LabioDental" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="LabioDental$.html"><span class="name">LabioDental</span></a><span class="result"> extends <a href="Place.html" class="extype" name="pseudoglot.data.Place">Place</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.LateralApproximant" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LateralApproximant"></a><a id="LateralApproximant:LateralApproximant"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#LateralApproximant" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="LateralApproximant$.html"><span class="name">LateralApproximant</span></a><span class="result"> extends <a href="Manner.html" class="extype" name="pseudoglot.data.Manner">Manner</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.LateralFricative" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LateralFricative"></a><a id="LateralFricative:LateralFricative"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#LateralFricative" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="LateralFricative$.html"><span class="name">LateralFricative</span></a><span class="result"> extends <a href="Manner.html" class="extype" name="pseudoglot.data.Manner">Manner</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Manner" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Manner"></a><a id="Manner:Manner"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Manner" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Manner$.html"><span class="name">Manner</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Mid" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Mid"></a><a id="Mid:Mid"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Mid" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Mid$.html"><span class="name">Mid</span></a><span class="result"> extends <a href="Height.html" class="extype" name="pseudoglot.data.Height">Height</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Murmered" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Murmered"></a><a id="Murmered:Murmered"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Murmered" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Murmered$.html"><span class="name">Murmered</span></a><span class="result"> extends <a href="Voicing.html" class="extype" name="pseudoglot.data.Voicing">Voicing</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Nasal" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Nasal"></a><a id="Nasal:Nasal"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Nasal" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Nasal$.html"><span class="name">Nasal</span></a><span class="result"> extends <a href="Manner.html" class="extype" name="pseudoglot.data.Manner">Manner</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.NearBack" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="NearBack"></a><a id="NearBack:NearBack"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#NearBack" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="NearBack$.html"><span class="name">NearBack</span></a><span class="result"> extends <a href="Backness.html" class="extype" name="pseudoglot.data.Backness">Backness</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.NearClose" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="NearClose"></a><a id="NearClose:NearClose"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#NearClose" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="NearClose$.html"><span class="name">NearClose</span></a><span class="result"> extends <a href="Height.html" class="extype" name="pseudoglot.data.Height">Height</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.NearFront" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="NearFront"></a><a id="NearFront:NearFront"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#NearFront" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="NearFront$.html"><span class="name">NearFront</span></a><span class="result"> extends <a href="Backness.html" class="extype" name="pseudoglot.data.Backness">Backness</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.NearOpen" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="NearOpen"></a><a id="NearOpen:NearOpen"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#NearOpen" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="NearOpen$.html"><span class="name">NearOpen</span></a><span class="result"> extends <a href="Height.html" class="extype" name="pseudoglot.data.Height">Height</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.NullPhoneme" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="NullPhoneme"></a><a id="NullPhoneme:NullPhoneme"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#NullPhoneme" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="NullPhoneme$.html"><span class="name">NullPhoneme</span></a><span class="result"> extends <a href="Phone.html" class="extype" name="pseudoglot.data.Phone">Phone</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Open" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Open"></a><a id="Open:Open"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Open" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Open$.html"><span class="name">Open</span></a><span class="result"> extends <a href="Height.html" class="extype" name="pseudoglot.data.Height">Height</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.OpenMid" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="OpenMid"></a><a id="OpenMid:OpenMid"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#OpenMid" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="OpenMid$.html"><span class="name">OpenMid</span></a><span class="result"> extends <a href="Height.html" class="extype" name="pseudoglot.data.Height">Height</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Palatal" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Palatal"></a><a id="Palatal:Palatal"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Palatal" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Palatal$.html"><span class="name">Palatal</span></a><span class="result"> extends <a href="Place.html" class="extype" name="pseudoglot.data.Place">Place</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Pharyngeal" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Pharyngeal"></a><a id="Pharyngeal:Pharyngeal"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Pharyngeal" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Pharyngeal$.html"><span class="name">Pharyngeal</span></a><span class="result"> extends <a href="Place.html" class="extype" name="pseudoglot.data.Place">Place</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Phone" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Phone"></a><a id="Phone:Phone"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Phone" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Phone$.html"><span class="name">Phone</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.PhoneSeq" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="PhoneSeq"></a><a id="PhoneSeq:PhoneSeq"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#PhoneSeq" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="PhoneSeq$.html"><span class="name">PhoneSeq</span></a>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Phonology" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Phonology"></a><a id="Phonology:Phonology"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Phonology" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Phonology$.html"><span class="name">Phonology</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.PhonotacticRule" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="PhonotacticRule"></a><a id="PhonotacticRule:PhonotacticRule"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#PhonotacticRule" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="PhonotacticRule$.html"><span class="name">PhonotacticRule</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Place" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Place"></a><a id="Place:Place"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Place" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Place$.html"><span class="name">Place</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Plosive" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Plosive"></a><a id="Plosive:Plosive"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Plosive" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Plosive$.html"><span class="name">Plosive</span></a><span class="result"> extends <a href="Manner.html" class="extype" name="pseudoglot.data.Manner">Manner</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.PostAlveolar" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="PostAlveolar"></a><a id="PostAlveolar:PostAlveolar"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#PostAlveolar" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="PostAlveolar$.html"><span class="name">PostAlveolar</span></a><span class="result"> extends <a href="Place.html" class="extype" name="pseudoglot.data.Place">Place</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Prosody" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Prosody"></a><a id="Prosody:Prosody"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Prosody" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Prosody$.html"><span class="name">Prosody</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Retroflex" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Retroflex"></a><a id="Retroflex:Retroflex"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Retroflex" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Retroflex$.html"><span class="name">Retroflex</span></a><span class="result"> extends <a href="Place.html" class="extype" name="pseudoglot.data.Place">Place</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Rounded" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Rounded"></a><a id="Rounded:Rounded"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Rounded" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Rounded$.html"><span class="name">Rounded</span></a><span class="result"> extends <a href="Roundedness.html" class="extype" name="pseudoglot.data.Roundedness">Roundedness</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Roundedness" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Roundedness"></a><a id="Roundedness:Roundedness"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Roundedness" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Roundedness$.html"><span class="name">Roundedness</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.TapOrFlap" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="TapOrFlap"></a><a id="TapOrFlap:TapOrFlap"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#TapOrFlap" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="TapOrFlap$.html"><span class="name">TapOrFlap</span></a><span class="result"> extends <a href="Manner.html" class="extype" name="pseudoglot.data.Manner">Manner</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Transcription" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Transcription"></a><a id="Transcription:Transcription"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Transcription" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Transcription$.html"><span class="name">Transcription</span></a>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Trill" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Trill"></a><a id="Trill:Trill"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Trill" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Trill$.html"><span class="name">Trill</span></a><span class="result"> extends <a href="Manner.html" class="extype" name="pseudoglot.data.Manner">Manner</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Unrounded" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Unrounded"></a><a id="Unrounded:Unrounded"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Unrounded" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Unrounded$.html"><span class="name">Unrounded</span></a><span class="result"> extends <a href="Roundedness.html" class="extype" name="pseudoglot.data.Roundedness">Roundedness</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Uvular" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Uvular"></a><a id="Uvular:Uvular"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Uvular" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Uvular$.html"><span class="name">Uvular</span></a><span class="result"> extends <a href="Place.html" class="extype" name="pseudoglot.data.Place">Place</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Velar" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Velar"></a><a id="Velar:Velar"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Velar" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Velar$.html"><span class="name">Velar</span></a><span class="result"> extends <a href="Place.html" class="extype" name="pseudoglot.data.Place">Place</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Voiced" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Voiced"></a><a id="Voiced:Voiced"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Voiced" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Voiced$.html"><span class="name">Voiced</span></a><span class="result"> extends <a href="Voicing.html" class="extype" name="pseudoglot.data.Voicing">Voicing</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Voiceless" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Voiceless"></a><a id="Voiceless:Voiceless"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Voiceless" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Voiceless$.html"><span class="name">Voiceless</span></a><span class="result"> extends <a href="Voicing.html" class="extype" name="pseudoglot.data.Voicing">Voicing</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Product.html#scala.Product" class="extype" name="scala.Product">Product</a> with <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.data.Voicing" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Voicing"></a><a id="Voicing:Voicing"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/data/index.html#Voicing" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="Voicing$.html"><span class="name">Voicing</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/Serializable.html#scala.Serializable" class="extype" name="scala.Serializable">Serializable</a></span>
+      </span>
+      
+      
+    </li>
+              </ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.12.5/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.12.5/scala/Any.html#scala.Any" class="extype" name="scala.Any">Any</a></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+    </body>
+          </div>
+        </div>
+      </div>
+    </body>
+      </html>

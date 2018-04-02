@@ -1,0 +1,746 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+          <title></title>
+          <meta name="description" content="" />
+          <meta name="keywords" content="" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../lib/index.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../lib/jquery.js"></script>
+      <script type="text/javascript" src="../../lib/jquery.panzoom.min.js"></script>
+      <script type="text/javascript" src="../../lib/jquery.mousewheel.min.js"></script>
+      <script type="text/javascript" src="../../lib/index.js"></script>
+      <script type="text/javascript" src="../../index.js"></script>
+      <script type="text/javascript" src="../../lib/scheduler.js"></script>
+      <script type="text/javascript" src="../../lib/template.js"></script>
+      <script type="text/javascript" src="../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+        /* this variable can be used by the JS to determine the path to the root document */
+        var toRoot = '../../';
+      </script>
+    
+        </head>
+        <body>
+      <div id="search">
+        <span id="doc-title"><span id="doc-version"></span></span>
+        <span class="close-results"><span class="left">&lt;</span> Back</span>
+        <div id="textfilter">
+          <span class="input">
+            <input autocapitalize="none" placeholder="Search" id="index-input" type="text" accesskey="/" />
+            <i class="clear material-icons"></i>
+            <i id="search-icon" class="material-icons"></i>
+          </span>
+        </div>
+    </div>
+      <div id="search-results">
+        <div id="search-progress">
+          <div id="progress-fill"></div>
+        </div>
+        <div id="results-content">
+          <div id="entity-results"></div>
+          <div id="member-results"></div>
+        </div>
+      </div>
+      <div id="content-scroll-container" style="-webkit-overflow-scrolling: touch;">
+        <div id="content-container" style="-webkit-overflow-scrolling: touch;">
+          <div id="subpackage-spacer">
+            <div id="packages">
+              <h1>Packages</h1>
+              <ul>
+                <li name="_root_.root" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="_root_"></a><a id="root:_root_"></a>
+      <span class="permalink">
+      <a href="index.html#_root_" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="This is the API documentation for Xenocosm a procedural space trader." href="../../index.html"><span class="name">root</span></a>
+      </span>
+      
+      <p class="shortcomment cmt">This is the API documentation for <a href="https://github.com/robotsnowfall/xenocosm" target="_blank">Xenocosm</a>
+a procedural space trader.</p><div class="fullcomment"><div class="comment cmt"><p>This is the API documentation for <a href="https://github.com/robotsnowfall/xenocosm" target="_blank">Xenocosm</a>
+a procedural space trader.</p><p>The game's codebase is divided into a number of modules.</p><ul><li><a href="../index.html" class="extype" name="pseudoglot">pseudoglot</a>: logic and data types for procedural phonologies</li><li><a href="../../galaxique/index.html" class="extype" name="galaxique">galaxique</a>: logic and data types for the procedural multiverse</li><li><a href="../../economancy/index.html" class="extype" name="economancy">economancy</a>: logic and data types for the procedural markets</li><li><a href="../../xenocosm/index.html" class="extype" name="xenocosm">xenocosm</a>: logic and data types combining the above into a space trader</li><li><a href="../../xenocosm/http/index.html" class="extype" name="xenocosm.http">xenocosm.http</a>: An HTTP application of the game via <a href="https://github.com/http4s/http4s" target="_blank">http4s</a></li></ul><p>Please refer to the <a href="https://robotsnowfall.github.io/xenocosm/" target="_blank">documentation</a>
+for a more details about the application.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../index.html" class="extype" name="_root_">root</a></dd></dl></div>
+    </li><li name="_root_.pseudoglot" visbl="pub" class="indented1 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="pseudoglot"></a><a id="pseudoglot:pseudoglot"></a>
+      <span class="permalink">
+      <a href="index.html#pseudoglot" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title=" Provides data types and typeclasses for procedurally-generated phonologies" href="../index.html"><span class="name">pseudoglot</span></a>
+      </span>
+      
+      <p class="shortcomment cmt"><img src="/xenocosm/img/pseudoglot-128.png" />
+Provides data types and typeclasses for procedurally-generated phonologies</p><div class="fullcomment"><div class="comment cmt"><p><img src="/xenocosm/img/pseudoglot-128.png" />
+Provides data types and typeclasses for procedurally-generated phonologies</p><h4>Overview</h4><p>As much as possible, all data types have an instance of <code>spire.random.Dist</code>
+in the companion object.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../index.html" class="extype" name="_root_">root</a></dd></dl></div>
+    </li><li name="pseudoglot.data" visbl="pub" class="indented2 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="data"></a><a id="data:data"></a>
+      <span class="permalink">
+      <a href="../pseudoglot/index.html#data" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../data/index.html"><span class="name">data</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="pseudoglot">pseudoglot</a></dd></dl></div>
+    </li><li name="pseudoglot.json" visbl="pub" class="indented2 current" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="json"></a><a id="json:json"></a>
+      <span class="permalink">
+      <a href="../pseudoglot/index.html#json" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">json</span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="pseudoglot">pseudoglot</a></dd></dl></div>
+    </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="trait" href="All.html" title=""></a>
+                        <a href="All.html" title="">All</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="trait" href="BacknessJson.html" title=""></a>
+                        <a href="BacknessJson.html" title="">BacknessJson</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="trait" href="HeightJson.html" title=""></a>
+                        <a href="HeightJson.html" title="">HeightJson</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="trait" href="MannerJson.html" title=""></a>
+                        <a href="MannerJson.html" title="">MannerJson</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="trait" href="PhonologyJson.html" title=""></a>
+                        <a href="PhonologyJson.html" title="">PhonologyJson</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="trait" href="PhonotacticRuleJson.html" title=""></a>
+                        <a href="PhonotacticRuleJson.html" title="">PhonotacticRuleJson</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="trait" href="PlaceJson.html" title=""></a>
+                        <a href="PlaceJson.html" title="">PlaceJson</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="trait" href="PulmonicJson.html" title=""></a>
+                        <a href="PulmonicJson.html" title="">PulmonicJson</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="trait" href="RoundednessJson.html" title=""></a>
+                        <a href="RoundednessJson.html" title="">RoundednessJson</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="trait" href="TranscriptionJson.html" title=""></a>
+                        <a href="TranscriptionJson.html" title="">TranscriptionJson</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="trait" href="VoicingJson.html" title=""></a>
+                        <a href="VoicingJson.html" title="">VoicingJson</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="trait" href="VowelJson.html" title=""></a>
+                        <a href="VowelJson.html" title="">VowelJson</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="package$$backness$.html" title=""></a>
+                        <a href="package$$backness$.html" title="">backness</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="package$$height$.html" title=""></a>
+                        <a href="package$$height$.html" title="">height</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="package$$implicits$.html" title=""></a>
+                        <a href="package$$implicits$.html" title="">implicits</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="package$$manner$.html" title=""></a>
+                        <a href="package$$manner$.html" title="">manner</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="package$$phonology$.html" title=""></a>
+                        <a href="package$$phonology$.html" title="">phonology</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="package$$phonotacticRule$.html" title=""></a>
+                        <a href="package$$phonotacticRule$.html" title="">phonotacticRule</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="package$$place$.html" title=""></a>
+                        <a href="package$$place$.html" title="">place</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="package$$pulmonic$.html" title=""></a>
+                        <a href="package$$pulmonic$.html" title="">pulmonic</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="package$$roundedness$.html" title=""></a>
+                        <a href="package$$roundedness$.html" title="">roundedness</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="package$$transcription$.html" title=""></a>
+                        <a href="package$$transcription$.html" title="">transcription</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="package$$voicing$.html" title=""></a>
+                        <a href="package$$voicing$.html" title="">voicing</a>
+                      </li><li class="current-entities indented2">
+                        <span class="separator"></span>
+                        <a class="object" href="package$$vowel$.html" title=""></a>
+                        <a href="package$$vowel$.html" title="">vowel</a>
+                      </li><li name="pseudoglot.parser" visbl="pub" class="indented2 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="parser"></a><a id="parser:parser"></a>
+      <span class="permalink">
+      <a href="../pseudoglot/index.html#parser" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../parser/index.html"><span class="name">parser</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="pseudoglot">pseudoglot</a></dd></dl></div>
+    </li>
+              </ul>
+            </div>
+          </div>
+          <div id="content">
+            <body class="package value">
+      <div id="definition">
+        <div class="big-circle package">p</div>
+        <p id="owner"><a href="../index.html" class="extype" name="pseudoglot">pseudoglot</a></p>
+        <h1>json<span class="permalink">
+      <a href="../../pseudoglot/json/index.html" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span></h1>
+        
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">json</span>
+      </span>
+      </h4>
+
+      
+          <div id="comment" class="fullcommenttop"><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/robotsnowfall/xenocosm/tree/master/json/src/main/scala/pseudoglot/json/package.scala" target="_blank">package.scala</a></dd></dl><div class="toggleContainer block">
+          <span class="toggle">
+            Linear Supertypes
+          </span>
+          <div class="superTypes hiddenContent"><a href="http://www.scala-lang.org/api/2.12.5/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a>, <a href="http://www.scala-lang.org/api/2.12.5/scala/Any.html#scala.Any" class="extype" name="scala.Any">Any</a></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div class="toggle"></div>
+        <div id="memberfilter">
+          <i class="material-icons arrow"></i>
+          <span class="input">
+            <input id="mbrsel-input" placeholder="Filter all members" type="text" accesskey="/" />
+          </span>
+          <i class="clear material-icons"></i>
+        </div>
+        <div id="filterby">
+          <div id="order">
+            <span class="filtertype">Ordering</span>
+            <ol>
+              
+              <li class="alpha in"><span>Alphabetic</span></li>
+              <li class="inherit out"><span>By Inheritance</span></li>
+            </ol>
+          </div>
+          <div class="ancestors">
+                  <span class="filtertype">Inherited<br />
+                  </span>
+                  <ol id="linearization">
+                    <li class="in" name="pseudoglot.json"><span>json</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  </ol>
+                </div><div class="ancestors">
+              <span class="filtertype"></span>
+              <ol>
+                <li class="hideall out"><span>Hide All</span></li>
+                <li class="showall in"><span>Show All</span></li>
+              </ol>
+            </div>
+          <div id="visbl">
+              <span class="filtertype">Visibility</span>
+              <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+            </div>
+        </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="pseudoglot.json.All" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="AllextendsBacknessJsonwithHeightJsonwithMannerJsonwithPhonologyJsonwithPhonotacticRuleJsonwithPlaceJsonwithPulmonicJsonwithRoundednessJsonwithTranscriptionJsonwithVoicingJsonwithVowelJson"></a><a id="All:All"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#AllextendsBacknessJsonwithHeightJsonwithMannerJsonwithPhonologyJsonwithPhonotacticRuleJsonwithPlaceJsonwithPulmonicJsonwithRoundednessJsonwithTranscriptionJsonwithVoicingJsonwithVowelJson" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="All.html"><span class="name">All</span></a><span class="result"> extends <a href="BacknessJson.html" class="extype" name="pseudoglot.json.BacknessJson">BacknessJson</a> with <a href="HeightJson.html" class="extype" name="pseudoglot.json.HeightJson">HeightJson</a> with <a href="MannerJson.html" class="extype" name="pseudoglot.json.MannerJson">MannerJson</a> with <a href="PhonologyJson.html" class="extype" name="pseudoglot.json.PhonologyJson">PhonologyJson</a> with <a href="PhonotacticRuleJson.html" class="extype" name="pseudoglot.json.PhonotacticRuleJson">PhonotacticRuleJson</a> with <a href="PlaceJson.html" class="extype" name="pseudoglot.json.PlaceJson">PlaceJson</a> with <a href="PulmonicJson.html" class="extype" name="pseudoglot.json.PulmonicJson">PulmonicJson</a> with <a href="RoundednessJson.html" class="extype" name="pseudoglot.json.RoundednessJson">RoundednessJson</a> with <a href="TranscriptionJson.html" class="extype" name="pseudoglot.json.TranscriptionJson">TranscriptionJson</a> with <a href="VoicingJson.html" class="extype" name="pseudoglot.json.VoicingJson">VoicingJson</a> with <a href="VowelJson.html" class="extype" name="pseudoglot.json.VowelJson">VowelJson</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.BacknessJson" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="BacknessJsonextendsAnyRef"></a><a id="BacknessJson:BacknessJson"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#BacknessJsonextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="BacknessJson.html"><span class="name">BacknessJson</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.HeightJson" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="HeightJsonextendsAnyRef"></a><a id="HeightJson:HeightJson"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#HeightJsonextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="HeightJson.html"><span class="name">HeightJson</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.MannerJson" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="MannerJsonextendsAnyRef"></a><a id="MannerJson:MannerJson"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#MannerJsonextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="MannerJson.html"><span class="name">MannerJson</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.PhonologyJson" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="PhonologyJsonextendsAnyRef"></a><a id="PhonologyJson:PhonologyJson"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#PhonologyJsonextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="PhonologyJson.html"><span class="name">PhonologyJson</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.PhonotacticRuleJson" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="PhonotacticRuleJsonextendsAnyRef"></a><a id="PhonotacticRuleJson:PhonotacticRuleJson"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#PhonotacticRuleJsonextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="PhonotacticRuleJson.html"><span class="name">PhonotacticRuleJson</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.PlaceJson" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="PlaceJsonextendsAnyRef"></a><a id="PlaceJson:PlaceJson"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#PlaceJsonextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="PlaceJson.html"><span class="name">PlaceJson</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.PulmonicJson" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="PulmonicJsonextendsAnyRef"></a><a id="PulmonicJson:PulmonicJson"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#PulmonicJsonextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="PulmonicJson.html"><span class="name">PulmonicJson</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.RoundednessJson" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="RoundednessJsonextendsAnyRef"></a><a id="RoundednessJson:RoundednessJson"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#RoundednessJsonextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="RoundednessJson.html"><span class="name">RoundednessJson</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.TranscriptionJson" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="TranscriptionJsonextendsAnyRef"></a><a id="TranscriptionJson:TranscriptionJson"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#TranscriptionJsonextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="TranscriptionJson.html"><span class="name">TranscriptionJson</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.VoicingJson" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="VoicingJsonextendsAnyRef"></a><a id="VoicingJson:VoicingJson"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#VoicingJsonextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="VoicingJson.html"><span class="name">VoicingJson</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.VowelJson" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="VowelJsonextendsAnyRef"></a><a id="VowelJson:VowelJson"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#VowelJsonextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="VowelJson.html"><span class="name">VowelJson</span></a><span class="result"> extends <a href="http://www.scala-lang.org/api/2.12.5/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      
+      
+    </li></ol>
+            </div>
+
+        
+
+        <div class="values members">
+              <h3>Value Members</h3>
+              <ol>
+                <li name="pseudoglot.json.backness" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="backness"></a><a id="backness:backness"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#backness" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="package$$backness$.html"><span class="name">backness</span></a><span class="result"> extends <a href="BacknessJson.html" class="extype" name="pseudoglot.json.BacknessJson">BacknessJson</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.height" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="height"></a><a id="height:height"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#height" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="package$$height$.html"><span class="name">height</span></a><span class="result"> extends <a href="HeightJson.html" class="extype" name="pseudoglot.json.HeightJson">HeightJson</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.implicits" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="implicits"></a><a id="implicits:implicits"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#implicits" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="package$$implicits$.html"><span class="name">implicits</span></a><span class="result"> extends <a href="All.html" class="extype" name="pseudoglot.json.All">All</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.manner" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="manner"></a><a id="manner:manner"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#manner" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="package$$manner$.html"><span class="name">manner</span></a><span class="result"> extends <a href="MannerJson.html" class="extype" name="pseudoglot.json.MannerJson">MannerJson</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.phonology" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="phonology"></a><a id="phonology:phonology"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#phonology" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="package$$phonology$.html"><span class="name">phonology</span></a><span class="result"> extends <a href="PhonologyJson.html" class="extype" name="pseudoglot.json.PhonologyJson">PhonologyJson</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.phonotacticRule" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="phonotacticRule"></a><a id="phonotacticRule:phonotacticRule"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#phonotacticRule" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="package$$phonotacticRule$.html"><span class="name">phonotacticRule</span></a><span class="result"> extends <a href="PhonotacticRuleJson.html" class="extype" name="pseudoglot.json.PhonotacticRuleJson">PhonotacticRuleJson</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.place" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="place"></a><a id="place:place"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#place" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="package$$place$.html"><span class="name">place</span></a><span class="result"> extends <a href="PlaceJson.html" class="extype" name="pseudoglot.json.PlaceJson">PlaceJson</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.pulmonic" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="pulmonic"></a><a id="pulmonic:pulmonic"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#pulmonic" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="package$$pulmonic$.html"><span class="name">pulmonic</span></a><span class="result"> extends <a href="PulmonicJson.html" class="extype" name="pseudoglot.json.PulmonicJson">PulmonicJson</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.roundedness" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="roundedness"></a><a id="roundedness:roundedness"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#roundedness" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="package$$roundedness$.html"><span class="name">roundedness</span></a><span class="result"> extends <a href="RoundednessJson.html" class="extype" name="pseudoglot.json.RoundednessJson">RoundednessJson</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.transcription" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="transcription"></a><a id="transcription:transcription"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#transcription" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="package$$transcription$.html"><span class="name">transcription</span></a><span class="result"> extends <a href="TranscriptionJson.html" class="extype" name="pseudoglot.json.TranscriptionJson">TranscriptionJson</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.voicing" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="voicing"></a><a id="voicing:voicing"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#voicing" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="package$$voicing$.html"><span class="name">voicing</span></a><span class="result"> extends <a href="VoicingJson.html" class="extype" name="pseudoglot.json.VoicingJson">VoicingJson</a></span>
+      </span>
+      
+      
+    </li><li name="pseudoglot.json.vowel" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="vowel"></a><a id="vowel:vowel"></a>
+      <span class="permalink">
+      <a href="../../pseudoglot/json/index.html#vowel" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="package$$vowel$.html"><span class="name">vowel</span></a><span class="result"> extends <a href="VowelJson.html" class="extype" name="pseudoglot.json.VowelJson">VowelJson</a></span>
+      </span>
+      
+      
+    </li>
+              </ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.12.5/scala/AnyRef.html#scala.AnyRef" class="extype" name="scala.AnyRef">AnyRef</a></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.12.5/scala/Any.html#scala.Any" class="extype" name="scala.Any">Any</a></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+    </body>
+          </div>
+        </div>
+      </div>
+    </body>
+      </html>
