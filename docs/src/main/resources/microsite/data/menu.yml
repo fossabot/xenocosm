@@ -1,0 +1,31 @@
+options:
+
+  - title: Xenocosm
+    url: /docs/xenocosm/index.html
+    menu_section: xenocosm
+
+    nested_options:
+     - title: HTTP
+       url: /docs/xenocosm/http.html
+
+  - title: Pseudoglot
+    url: /docs/pseudoglot/index.html
+    menu_section: pseudoglot
+
+  - title: Galaxique
+    url: /docs/galaxique/index.html
+    menu_section: galaxique
+
+  - title: Economancy
+    url: /docs/economancy/index.html
+    menu_section: economancy
+
+  - title: Cavernetics
+    url: /docs/cavernetics/index.html
+    menu_section: cavernetics
+
+  - title: README
+    url: /docs/index.html
+
+  - title: Scaladoc
+    url: /api/index.html

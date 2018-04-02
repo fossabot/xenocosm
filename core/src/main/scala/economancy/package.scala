@@ -7,7 +7,6 @@
   * in the companion object.
   */
 package object economancy {
-  object implicits
-    extends TimeValue.Syntax
-    with data.DepositAccount.Instances
+  object market extends Market.Syntax
+  object pointOfSale extends PointOfSale.Syntax
 }

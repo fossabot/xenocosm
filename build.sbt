@@ -2,8 +2,7 @@ import microsites.ExtraMdFileConfig
 
 inThisBuild(Seq(
   organization in ThisBuild := "com.robotsnowfall",
-  scalaOrganization := "org.typelevel",
-  scalaVersion := "2.12.4-bin-typelevel-4"
+  scalaVersion := "2.12.5"
 ))
 
 lazy val versions = new {
@@ -70,7 +69,7 @@ lazy val http = project.in(file("http"))
   ))
 
 lazy val docs = project.in(file("docs"))
-  .enablePlugins(MicrositesPlugin, ScalaUnidocPlugin)
+  .enablePlugins(MicrositesPlugin, ScalaUnidocPlugin, TutPlugin)
   .dependsOn(core, json, http)
   .settings(moduleName := "xenocosm-docs")
   .settings(xenocosmSettings ++ micrositeSettings ++ unidocSettings)
@@ -160,13 +159,9 @@ lazy val micrositeSettings = Seq(
     "gray-lighter"    -> "#F4F3F4",
     "white-color"     -> "#FFFFFF"),
   micrositeExtraMdFiles := Map(
-    file("README.md") -> ExtraMdFileConfig(
-      "index.md",
-      "home",
-      Map("title" -> "Home", "section" -> "home", "position" -> "0")
-    )
+    file("README.md") -> ExtraMdFileConfig("docs/index.md", "docs", Map.empty[String, String])
   ),
-  micrositeDocumentationUrl := "/xenocosm/api/index.html"
+  micrositeDocumentationUrl := "/xenocosm/docs/index.html"
 )
 
 lazy val docsMappingsAPIDir = settingKey[String]("Name of subdirectory in site target directory for api docs")
@@ -203,8 +198,7 @@ lazy val dockerSettings = Seq(
   dockerUpdateLatest := true
 )
 
-addCommandAlias("validateCore", ";core/clean;core/scalastyle;coverage;core/compile;core/test;core/coverageReport")
-addCommandAlias("validateJson", ";json/clean;json/scalastyle;coverage;json/compile;json/test;json/coverageReport")
-addCommandAlias("validateHttp", ";http/clean;http/scalastyle;coverage;http/compile;http/test;http/coverageReport")
-addCommandAlias("validateDocs", ";docs/clean;docs/makeMicrosite")
-addCommandAlias("validate", ";validateCore;validateJson;validateHttp;validateDocs;coverageAggregate")
+addCommandAlias("validateCore", ";coverage;core/compile;core/test;core/coverageReport")
+addCommandAlias("validateJson", ";coverage;json/compile;json/test;json/coverageReport")
+addCommandAlias("validateHttp", ";coverage;http/compile;http/test;http/coverageReport")
+addCommandAlias("validate", ";clean;scalastyle;validateCore;validateJson;validateHttp;coverageAggregate;makeMicrosite")
