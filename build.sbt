@@ -65,7 +65,9 @@ lazy val http = project.in(file("http"))
     "com.github.pureconfig" %% "pureconfig"          % versions.pureconfig,
     "com.github.pureconfig" %% "pureconfig-http4s"   % versions.pureconfig,
     "com.github.pureconfig" %% "pureconfig-squants"  % versions.pureconfig,
-    "ch.qos.logback"         % "logback-classic"     % versions.logback
+    "ch.qos.logback"         % "logback-classic"     % versions.logback,
+
+    "org.http4s"            %% "http4s-circe"        % versions.http4s     % Test
   ))
 
 lazy val docs = project.in(file("docs"))
@@ -155,7 +157,7 @@ lazy val micrositeSettings = Seq(
     "brand-tertiary"  -> "#4B788F",
     "gray-dark"       -> "#49494B",
     "gray"            -> "#7B7B7E",
-    "gray-light"      -> "#E9F9CE",
+    "gray-light"      -> "#E3E2E3",
     "gray-lighter"    -> "#F4F3F4",
     "white-color"     -> "#FFFFFF"),
   micrositeExtraMdFiles := Map(

@@ -1,9 +1,11 @@
 # Xenocosm
 
-[![Build Status](https://api.travis-ci.org/robotsnowfall/xenocosm.svg)](https://travis-ci.org/robotsnowfall/xenocosm)
-[![Code Coverage](http://codecov.io/github/robotsnowfall/xenocosm/coverage.svg?branch=master)](http://codecov.io/github/robotsnowfall/xenocosm?branch=master)
+[![Build Status](https://travis-ci.org/robotsnowfall/xenocosm.svg?branch=master)](https://travis-ci.org/robotsnowfall/xenocosm)
+[![codecov](https://codecov.io/gh/robotsnowfall/xenocosm/branch/master/graph/badge.svg)](https://codecov.io/gh/robotsnowfall/xenocosm)
 
 A turn-based, procedural space trader for HTTP.
+
+More info in the [documentation](https://robotsnowfall.github.io/xenocosm/).
 
 ## Minimal client
 
