@@ -8,6 +8,7 @@ services:
   - docker
 
 before_install:
+  - if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then bash scripts/decrypt-keys.sh; fi
   - export PATH=${PATH}:./vendor/bundle
 
 install:
@@ -21,6 +22,7 @@ script:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  - if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then bash scripts/publishMicrosite.sh; fi
 
 before_deploy:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
