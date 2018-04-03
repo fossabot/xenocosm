@@ -19,13 +19,6 @@ curl --include \
  "${URL}"
 ```
 
-## TODO
-
-- [ ] Traverse the multiverse
-- [ ] Track multiversal time and subjective time
-- [ ] Buy/sell cargo
-- [ ] Game ends at multiversal `Instant.MAX`
-
 ## Implementors
 
 * [Doug Hurst](https://github.com/robotsnowfall)

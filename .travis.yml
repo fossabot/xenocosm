@@ -1,19 +1,33 @@
+sudo: required
 language: scala
 jdk: openjdk8
 scala:
-   - 2.12.5
+  - 2.12.5
+
+services:
+  - docker
 
 before_install:
- - export PATH=${PATH}:./vendor/bundle
+  - export PATH=${PATH}:./vendor/bundle
 
 install:
-- rvm use 2.2.8 --install --fuzzy
-- gem update --system
-- gem install sass
-- gem install jekyll -v 3.2.1
+  - rvm use 2.2.8 --install --fuzzy
+  - gem update --system
+  - gem install sass
+  - gem install jekyll -v 3.2.1
 
 script:
- - sbt ++$TRAVIS_SCALA_VERSION validate
+  - sbt ++$TRAVIS_SCALA_VERSION validate
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+
+before_deploy:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: sbt http/docker:publish
+  on:
+    tags: true

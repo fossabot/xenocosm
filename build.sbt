@@ -55,6 +55,7 @@ lazy val http = project.in(file("http"))
   .settings(moduleName := "xenocosm-http")
   .settings(xenocosmSettings ++ dockerSettings)
   .settings(Seq(
+    packageName in Docker := "xenocosm-http",
     mainClass in Compile := Some("xenocosm.http.Main")
   ))
   .settings(libraryDependencies ++= Seq(
@@ -190,12 +191,12 @@ lazy val buildInfoSettings = Seq(
 )
 
 lazy val dockerSettings = Seq(
-  packageName in Docker := "xenocosm",
   dockerBaseImage := "openjdk:8-jre",
   dockerExposedPorts := Seq(8080),
   dockerLabels := Map(
     "maintainer" -> "doug.hurst@protonmail.com"
   ),
+  dockerRepository := Some("index.docker.io"),
   dockerUsername := Some("robotsnowfall"),
   dockerUpdateLatest := true
 )
