@@ -51,7 +51,7 @@ object Universe {
       Dist[UUID].map(Universe.apply)
 
     implicit val universeHasSparseSpace:SparseSpace3[Universe, Galaxy] =
-      SparseSpace3.instance[Universe, Galaxy](Parsecs, Galaxy.apply)(bytes)
+      SparseSpace3.instance[Universe, Galaxy](Parsecs, Parsecs(10000), Galaxy.apply)(bytes)
   }
   object instances extends Instances
 }

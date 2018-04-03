@@ -7,12 +7,14 @@ import spire.algebra.MetricSpace
 import spire.math.Bounded
 import spire.random.Dist
 import squants.UnitOfMeasure
-import squants.space.{Length, LightYears}
+import squants.space.{Length, LightYears, Meters}
 
 final case class Point3(x:Length, y:Length, z:Length)
 
 object Point3 {
   import interop.length._
+
+  val zero:Point3 = Point3(Meters(0), Meters(0), Meters(0))
 
   private[galaxique] val bytes:UnitOfMeasure[Length] ⇒ Point3 ⇒ Array[Byte] = uom ⇒ loc ⇒
     ByteBuffer

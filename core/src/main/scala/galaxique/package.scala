@@ -16,4 +16,5 @@ package object galaxique {
     with data.Galaxy.Instances
     with data.Star.Instances
     with data.Planet.Instances
+    with SparseSpace3.Syntax
 }

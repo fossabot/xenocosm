@@ -2,7 +2,6 @@ package xenocosm.json
 
 import io.circe._
 import galaxique.data._
-
 import xenocosm.data._
 
 trait ShipLocationJson {

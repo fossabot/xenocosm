@@ -55,7 +55,7 @@ object Galaxy {
       } yield Galaxy(universe, Point3(x, y, z))
 
     implicit val galaxyHasSparseSpace:SparseSpace3[Galaxy, Star] =
-      SparseSpace3.instance[Galaxy, Star](Parsecs, Star.apply)(bytes)
+      SparseSpace3.instance[Galaxy, Star](Parsecs, Parsecs(1), Star.apply)(bytes)
   }
 
   object instances extends Instances

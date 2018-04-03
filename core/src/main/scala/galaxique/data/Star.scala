@@ -7,7 +7,7 @@ import spire.random.{Dist, Generator}
 import spire.random.rng.BurtleRot2
 import squants.energy.Power
 import squants.mass.{Density, Mass}
-import squants.space.{Length, Parsecs, Volume}
+import squants.space.{AstronomicalUnits, Length, Parsecs, Volume}
 import squants.thermal.Temperature
 import MorganKeenan.instances._
 
@@ -46,7 +46,7 @@ object Star {
       } yield Star(galaxy, Point3(x, y, z))
 
     implicit val starHasSparseSpace:SparseSpace3[Star, Planet] =
-      SparseSpace3.instance[Star, Planet](Parsecs, Planet.apply)(bytes)
+      SparseSpace3.instance[Star, Planet](AstronomicalUnits, AstronomicalUnits(1), Planet.apply)(bytes)
   }
   object instances extends Instances
 }

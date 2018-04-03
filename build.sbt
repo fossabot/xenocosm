@@ -172,9 +172,10 @@ lazy val docsMappingsAPIDir = settingKey[String]("Name of subdirectory in site t
 lazy val unidocSettings = Seq(
   autoAPIMappings := true,
   docsMappingsAPIDir := "api",
-  fork in (ScalaUnidoc, unidoc) := true,
   addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), docsMappingsAPIDir),
   unidocProjectFilter in (ScalaUnidoc, unidoc) := inAnyProject -- inProjects(testkit),
+  ghpagesNoJekyll := false,
+  fork in tut := true,
   fork in (ScalaUnidoc, unidoc) := true,
   scalacOptions in (ScalaUnidoc, unidoc) ++= Seq(
     "-Xfatal-warnings",
@@ -182,7 +183,10 @@ lazy val unidocSettings = Seq(
     "-doc-source-url", "https://github.com/robotsnowfall/xenocosm/tree/master€{FILE_PATH}.scala",
     "-sourcepath", baseDirectory.in(LocalRootProject).value.getAbsolutePath,
     "-doc-root-content", (resourceDirectory.in(Compile).value / "rootdoc.txt").getAbsolutePath
-  )
+  ),
+  scalacOptions in Tut ~= (_.filterNot(Set("-Ywarn-unused-import", "-Ywarn-dead-code"))),
+  includeFilter in makeSite := "*.html" | "*.css" | "*.png" | "*.jpg" | "*.gif" | "*.js" | "*.swf" | "*.yml" | "*.md" | "*.svg",
+  includeFilter in Jekyll := (includeFilter in makeSite).value
 )
 
 lazy val buildInfoSettings = Seq(
