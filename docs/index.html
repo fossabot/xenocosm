@@ -3,9 +3,16 @@
 <p><a href="https://travis-ci.org/robotsnowfall/xenocosm"><img src="https://travis-ci.org/robotsnowfall/xenocosm.svg?branch=master" alt="Build Status" /></a>
 <a href="https://codecov.io/gh/robotsnowfall/xenocosm"><img src="https://codecov.io/gh/robotsnowfall/xenocosm/branch/master/graph/badge.svg" alt="codecov" /></a></p>
 
-<p>A turn-based, procedural space trader for HTTP.</p>
+<p>A work-in-progress, turn-based, procedural space trader for HTTP.</p>
 
 <p>More info in the <a href="https://robotsnowfall.github.io/xenocosm/">documentation</a>.</p>
+
+<h2 id="run-the-http-service-with-docker">Run the HTTP service with Docker</h2>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>docker pull robotsnowfall/xenocosm-http
+docker run -d -p 8080:8080 robotsnowfall/xenocosm-http:latest
+</code></pre>
+</div>
 
 <h2 id="minimal-client">Minimal client</h2>
 
