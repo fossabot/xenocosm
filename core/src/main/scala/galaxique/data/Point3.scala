@@ -9,7 +9,10 @@ import spire.random.Dist
 import squants.UnitOfMeasure
 import squants.space.{Length, LightYears, Meters}
 
-final case class Point3(x:Length, y:Length, z:Length)
+final case class Point3(x:Length, y:Length, z:Length) {
+  def in(uom:UnitOfMeasure[Length]):Point3 =
+    Point3(x.in(uom), y.in(uom), z.in(uom))
+}
 
 object Point3 {
   import interop.length._

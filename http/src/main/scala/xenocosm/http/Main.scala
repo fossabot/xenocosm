@@ -2,6 +2,7 @@ package xenocosm.http
 
 import scala.concurrent.ExecutionContext
 import cats.effect.IO
+import cats.implicits._
 import fs2.{Stream, StreamApp}
 import fs2.StreamApp.ExitCode
 import org.http4s._
@@ -18,7 +19,7 @@ object Main extends StreamApp[IO] {
   val config:XenocosmConfig = XenocosmConfig.loadUnsafe
 
   val services:HttpService[IO] =
-    HomeService.service
+    MultiverseAPI.service <+> UniverseAPI.service
 
   val gzip:HttpService[IO] => HttpService[IO] = http => GZip(http)
 

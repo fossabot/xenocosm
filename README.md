@@ -12,16 +12,31 @@ docker pull robotsnowfall/xenocosm-http
 docker run -d -p 8080:8080 robotsnowfall/xenocosm-http:latest
 ```
 
-## Minimal client
+## Vanilla client
 
 ```bash
 #!/bin/bash
 
 URL="http://127.0.0.1:8080${1}"
 curl --include \
- --cookie xenocosm.txt \
- --cookie-jar xenocosm.txt \
- "${URL}"
+     --location \
+     --cookie xenocosm.txt \
+     --cookie-jar xenocosm.txt \
+     "${URL}"
+echo
+```
+
+## Collector's Edition client (GOTY version)
+
+```bash
+#!/bin/bash
+
+URL="http://127.0.0.1:8080${1}"
+curl --silent \
+     --location \
+     --cookie xenocosm.txt \
+     --cookie-jar xenocosm.txt \
+     "${URL}" | jq
 ```
 
 ## Implementors

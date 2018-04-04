@@ -41,7 +41,8 @@ Accept: application/hal+json
 
 ```http
 HTTP/1.1 200 OK
-Content-Type: application/hal+json
+Content-Type: application/hal+json; charset=UTF-8
+Server: xenocosm/0.0.0
 ```
 
 #### Response Body

@@ -13,5 +13,5 @@ trait JsonHal {
   )
 
   def locUrls[A](base:String, f:A => Point3)(as:Iterator[A]):Seq[String] =
-    as.map(a => s"$base/${f(a).x.value},${f(a).y.value},${f(a).z.value}").toSeq
+    as.map(a => s"$base/${f(a).x.value.toLong},${f(a).y.value.toLong},${f(a).z.value.toLong}").toSeq
 }

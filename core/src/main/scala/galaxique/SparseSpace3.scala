@@ -1,6 +1,7 @@
 package galaxique
 
 import java.security.MessageDigest
+import cats.implicits._
 import squants.UnitOfMeasure
 import squants.space.Length
 import galaxique.data.Point3
@@ -10,13 +11,13 @@ trait SparseSpace3[A, B] {
   def scale:Length
   def locate(a:A, loc:Point3):Option[B]
   def nearby(a:A, origin:Point3, range:Length):Iterator[B] =
-    if (range == uom(0) || range < scale) {
+    if (range.value === 0d || range < scale) {
       Iterator.empty
     } else {
       val steps = range / scale
       Point3
         .wholePointsInCube(scale * steps * 2, scale, origin)
-        .flatMap(loc => locate(a, loc))
+        .flatMap(loc => locate(a, loc.in(uom)))
     }
 }
 
