@@ -1,5 +1,8 @@
 options:
 
+  - title: Getting Started
+    url: /docs
+
   - title: Xenocosm
     url: /docs/xenocosm
     menu_section: xenocosm
@@ -31,9 +34,6 @@ options:
     nested_options:
      - title: Unverse API
        url: /docs/rest/universe
-
-  - title: README
-    url: /docs
 
   - title: Scaladoc
     url: /api
