@@ -1,4 +1,5 @@
-package xenocosm.http.service
+package xenocosm.http
+package service
 
 import cats.effect.IO
 import galaxique.data.Point3
@@ -10,7 +11,7 @@ import squants.space.Parsecs
 import xenocosm.http.data.UniverseResponse
 
 object UniverseAPI extends XenocosmAPI {
-  import xenocosm.json.hal.universe._
+  import xenocosm.http.hal.universe._
 
   val service = HttpService[IO] {
     case GET -> Root / ♠(universe) ⇒

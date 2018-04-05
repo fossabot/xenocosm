@@ -9,7 +9,7 @@ import org.http4s.dsl.io._
 
 object MultiverseAPI extends XenocosmAPI {
   import xenocosm.http.data.MultiverseResponse
-  import xenocosm.json.hal.multiverse._
+  import xenocosm.http.hal.multiverse._
 
   val service = HttpService[IO] {
     case GET -> Root ⇒

@@ -14,10 +14,10 @@ import MorganKeenan.instances._
 final case class Star(galaxy:Galaxy, loc:Point3) { self =>
   private val gen:Generator = Star.gen(self)
   val mk:MorganKeenan = Dist[MorganKeenan].apply(gen)
-  val mass:Mass = MorganKeenan.distMass(mk.mass)(gen)
-  val luminosity:Power = MorganKeenan.distPower(mk.luminosity)(gen)
-  val radius:Length = MorganKeenan.distLength(mk.radius)(gen)
-  val temperature:Temperature = MorganKeenan.distTemperature(mk.temperature)(gen)
+  val mass:Mass = mk.distMass(gen)
+  val luminosity:Power = mk.distLuminosity(gen)
+  val radius:Length = mk.distRadius(gen)
+  val temperature:Temperature = mk.distTemperature(gen)
   lazy val μ:Double = mass.toKilograms * G
   lazy val volume:Volume = (radius.cubed * Math.PI * 4) / 3
   lazy val density:Density = mass / volume
@@ -46,7 +46,7 @@ object Star {
       } yield Star(galaxy, Point3(x, y, z))
 
     implicit val starHasSparseSpace:SparseSpace3[Star, Planet] =
-      SparseSpace3.instance[Star, Planet](AstronomicalUnits, AstronomicalUnits(1), Planet.apply)(bytes)
+      SparseSpace3.fromStandardProof[Star, Planet](AstronomicalUnits, AstronomicalUnits(1))(Planet.apply)(bytes)
   }
   object instances extends Instances
 }

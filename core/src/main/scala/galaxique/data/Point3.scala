@@ -2,7 +2,7 @@ package galaxique
 package data
 
 import java.nio.ByteBuffer
-import cats.PartialOrder
+import cats.kernel.Eq
 import spire.algebra.MetricSpace
 import spire.math.Bounded
 import spire.random.Dist
@@ -42,10 +42,7 @@ object Point3 {
           ((v.x - w.x).squared + (v.y - w.y).squared + (v.z - w.z).squared).squareRoot
       }
 
-    implicit val point3HasEq:PartialOrder[Point3] =
-      PartialOrder.from {
-        (a:Point3, b:Point3) ⇒ point3HasMetricSpace.distance(a, b).to(a.x.unit)
-      }
+    implicit val point3HasEq:Eq[Point3] = Eq.fromUniversalEquals[Point3]
 
     implicit val point3HasDist:Dist[Point3] =
       Dist.array[Int](3, 3).map(xs => Point3(LightYears(xs(0)), LightYears(xs(1)), LightYears(xs(2))))

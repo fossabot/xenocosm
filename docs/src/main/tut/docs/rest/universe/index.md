@@ -53,7 +53,7 @@ import io.circe.syntax._
 import squants.space.Parsecs
 import galaxique.data._
 import xenocosm.http.data.UniverseResponse
-import xenocosm.json.hal.universe._
+import xenocosm.http.hal.universe._
 
 val universe = Universe(UUID.fromString("00000000-0000-0000-0000-000000000000"))
 val origin = Point3(Parsecs(0), Parsecs(0), Parsecs(0))

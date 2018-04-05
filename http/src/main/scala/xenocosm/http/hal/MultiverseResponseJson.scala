@@ -1,6 +1,8 @@
-package xenocosm.json.hal
+package xenocosm.http
+package hal
 
 import io.circe._
+
 import xenocosm.http.data.MultiverseResponse
 
 trait MultiverseResponseJson extends JsonHal {

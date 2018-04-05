@@ -1,4 +1,4 @@
-package xenocosm.json
+package xenocosm.http
 
 package object hal {
   object multiverse extends MultiverseResponseJson

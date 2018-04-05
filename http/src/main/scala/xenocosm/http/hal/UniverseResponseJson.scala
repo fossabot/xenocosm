@@ -1,24 +1,26 @@
-package xenocosm.json.hal
+package xenocosm.http
+package hal
 
-import java.util.UUID
-import galaxique.data.{Galaxy, Point3, Universe}
 import io.circe._
-import squants.space.Parsecs
+import squants.space.Length
 
+import galaxique.data.{Point3, Universe}
 import xenocosm.http.data.UniverseResponse
 
 trait UniverseResponseJson extends JsonHal {
-  import io.circe.syntax._
   import galaxique.json.interop.length._
   import galaxique.json.point3._
   import galaxique.json.universe._
+  import io.circe.syntax._
 
   implicit val universeResponseHasJsonEncoder:Encoder[UniverseResponse] =
     Encoder.instance(res => Json.obj(
       "_links" -> Json.obj(
         "self" -> Json.obj("href" -> s"/${res.universe.uuid.toString}".asJson),
         "curies" -> Json.arr(apiCurie),
-        "api:galaxy" -> locUrls[Galaxy](s"/${res.universe.uuid.toString}", _.loc)(res.galaxies).map(url => Json.obj("href" -> url.asJson)).asJson
+        "api:galaxy" -> res.galaxies.map(galaxy => Json.obj("href" ->
+          s"/${♠(galaxy.universe)}/${♣(galaxy.loc)}".asJson
+        )).toSeq.asJson
       ),
       "universe" -> res.universe.asJson,
       "loc" -> res.loc.asJson,
@@ -27,9 +29,10 @@ trait UniverseResponseJson extends JsonHal {
 
   implicit val universeResponseHasJsonDecoder:Decoder[UniverseResponse] =
     Decoder.instance { hcur =>
-      hcur.downField("_links").downField("self").downField("href").as[String].flatMap({
-        case "/" => Right(UniverseResponse(Universe(UUID.randomUUID), Point3.zero, Parsecs(50000)))
-        case _ => Left(DecodingFailure.apply("unrecognized response type", List.empty[CursorOp]))
-      })
+      for {
+        universe <- hcur.downField("universe").as[Universe]
+        loc <- hcur.downField("loc").as[Point3]
+        range <- hcur.downField("scan-range").as[Length]
+      } yield UniverseResponse(universe, loc, range)
     }
 }

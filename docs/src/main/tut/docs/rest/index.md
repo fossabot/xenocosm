@@ -50,7 +50,7 @@ Server: xenocosm/0.0.0
 ```tut:invisible
 import io.circe.syntax._
 import xenocosm.http.data.MultiverseResponse
-import xenocosm.json.hal.multiverse._
+import xenocosm.http.hal.multiverse._
 
 val response = MultiverseResponse
 ```
