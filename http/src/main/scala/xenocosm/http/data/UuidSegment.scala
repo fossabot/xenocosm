@@ -3,11 +3,8 @@ package data
 
 import java.util.UUID
 import scala.util.Try
-import galaxique.data.Universe
 
 object UuidSegment {
-  def unapply(str:String):Option[Universe] =
-    Try(UUID.fromString(str)).toOption.map(Universe.apply)
-
-  def apply(universe:Universe):String = s"${universe.uuid.toString}"
+  def unapply(str:String):Option[UUID] = Try(UUID.fromString(str)).toOption
+  def apply(uuid:UUID):String = uuid.toString
 }

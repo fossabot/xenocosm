@@ -1,13 +1,13 @@
 ---
 layout: docs
-title: Universe API
+title: Galaxy API
 ---
 
-# Universe API
+# Galaxy API
 
-## GET /{uuid}
+## GET /{uuid}/{loc}
 
-Returns a Universe identified by a UUID in the format 00000000-0000-0000-0000-000000000000.
+Returns a Galaxy identified by its location within a universe.
 
 ### Prerequisites
 
@@ -35,20 +35,21 @@ import io.circe.syntax._
 import squants.space.Parsecs
 import galaxique.data._
 import xenocosm.http._
-import xenocosm.http.data.UniverseResponse
-import UniverseResponse.instances._
+import xenocosm.http.data.GalaxyResponse
+import GalaxyResponse.instances._
 
 val universe = Universe(UUID.fromString("00000000-0000-0000-0000-000000000000"))
+val galaxy = Galaxy(universe, Point3(Parsecs(-10000), Parsecs(-10000), Parsecs(0)))
 val origin = Point3(Parsecs(0), Parsecs(0), Parsecs(0))
-val range = Parsecs(10000)
-val response = UniverseResponse(universe, origin, range)
+val range = Parsecs(1)
+val response = GalaxyResponse(galaxy, origin, range)
 ```
 
 #### Request
 
 ```tut:passthrough
 println(s"""```http
-           |GET /${♠(universe.uuid)} HTTP/1.1
+           |GET /${♠(universe.uuid)}/${♣(galaxy.loc)} HTTP/1.1
            |Host: xenocosm.com
            |Accept: application/hal+json
            |```""".stripMargin)

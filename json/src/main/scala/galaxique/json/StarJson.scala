@@ -19,7 +19,7 @@ trait StarJson {
     Encoder.instance(a => Json.obj(
       "galaxy" -> a.galaxy.asJson,
       "loc" -> a.loc.asJson,
-      "mk" -> a.mk.asJson,
+      "morgan-keenan" -> a.mk.asJson,
       "mass" -> a.mass.asJson,
       "luminosity" -> a.luminosity.asJson,
       "radius" -> a.radius.asJson,

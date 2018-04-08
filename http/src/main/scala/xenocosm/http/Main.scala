@@ -19,7 +19,11 @@ object Main extends StreamApp[IO] {
   val config:XenocosmConfig = XenocosmConfig.loadUnsafe
 
   val services:HttpService[IO] =
-    MultiverseAPI.service <+> UniverseAPI.service
+    MultiverseAPI.service <+>
+      UniverseAPI.service <+>
+      GalaxyAPI.service <+>
+      StarAPI.service <+>
+      PlanetAPI.service
 
   val gzip:HttpService[IO] => HttpService[IO] = http => GZip(http)
 

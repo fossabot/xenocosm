@@ -7,13 +7,13 @@ import spire.random.{Dist, Generator}
 import spire.random.rng.BurtleRot2
 import squants.energy.{Power, SolarLuminosities}
 import squants.mass.{Mass, SolarMasses}
-import squants.space.{Length, Parsecs}
+import squants.space.{Length, Parsecs, SolarRadii}
 
 final case class Galaxy(universe:Universe, loc:Point3) { self =>
   private val gen:Generator = Galaxy.gen(self)
-  val luminosity:Power = Galaxy.luminosityDist(gen)
-  val diameter:Length = Galaxy.diameterDist(gen)
-  val mass:Mass = Galaxy.massDist(gen)
+  val luminosity:Power = Galaxy.luminosityDist(gen).in(SolarLuminosities)
+  val diameter:Length = Galaxy.diameterDist(gen).in(SolarRadii)
+  val mass:Mass = Galaxy.massDist(gen).in(SolarMasses)
   lazy val radius:Length = diameter / 2
 }
 
@@ -49,9 +49,12 @@ object Galaxy {
         universe <- Dist[Universe]
         interval = Interval(-universe.radius, universe.radius)
         dist = interval.dist(-universe.radius, universe.radius, universe.radius / 1000)
-        x <- dist
-        y <- dist
-        z <- dist
+        x0 <- dist
+        y0 <- dist
+        z0 <- dist
+        x = (x0.in(Parsecs) / 10000).floor * 10000
+        y = (y0.in(Parsecs) / 10000).floor * 10000
+        z = (z0.in(Parsecs) / 10000).floor * 10000
       } yield Galaxy(universe, Point3(x, y, z))
 
     implicit val galaxyHasSparseSpace:SparseSpace3[Galaxy, Star] =

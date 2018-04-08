@@ -32,8 +32,20 @@ options:
     menu_section: rest
 
     nested_options:
-     - title: Unverse API
+     - title: Multiverse API
+       url: /docs/rest/multiverse
+
+     - title: Universe API
        url: /docs/rest/universe
+
+     - title: Galaxy API
+       url: /docs/rest/galaxy
+
+     - title: Star API
+       url: /docs/rest/star
+
+     - title: Planet API
+       url: /docs/rest/planet
 
   - title: Scaladoc
     url: /api

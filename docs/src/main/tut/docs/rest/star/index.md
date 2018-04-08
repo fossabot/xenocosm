@@ -1,13 +1,13 @@
 ---
 layout: docs
-title: Universe API
+title: Star API
 ---
 
-# Universe API
+# Star API
 
-## GET /{uuid}
+## GET /{uuid}/{loc}/{loc}
 
-Returns a Universe identified by a UUID in the format 00000000-0000-0000-0000-000000000000.
+Returns a Star identified by its location within a galaxy.
 
 ### Prerequisites
 
@@ -32,23 +32,25 @@ Do not supply a request body with this method.
 ```tut:invisible
 import java.util.UUID
 import io.circe.syntax._
-import squants.space.Parsecs
+import squants.space.{AstronomicalUnits, Parsecs}
 import galaxique.data._
 import xenocosm.http._
-import xenocosm.http.data.UniverseResponse
-import UniverseResponse.instances._
+import xenocosm.http.data.StarResponse
+import StarResponse.instances._
 
 val universe = Universe(UUID.fromString("00000000-0000-0000-0000-000000000000"))
-val origin = Point3(Parsecs(0), Parsecs(0), Parsecs(0))
-val range = Parsecs(10000)
-val response = UniverseResponse(universe, origin, range)
+val galaxy = Galaxy(universe, Point3(Parsecs(-10000), Parsecs(-10000), Parsecs(0)))
+val star = Star(galaxy, Point3(Parsecs(0), Parsecs(-1), Parsecs(0)))
+val origin = Point3(AstronomicalUnits(0), AstronomicalUnits(0), AstronomicalUnits(0))
+val range = AstronomicalUnits(1)
+val response = StarResponse(star, origin, range)
 ```
 
 #### Request
 
 ```tut:passthrough
 println(s"""```http
-           |GET /${♠(universe.uuid)} HTTP/1.1
+           |GET /${♠(universe.uuid)}/${♣(galaxy.loc)}/${♥(star.loc)} HTTP/1.1
            |Host: xenocosm.com
            |Accept: application/hal+json
            |```""".stripMargin)

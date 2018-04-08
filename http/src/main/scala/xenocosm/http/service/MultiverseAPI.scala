@@ -7,9 +7,10 @@ import org.http4s.HttpService
 import org.http4s.circe._
 import org.http4s.dsl.io._
 
+import xenocosm.http.data.MultiverseResponse
+
 object MultiverseAPI extends XenocosmAPI {
-  import xenocosm.http.data.MultiverseResponse
-  import xenocosm.http.hal.multiverse._
+  import MultiverseResponse.instances._
 
   val service = HttpService[IO] {
     case GET -> Root ⇒

@@ -11,7 +11,7 @@ class Point3SegmentSpec extends xenocosm.test.XenocosmSuite {
     val loc1 = Point3(Parsecs(10000), Parsecs(10000), Parsecs(10000))
     val path = Path(s"/1,1,1")
     path match {
-      case Root / ♣(loc2) => loc1 shouldBe loc2
+      case Root / IntergalacticSegment(loc2) => loc1 shouldBe loc2
       case _ => fail()
     }
   }
@@ -20,7 +20,7 @@ class Point3SegmentSpec extends xenocosm.test.XenocosmSuite {
     val loc1 = Point3(Parsecs(1), Parsecs(1), Parsecs(1))
     val path = Path(s"/1,1,1")
     path match {
-      case Root / ♥(loc2) => loc1 shouldBe loc2
+      case Root / InterstellarSegment(loc2) => loc1 shouldBe loc2
       case _ => fail()
     }
   }
@@ -29,7 +29,7 @@ class Point3SegmentSpec extends xenocosm.test.XenocosmSuite {
     val loc1 = Point3(AstronomicalUnits(1), AstronomicalUnits(1), AstronomicalUnits(1))
     val path = Path(s"/1,1,1")
     path match {
-      case Root / ♦(loc2) => loc1 shouldBe loc2
+      case Root / InterplanetarySegment(loc2) => loc1 shouldBe loc2
       case _ => fail()
     }
   }
