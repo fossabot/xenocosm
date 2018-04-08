@@ -7,6 +7,5 @@
   * in the companion object.
   */
 package object economancy {
-  object market extends Market.Syntax
   object pointOfSale extends PointOfSale.Syntax
 }
