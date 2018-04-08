@@ -20,7 +20,7 @@ object StarAPI extends XenocosmAPI {
   import Universe.instances._
 
   val service = HttpService[IO] {
-    case GET -> Root / ♠(uuid) / ♣(locU) / ♥(locG) ⇒
+    case GET -> Root / ⎈(uuid) / ✺(locU) / ✨(locG) ⇒
       val range = AstronomicalUnits(1)
       val located = for {
         galaxy <-  Universe(uuid).locate(locU)

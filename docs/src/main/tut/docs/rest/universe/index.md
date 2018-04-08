@@ -7,7 +7,27 @@ title: Universe API
 
 ## GET /{uuid}
 
-Returns a Universe identified by a UUID in the format 00000000-0000-0000-0000-000000000000.
+Returns a Universe identified by a UUID in a URL-safe Base64 encoding with
+padding removed. This will always be 22 characters in length.
+
+Example encoding below.
+
+```tut
+import java.nio.ByteBuffer
+import java.util.UUID
+import java.util.Base64
+
+val uuid = UUID.fromString("00000000-0000-0000-0000-000000000000")
+
+// Pack the UUID into a ByteBuffer
+val buffer = ByteBuffer.
+               allocate(16).
+               putLong(uuid.getMostSignificantBits).
+               putLong(uuid.getLeastSignificantBits)
+
+// b64 those bytes
+Base64.getUrlEncoder.withoutPadding.encodeToString(buffer.array())
+```
 
 ### Prerequisites
 
@@ -48,7 +68,7 @@ val response = UniverseResponse(universe, origin, range)
 
 ```tut:passthrough
 println(s"""```http
-           |GET /${♠(universe.uuid)} HTTP/1.1
+           |GET /${⎈(universe.uuid)} HTTP/1.1
            |Host: xenocosm.com
            |Accept: application/hal+json
            |```""".stripMargin)

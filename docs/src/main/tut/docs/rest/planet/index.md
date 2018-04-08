@@ -49,7 +49,7 @@ val response = PlanetResponse(planet)
 
 ```tut:passthrough
 println(s"""```http
-           |GET /${♠(universe.uuid)}/${♣(galaxy.loc)}/${♥(star.loc)}/${♦(planet.loc)} HTTP/1.1
+           |GET /${⎈(universe.uuid)}/${✺(galaxy.loc)}/${✨(star.loc)}/${★(planet.loc)} HTTP/1.1
            |Host: xenocosm.com
            |Accept: application/hal+json
            |```""".stripMargin)

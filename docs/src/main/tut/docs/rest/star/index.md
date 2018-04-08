@@ -50,7 +50,7 @@ val response = StarResponse(star, origin, range)
 
 ```tut:passthrough
 println(s"""```http
-           |GET /${♠(universe.uuid)}/${♣(galaxy.loc)}/${♥(star.loc)} HTTP/1.1
+           |GET /${⎈(universe.uuid)}/${✺(galaxy.loc)}/${✨(star.loc)} HTTP/1.1
            |Host: xenocosm.com
            |Accept: application/hal+json
            |```""".stripMargin)

@@ -19,10 +19,13 @@ object GalaxyAPI extends XenocosmAPI {
   import SparseSpace3.syntax._
 
   val service = HttpService[IO] {
-    case GET -> Root / ♠(uuid) / ♣(locU) ⇒
+    case GET -> Root / ⎈(uuid) / ✺(locU) ⇒
       val range = Parsecs(1)
+      val located = for {
+        galaxy <-  Universe(uuid).locate(locU)
+      } yield galaxy
 
-      Universe(uuid).locate(locU) match {
+      located match {
         case Some(galaxy) =>
           val response = GalaxyResponse(galaxy, Point3.zero, range)
           Ok(response.asJson, jsonHal)

@@ -28,7 +28,7 @@ object StarResponse {
 
     def baseFromSelfLink(hcursor:HCursor):Decoder.Result[Star] =
       selfPath(hcursor).flatMap({
-        case Root / ♠(uuid) / ♣(locU) / ♥(locG) => Right(Star(Galaxy(Universe(uuid), locU), locG))
+        case Root / ⎈(uuid) / ✺(locU) / ✨(locG) => Right(Star(Galaxy(Universe(uuid), locU), locG))
         case _ => Left(DecodingFailure.apply("unrecognized response type", List.empty[CursorOp]))
       })
 
@@ -40,10 +40,10 @@ object StarResponse {
     implicit val starResponseHasJsonEncoder:Encoder[StarResponse] =
       Encoder.instance(res => Json.obj(
         "_links" -> Json.obj(
-          "self" -> Json.obj("href" -> s"/${♠(res.star.galaxy.universe.uuid)}/${♣(res.star.galaxy.loc)}/${♥(res.star.loc)}".asJson),
+          "self" -> Json.obj("href" -> s"/${⎈(res.star.galaxy.universe.uuid)}/${✺(res.star.galaxy.loc)}/${✨(res.star.loc)}".asJson),
           "curies" -> Json.arr(apiCurie),
           "api:planet" -> res.planets.map(planet => Json.obj("href" ->
-            s"/${♠(planet.star.galaxy.universe.uuid)}/${♣(planet.star.galaxy.loc)}/${♥(planet.star.loc)}/${♦(planet.loc)}".asJson
+            s"/${⎈(planet.star.galaxy.universe.uuid)}/${✺(planet.star.galaxy.loc)}/${✨(planet.star.loc)}/${★(planet.loc)}".asJson
           )).toSeq.asJson
         ),
         "star" -> cleanBase(res.star),

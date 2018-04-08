@@ -15,7 +15,7 @@ object UniverseAPI extends XenocosmAPI {
   import UniverseResponse.instances._
 
   val service = HttpService[IO] {
-    case GET -> Root / ♠(uuid) ⇒
+    case GET -> Root / ⎈(uuid) ⇒
       val range = Parsecs(10000)
       val response = UniverseResponse(Universe(uuid), Point3.zero, range)
       Ok(response.asJson, jsonHal)
