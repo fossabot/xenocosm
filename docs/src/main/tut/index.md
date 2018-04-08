@@ -9,4 +9,4 @@ technologies:
 ---
 # Xenocosm
 
-A turn-based, procedural space trader for HTTP
+A work-in-progress, turn-based, procedural space trader for HTTP

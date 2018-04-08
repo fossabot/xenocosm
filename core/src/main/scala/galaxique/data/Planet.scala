@@ -11,9 +11,9 @@ import squants.time.{Seconds, Time}
 
 final case class Planet(star:Star, loc:Point3) { self =>
   private val gen:Generator = Planet.gen(self)
-  val radius:Length = Planet.radiusDist(gen)
-  val mass:Mass = Planet.massDist(gen)
-  val semiMajorAxis:Length = Planet.semiMajorAxisDist(gen)
+  val radius:Length = Planet.radiusDist(gen).in(Kilometers)
+  val mass:Mass = Planet.massDist(gen).in(Kilograms)
+  val semiMajorAxis:Length = Planet.semiMajorAxisDist(gen).in(AstronomicalUnits)
   lazy val volume:Volume = (radius.cubed * Math.PI * 4) / 3
   lazy val density:Density = mass / volume
   lazy val orbitalPeriod:Time = Seconds(Math.sqrt(semiMajorAxis.cubed.to(CubicMeters) / star.μ) * Math.PI * 2)
@@ -60,9 +60,12 @@ object Planet {
         rocheLimit = star.rocheLimit(density)
         interval = Interval(rocheLimit, AstronomicalUnits(100))
         dist = interval.dist(rocheLimit, AstronomicalUnits(100), rocheLimit / 10)
-        x <- dist
-        y <- dist
-        z <- dist
+        x0 <- dist
+        y0 <- dist
+        z0 <- dist
+        x = x0.in(AstronomicalUnits).floor
+        y = y0.in(AstronomicalUnits).floor
+        z = z0.in(AstronomicalUnits).floor
       } yield Planet(star, Point3(x, y, z))
   }
   object instances extends Instances

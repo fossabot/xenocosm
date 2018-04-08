@@ -1,5 +1,6 @@
 package xenocosm.data
 
+import cats.kernel.Eq
 import spire.random.Dist
 import squants.space.{CubicMeters, Length, Parsecs, Volume}
 
@@ -15,6 +16,7 @@ object ShipModule {
   def emptyFuel(max:Volume):ShipModule = FuelTank(CubicMeters(0), max)
 
   trait Instances {
+    implicit val shipModuleHasEq:Eq[ShipModule] = Eq.fromUniversalEquals[ShipModule]
     implicit val shipModuleHasDist:Dist[ShipModule] =
       for {
         volume <- Dist.intrange(0, 100).map(CubicMeters.apply[Int])

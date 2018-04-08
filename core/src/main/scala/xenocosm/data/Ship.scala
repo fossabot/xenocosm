@@ -2,6 +2,7 @@ package xenocosm
 package data
 
 import java.util.UUID
+import cats.kernel.Eq
 import spire.random.Dist
 import squants.space.{CubicMeters, Parsecs}
 
@@ -21,6 +22,8 @@ object Ship {
     )
 
   trait Instances {
+    implicit val shipHasEq:Eq[Ship] = Eq.fromUniversalEquals[Ship]
+
     implicit val shipHasDist:Dist[Ship] =
       for {
         uuid <- Dist[UUID]

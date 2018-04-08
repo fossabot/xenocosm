@@ -2,17 +2,22 @@ package galaxique
 package data
 
 import java.nio.ByteBuffer
-import cats.PartialOrder
+import cats.kernel.Eq
 import spire.algebra.MetricSpace
 import spire.math.Bounded
 import spire.random.Dist
 import squants.UnitOfMeasure
-import squants.space.{Length, LightYears}
+import squants.space.{Length, LightYears, Meters}
 
-final case class Point3(x:Length, y:Length, z:Length)
+final case class Point3(x:Length, y:Length, z:Length) {
+  def in(uom:UnitOfMeasure[Length]):Point3 =
+    Point3(x.in(uom), y.in(uom), z.in(uom))
+}
 
 object Point3 {
   import interop.length._
+
+  val zero:Point3 = Point3(Meters(0), Meters(0), Meters(0))
 
   private[galaxique] val bytes:UnitOfMeasure[Length] ⇒ Point3 ⇒ Array[Byte] = uom ⇒ loc ⇒
     ByteBuffer
@@ -37,10 +42,7 @@ object Point3 {
           ((v.x - w.x).squared + (v.y - w.y).squared + (v.z - w.z).squared).squareRoot
       }
 
-    implicit val point3HasEq:PartialOrder[Point3] =
-      PartialOrder.from {
-        (a:Point3, b:Point3) ⇒ point3HasMetricSpace.distance(a, b).to(a.x.unit)
-      }
+    implicit val point3HasEq:Eq[Point3] = Eq.fromUniversalEquals[Point3]
 
     implicit val point3HasDist:Dist[Point3] =
       Dist.array[Int](3, 3).map(xs => Point3(LightYears(xs(0)), LightYears(xs(1)), LightYears(xs(2))))

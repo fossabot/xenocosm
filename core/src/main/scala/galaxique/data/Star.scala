@@ -5,19 +5,19 @@ import cats.Eq
 import spire.math.Interval
 import spire.random.{Dist, Generator}
 import spire.random.rng.BurtleRot2
-import squants.energy.Power
-import squants.mass.{Density, Mass}
-import squants.space.{Length, Parsecs, Volume}
-import squants.thermal.Temperature
+import squants.energy.{Power, SolarLuminosities}
+import squants.mass.{Density, Mass, SolarMasses}
+import squants.space._
+import squants.thermal.{Kelvin, Temperature}
 import MorganKeenan.instances._
 
 final case class Star(galaxy:Galaxy, loc:Point3) { self =>
   private val gen:Generator = Star.gen(self)
   val mk:MorganKeenan = Dist[MorganKeenan].apply(gen)
-  val mass:Mass = MorganKeenan.distMass(mk.mass)(gen)
-  val luminosity:Power = MorganKeenan.distPower(mk.luminosity)(gen)
-  val radius:Length = MorganKeenan.distLength(mk.radius)(gen)
-  val temperature:Temperature = MorganKeenan.distTemperature(mk.temperature)(gen)
+  val mass:Mass = mk.distMass(gen).in(SolarMasses)
+  val luminosity:Power = mk.distLuminosity(gen).in(SolarLuminosities)
+  val radius:Length = mk.distRadius(gen).in(SolarRadii)
+  val temperature:Temperature = mk.distTemperature(gen).in(Kelvin)
   lazy val μ:Double = mass.toKilograms * G
   lazy val volume:Volume = (radius.cubed * Math.PI * 4) / 3
   lazy val density:Density = mass / volume
@@ -40,13 +40,16 @@ object Star {
         galaxy <- Dist[Galaxy]
         interval = Interval(-galaxy.radius, galaxy.radius)
         dist = interval.dist(-galaxy.radius, galaxy.radius, galaxy.radius / 1000)
-        x <- dist
-        y <- dist
-        z <- dist
+        x0 <- dist
+        y0 <- dist
+        z0 <- dist
+        x = x0.in(Parsecs).floor
+        y = y0.in(Parsecs).floor
+        z = z0.in(Parsecs).floor
       } yield Star(galaxy, Point3(x, y, z))
 
     implicit val starHasSparseSpace:SparseSpace3[Star, Planet] =
-      SparseSpace3.instance[Star, Planet](Parsecs, Planet.apply)(bytes)
+      SparseSpace3.fromStandardProof[Star, Planet](AstronomicalUnits, AstronomicalUnits(1))(Planet.apply)(bytes)
   }
   object instances extends Instances
 }

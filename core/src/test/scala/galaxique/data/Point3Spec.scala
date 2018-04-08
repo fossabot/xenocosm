@@ -1,8 +1,7 @@
 package galaxique
 package data
 
-import cats.kernel.laws.discipline.PartialOrderTests
-import cats.implicits._
+import cats.kernel.laws.discipline.EqTests
 import spire.laws._
 import squants.space.{Length, Parsecs}
 
@@ -10,7 +9,7 @@ class Point3Spec extends xenocosm.test.XenocosmSuite {
   import Point3.instances._
   import interop.length._
 
-  checkAll("PartialOrder[Point3]", PartialOrderTests[Point3].partialOrder)
+  checkAll("Eq[Point3]", EqTests[Point3].eqv)
   checkAll("MetricSpace[Point3]", VectorSpaceLaws[Point3, Length].metricSpace)
 
   test("Given a Point3, generate integer points in a cube") {

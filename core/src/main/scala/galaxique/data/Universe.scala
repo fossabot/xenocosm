@@ -12,8 +12,8 @@ import squants.space.{Length, Parsecs}
 final case class Universe(uuid:UUID) { self =>
   private val gen:Generator = Universe.gen(self)
   val age:Long = Universe.ageDist(gen)
-  val diameter:Length = Universe.diameterDist(gen)
-  lazy val radius:Length = diameter / 2
+  val diameter:Length = Universe.diameterDist(gen).in(Parsecs)
+  lazy val radius:Length = (diameter / 2).in(Parsecs)
 }
 
 object Universe {
@@ -51,7 +51,7 @@ object Universe {
       Dist[UUID].map(Universe.apply)
 
     implicit val universeHasSparseSpace:SparseSpace3[Universe, Galaxy] =
-      SparseSpace3.instance[Universe, Galaxy](Parsecs, Galaxy.apply)(bytes)
+      SparseSpace3.fromStandardProof[Universe, Galaxy](Parsecs, Parsecs(10000))(Galaxy.apply)(bytes)
   }
   object instances extends Instances
 }
