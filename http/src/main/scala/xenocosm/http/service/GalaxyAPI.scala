@@ -19,7 +19,7 @@ object GalaxyAPI extends XenocosmAPI {
   import SparseSpace3.syntax._
 
   val service = HttpService[IO] {
-    case GET -> Root / ⎈(uuid) / ✺(locU) ⇒
+    case GET -> Root / "v1" / "multiverse" / ⎈(uuid) / ✺(locU) ⇒
       val range = Parsecs(1)
       val located = for {
         galaxy <-  Universe(uuid).locate(locU)

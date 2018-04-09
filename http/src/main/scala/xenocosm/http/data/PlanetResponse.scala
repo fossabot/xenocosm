@@ -23,7 +23,7 @@ object PlanetResponse {
 
     def baseFromSelfLink(hcursor:HCursor):Decoder.Result[Planet] =
       selfPath(hcursor).flatMap({
-        case Root / ⎈(uuid) / ✺(locU) / ✨(locG) / ★(locS) => Right(Planet(Star(Galaxy(Universe(uuid), locU), locG), locS))
+        case Root / "v1" / "multiverse" / ⎈(uuid) / ✺(locU) / ✨(locG) / ★(locS) => Right(Planet(Star(Galaxy(Universe(uuid), locU), locG), locS))
         case _ => Left(DecodingFailure.apply("unrecognized response type", List.empty[CursorOp]))
       })
 
@@ -33,7 +33,7 @@ object PlanetResponse {
     implicit val planetResponseHasJsonEncoder:Encoder[PlanetResponse] =
       Encoder.instance(res => Json.obj(
         "_links" -> Json.obj(
-          "self" -> Json.obj("href" -> s"/${⎈(res.planet.star.galaxy.universe.uuid)}/${✺(res.planet.star.galaxy.loc)}/${✨(res.planet.star.loc)}/${★(res.planet.loc)}".asJson),
+          "self" -> Json.obj("href" -> s"/v1/multiverse/${⎈(res.planet.star.galaxy.universe.uuid)}/${✺(res.planet.star.galaxy.loc)}/${✨(res.planet.star.loc)}/${★(res.planet.loc)}".asJson),
           "curies" -> Json.arr(apiCurie)
         ),
         "planet" -> cleanBase(res.planet)

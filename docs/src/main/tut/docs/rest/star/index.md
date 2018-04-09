@@ -5,7 +5,7 @@ title: Star API
 
 # Star API
 
-## GET /{uuid}/{loc}/{loc}
+## GET /v1/multiverse/{uuid}/{loc}/{loc}
 
 Returns a Star identified by its location within a galaxy.
 
@@ -50,7 +50,7 @@ val response = StarResponse(star, origin, range)
 
 ```tut:passthrough
 println(s"""```http
-           |GET /${⎈(universe.uuid)}/${✺(galaxy.loc)}/${✨(star.loc)} HTTP/1.1
+           |GET /v1/multiverse/${⎈(universe.uuid)}/${✺(galaxy.loc)}/${✨(star.loc)} HTTP/1.1
            |Host: xenocosm.com
            |Accept: application/hal+json
            |```""".stripMargin)

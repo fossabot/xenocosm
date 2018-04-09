@@ -1,12 +1,13 @@
 package xenocosm.http
 package data
 
-import galaxique.data.{Galaxy, Point3, Universe}
-import galaxique.implicits._
 import io.circe._
 import org.http4s.dsl.impl._
 import spire.random.Dist
 import squants.space.{Length, Parsecs}
+
+import galaxique.implicits._
+import galaxique.data.{Galaxy, Point3, Universe}
 
 final case class UniverseResponse(universe:Universe, loc:Point3, range:Length) {
   lazy val galaxies:Iterator[Galaxy] = universe.nearby(loc, range)
@@ -27,7 +28,7 @@ object UniverseResponse {
 
     def baseFromSelfLink(hcursor:HCursor):Decoder.Result[Universe] =
       selfPath(hcursor).flatMap({
-        case Root / ⎈(uuid) => Right(Universe(uuid))
+        case Root / "v1" / "multiverse" / ⎈(uuid) => Right(Universe(uuid))
         case _ => Left(DecodingFailure.apply("unrecognized response type", List.empty[CursorOp]))
       })
 
@@ -39,10 +40,10 @@ object UniverseResponse {
     implicit val universeResponseHasJsonEncoder:Encoder[UniverseResponse] =
       Encoder.instance(res => Json.obj(
         "_links" -> Json.obj(
-          "self" -> Json.obj("href" -> s"/${⎈(res.universe.uuid)}".asJson),
+          "self" -> Json.obj("href" -> s"/v1/multiverse/${⎈(res.universe.uuid)}".asJson),
           "curies" -> Json.arr(apiCurie),
           "api:galaxy" -> res.galaxies.map({galaxy => Json.obj("href" ->
-            s"/${⎈(galaxy.universe.uuid)}/${✺(galaxy.loc)}".asJson
+            s"/v1/multiverse/${⎈(galaxy.universe.uuid)}/${✺(galaxy.loc)}".asJson
           )}).toSeq.asJson
         ),
         "universe" -> cleanBase(res.universe),

@@ -15,7 +15,7 @@ class StarAPISpec extends xenocosm.test.XenocosmSuite with HttpCheck {
       service
         .run(Request(
           method = Method.GET,
-          uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA/-1,-1,0/0,-1,0")
+          uri = Uri.uri("/v1/multiverse/AAAAAAAAAAAAAAAAAAAAAA/-1,-1,0/0,-1,0")
         ))
         .getOrElse(Response.notFound)
 
@@ -30,7 +30,7 @@ class StarAPISpec extends xenocosm.test.XenocosmSuite with HttpCheck {
       service
         .run(Request(
           method = Method.GET,
-          uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA/0,0,0/0,0,0")
+          uri = Uri.uri("/v1/multiverse/AAAAAAAAAAAAAAAAAAAAAA/0,0,0/0,0,0")
         ))
         .getOrElse(Response.notFound)
 

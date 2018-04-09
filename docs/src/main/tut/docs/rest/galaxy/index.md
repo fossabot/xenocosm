@@ -5,7 +5,7 @@ title: Galaxy API
 
 # Galaxy API
 
-## GET /{uuid}/{loc}
+## GET /v1/multiverse/{uuid}/{loc}
 
 Returns a Galaxy identified by its location within a universe.
 
@@ -49,7 +49,7 @@ val response = GalaxyResponse(galaxy, origin, range)
 
 ```tut:passthrough
 println(s"""```http
-           |GET /${⎈(universe.uuid)}/${✺(galaxy.loc)} HTTP/1.1
+           |GET /v1/multiverse/${⎈(universe.uuid)}/${✺(galaxy.loc)} HTTP/1.1
            |Host: xenocosm.com
            |Accept: application/hal+json
            |```""".stripMargin)

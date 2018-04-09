@@ -5,7 +5,7 @@ title: Multiverse API
 
 # Multiverse API
 
-## GET /
+## GET /v1/multiverse
 
 Returns the multiverse. Limitless possibilities.
 
@@ -40,7 +40,7 @@ val response = MultiverseResponse
 #### Request
 
 ```http
-GET / HTTP/1.1
+GET /v1/multiverse HTTP/1.1
 Host: xenocosm.com
 Accept: application/hal+json
 ```

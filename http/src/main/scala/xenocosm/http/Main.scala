@@ -18,21 +18,23 @@ object Main extends StreamApp[IO] {
 
   val config:XenocosmConfig = XenocosmConfig.loadUnsafe
 
-  val services:HttpService[IO] =
-    MultiverseAPI.service <+>
-      UniverseAPI.service <+>
-      GalaxyAPI.service <+>
-      StarAPI.service <+>
-      PlanetAPI.service
-
   val gzip:HttpService[IO] => HttpService[IO] = http => GZip(http)
 
   val wrapper:HttpService[IO] => HttpService[IO] =
     gzip compose middleware.ServerHeader.wrap
 
+  val api:HttpService[IO] = wrapper {
+    Home.service <+>
+    MultiverseAPI.service <+>
+    UniverseAPI.service <+>
+    GalaxyAPI.service <+>
+    StarAPI.service <+>
+    PlanetAPI.service
+  }
+
   override def stream(args: List[String], requestShutdown: IO[Unit]): Stream[IO, ExitCode] =
     BlazeBuilder[IO]
       .bindHttp(config.http.port, config.http.host)
-      .mountService(wrapper(services), "/")
+      .mountService(api, "/")
       .serve
 }

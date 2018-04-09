@@ -13,7 +13,7 @@ class UniverseAPISpec extends xenocosm.test.XenocosmSuite with HttpCheck {
 
     val response:IO[Response[IO]] =
       service
-        .run(Request(method = Method.GET, uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA")))
+        .run(Request(method = Method.GET, uri = Uri.uri("/v1/multiverse/AAAAAAAAAAAAAAAAAAAAAA")))
         .getOrElse(Response.notFound)
 
     checkStatus[Json](response) shouldBe Status.Ok

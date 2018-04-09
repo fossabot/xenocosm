@@ -13,7 +13,7 @@ object MultiverseAPI extends XenocosmAPI {
   import MultiverseResponse.instances._
 
   val service = HttpService[IO] {
-    case GET -> Root ⇒
+    case GET -> Root / "v1" / "multiverse" ⇒
       Ok(MultiverseResponse.asJson, jsonHal)
   }
 }
