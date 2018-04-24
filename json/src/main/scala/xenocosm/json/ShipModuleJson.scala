@@ -9,15 +9,15 @@ trait ShipModuleJson {
   import io.circe.syntax._
   import galaxique.json.interop.length._
   import galaxique.json.interop.volume._
+  import cargo._
 
   implicit val shipModuleHasJsonEncoder:Encoder[ShipModule] =
     Encoder.instance({
       case EmptyModule => Json.obj("module" -> "empty".asJson)
-      case CargoHold(used, unused) =>
+      case CargoHold(cargo) =>
         Json.obj(
           "module" -> "cargo".asJson,
-          "used" -> used.asJson,
-          "unused" -> unused.asJson
+          "contents" -> cargo.asJson
         )
       case FuelTank(used, unused) =>
         Json.obj(
@@ -38,9 +38,8 @@ trait ShipModuleJson {
         case "empty" => Right(EmptyModule)
         case "cargo" =>
           for {
-            used <- hcur.downField("used").as[Volume]
-            unused <- hcur.downField("unused").as[Volume]
-          } yield CargoHold(used, unused)
+            contents <- hcur.downField("contents").as[Map[Cargo, Volume]]
+          } yield CargoHold(contents)
         case "fuel" =>
           for {
             used <- hcur.downField("used").as[Volume]

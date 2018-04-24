@@ -16,7 +16,6 @@ trait JsonHal[A] {
       .map(Path.apply)
 
   def cleanBase(base:A):Json
-  def baseFromSelfLink(hcursor:HCursor):Decoder.Result[A]
 
   val apiCurie:Json = Json.obj(
     "name" -> "api".asJson,

@@ -6,11 +6,11 @@ import cats.kernel.Eq
 import spire.random.Dist
 import squants.space.{CubicMeters, Parsecs}
 
-final case class Ship(uuid:UUID, loc:ShipLocation, modules:List[ShipModule])
+final case class Ship(uuid:UUID, loc:CosmicLocation, modules:List[ShipModule])
 
 object Ship {
   import galaxique.interop.uuid._
-  import ShipLocation.instances._
+  import CosmicLocation.instances._
 
   lazy val startingLoad:List[ShipModule] =
     List(
@@ -27,7 +27,7 @@ object Ship {
     implicit val shipHasDist:Dist[Ship] =
       for {
         uuid <- Dist[UUID]
-        loc <- Dist[ShipLocation]
+        loc <- Dist[CosmicLocation]
       } yield Ship(uuid, loc, startingLoad)
   }
   object instances extends Instances

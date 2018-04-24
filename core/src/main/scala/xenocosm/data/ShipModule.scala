@@ -6,13 +6,13 @@ import squants.space.{CubicMeters, Length, Parsecs, Volume}
 
 sealed trait ShipModule
 case object EmptyModule extends ShipModule
-final case class CargoHold(used:Volume, unused:Volume) extends ShipModule
+final case class CargoHold(cargo:Map[Cargo, Volume]) extends ShipModule
 final case class FuelTank(used:Volume, unused:Volume) extends ShipModule
 final case class Navigation(range:Length) extends ShipModule
 
 object ShipModule {
   def empty:ShipModule = EmptyModule
-  def emptyCargo(max:Volume):ShipModule = CargoHold(CubicMeters(0), max)
+  def emptyCargo(max:Volume):ShipModule = CargoHold(Map(Vacuum -> max))
   def emptyFuel(max:Volume):ShipModule = FuelTank(CubicMeters(0), max)
 
   trait Instances {

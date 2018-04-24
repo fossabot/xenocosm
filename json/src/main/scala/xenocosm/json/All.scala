@@ -1,5 +1,7 @@
 package xenocosm.json
 
 trait All
-  extends ShipLocationJson
+  extends ShipJson
+  with CosmicLocationJson
   with ShipModuleJson
+  with TraderJson
