@@ -2,20 +2,20 @@ import microsites.ExtraMdFileConfig
 
 inThisBuild(Seq(
   organization in ThisBuild := "com.robotsnowfall",
-  scalaVersion := "2.12.5"
+  scalaVersion := "2.12.6"
 ))
 
 lazy val versions = new {
   val cats       = "1.1.0"
   val circe      = "0.9.3"
-  val discipline = "0.9.0"
+  val discipline = "0.10.0"
   val fastparse  = "1.0.0"
-  val http4s     = "0.18.9"
+  val http4s     = "0.18.15"
   val logback    = "1.2.3"
   val pureconfig = "0.9.1"
   val scalacheck = "1.14.0"
   val scalatest  = "3.0.5"
-  val spire      = "0.15.0"
+  val spire      = "0.16.0"
   val squants    = "1.3.0"
 }
 
