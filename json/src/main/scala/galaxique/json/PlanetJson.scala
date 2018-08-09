@@ -5,11 +5,7 @@ import galaxique.data.{Planet, Point3, Star}
 
 trait PlanetJson {
   import io.circe.syntax._
-  import interop.density._
-  import interop.length._
-  import interop.mass._
-  import interop.time._
-  import interop.volume._
+  import interop.squants.json.instances._
   import star._
   import point3._
 

@@ -32,7 +32,7 @@ Do not supply a request body with this method.
 ```tut:invisible
 import java.util.UUID
 import io.circe.syntax._
-import xenocosm.http.data.ApiResponse
+import xenocosm.http.response.ApiResponse
 import ApiResponse.instances._
 
 val response = ApiResponse(1)

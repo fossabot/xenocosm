@@ -15,7 +15,7 @@ final case class Point3(x:Length, y:Length, z:Length) {
 }
 
 object Point3 {
-  import interop.length._
+  import interop.squants.instances._
 
   val zero:Point3 = Point3(Meters(0), Meters(0), Meters(0))
 

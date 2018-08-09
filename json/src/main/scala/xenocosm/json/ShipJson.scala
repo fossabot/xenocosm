@@ -7,6 +7,7 @@ import xenocosm.data.{CosmicLocation, Ship, ShipModule}
 
 trait ShipJson {
   import io.circe.syntax._
+  import interop.squants.json.instances._
   import cosmicLocation._
   import shipModule._
 
@@ -15,7 +16,10 @@ trait ShipJson {
       Json.obj(
         "uuid" -> ship.uuid.asJson,
         "loc" -> ship.loc.asJson,
-        "modules" -> ship.modules.asJson
+        "modules" -> ship.modules.asJson,
+        "unusedFuel" -> ship.unusedFuel.asJson,
+        "maxNavDistance" -> ship.maxNavDistance.asJson,
+        "maxTravelDistance" -> ship.maxTravelDistance.asJson
       )
     )
 

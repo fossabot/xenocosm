@@ -20,8 +20,7 @@ final case class Planet(star:Star, loc:Point3) { self =>
 }
 
 object Planet {
-  import interop.length._
-  import interop.mass._
+  import interop.squants.instances._
   import Star.instances._
 
   private[data] val bytes:Planet => Array[Byte] = planet =>

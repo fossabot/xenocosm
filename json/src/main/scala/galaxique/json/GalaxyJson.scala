@@ -5,9 +5,7 @@ import galaxique.data.{Galaxy, Point3, Universe}
 
 trait GalaxyJson {
   import io.circe.syntax._
-  import interop.length._
-  import interop.mass._
-  import interop.power._
+  import interop.squants.json.instances._
   import point3._
   import universe._
 

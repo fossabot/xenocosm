@@ -35,7 +35,7 @@ import io.circe.syntax._
 import squants.space.Parsecs
 import galaxique.data._
 import xenocosm.http._
-import xenocosm.http.data.GalaxyResponse
+import xenocosm.http.response.GalaxyResponse
 import GalaxyResponse.instances._
 
 val universe = Universe(UUID.fromString("00000000-0000-0000-0000-000000000000"))

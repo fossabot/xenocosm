@@ -1,14 +1,14 @@
 package xenocosm.json
 
 import io.circe._
+import squants.motion.{Velocity, VolumeFlow}
 import squants.space.{Length, Volume}
 
 import xenocosm.data._
 
 trait ShipModuleJson {
   import io.circe.syntax._
-  import galaxique.json.interop.length._
-  import galaxique.json.interop.volume._
+  import interop.squants.json.instances._
   import cargo._
 
   implicit val shipModuleHasJsonEncoder:Encoder[ShipModule] =
@@ -30,6 +30,13 @@ trait ShipModuleJson {
           "module" -> "navigation".asJson,
           "range" -> range.asJson
         )
+      case engine @ Engine(speed, consumption) =>
+        Json.obj(
+          "module" -> "engine".asJson,
+          "speed" -> speed.asJson,
+          "consumption" -> consumption.asJson,
+          "fuelEfficiency" -> ShipModule.fuelEfficiency(engine).asJson
+        )
     })
 
   implicit val shipModuleHasJsonDecoder:Decoder[ShipModule] =
@@ -49,6 +56,11 @@ trait ShipModuleJson {
           for {
             range <- hcur.downField("range").as[Length]
           } yield Navigation(range)
+        case "engine" =>
+          for {
+            speed <- hcur.downField("speed").as[Velocity]
+            consumption <- hcur.downField("consumption").as[VolumeFlow]
+          } yield Engine(speed, consumption)
         case _ => Left(DecodingFailure.apply("unrecognized module", List.empty[CursorOp]))
       })
     }

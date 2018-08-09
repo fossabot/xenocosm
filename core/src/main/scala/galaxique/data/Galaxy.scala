@@ -18,10 +18,10 @@ final case class Galaxy(universe:Universe, loc:Point3) { self =>
 }
 
 object Galaxy {
-  import interop.length._
-  import interop.mass._
-  import interop.power._
+  import interop.squants.instances._
   import Universe.instances._
+
+  lazy val scale:Length = Parsecs(1)
 
   private[data] val bytes:Galaxy => Array[Byte] = galaxy =>
     Universe.bytes(galaxy.universe) ++ Point3.bytes(Parsecs)(galaxy.loc)
@@ -32,7 +32,7 @@ object Galaxy {
   private lazy val luminosity:Interval[Power] = Interval(luminosityMin, luminosityMax)
   private lazy val luminosityDist:Dist[Power] = luminosity.dist(luminosityMin, luminosityMax, luminosityMin / 100)
 
-  private lazy val diameterMin:Length = Parsecs(10000)
+  private lazy val diameterMin:Length = Universe.scale
   private lazy val diameterMax:Length = Parsecs(800000)
   private lazy val diameter:Interval[Length] = Interval(diameterMin, diameterMax)
   private lazy val diameterDist:Dist[Length] = diameter.dist(diameterMin, diameterMax, diameterMin / 100)
@@ -58,7 +58,7 @@ object Galaxy {
       } yield Galaxy(universe, Point3(x, y, z))
 
     implicit val galaxyHasSparseSpace:SparseSpace3[Galaxy, Star] =
-      SparseSpace3.fromStandardProof[Galaxy, Star](Parsecs, Parsecs(1))(Star.apply)(bytes)
+      SparseSpace3.fromStandardProof[Galaxy, Star](Parsecs, Galaxy.scale)(Star.apply)(bytes)
   }
 
   object instances extends Instances

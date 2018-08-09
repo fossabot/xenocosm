@@ -28,10 +28,7 @@ final case class MorganKeenan(
 }
 
 object MorganKeenan {
-  import interop.length._
-  import interop.mass._
-  import interop.power._
-  import interop.temperature._
+  import interop.squants.instances._
 
   def fromClassification(classification:Char):Option[MorganKeenan] =
     Observed.all.find(_.classification === classification)

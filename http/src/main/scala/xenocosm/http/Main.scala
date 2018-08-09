@@ -8,11 +8,13 @@ import fs2.StreamApp.ExitCode
 import org.http4s._
 import org.http4s.server.blaze._
 import org.http4s.server.middleware.GZip
+import spire.random.Generator
+import spire.random.rng.SecureJava
 
+import xenocosm.http.service._
 
 object Main extends StreamApp[IO] {
   import ExecutionContext.Implicits.global
-  import service._
 
   java.security.Security.setProperty("networkaddress.cache.ttl", "60")
 
@@ -23,13 +25,11 @@ object Main extends StreamApp[IO] {
   val wrapper:HttpService[IO] => HttpService[IO] =
     gzip compose middleware.ServerHeader.wrap
 
+  val gen:Generator = SecureJava.apply()
+
   val api:HttpService[IO] = wrapper {
-    Home.service <+>
     MultiverseAPI.service <+>
-    UniverseAPI.service <+>
-    GalaxyAPI.service <+>
-    StarAPI.service <+>
-    PlanetAPI.service
+    TraderAPI.service(gen)
   }
 
   override def stream(args: List[String], requestShutdown: IO[Unit]): Stream[IO, ExitCode] =

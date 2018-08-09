@@ -18,8 +18,10 @@ final case class Universe(uuid:UUID) { self =>
 
 object Universe {
   import spire.implicits._
-  import interop.length._
-  import interop.uuid._
+  import interop.squants.instances._
+  import interop.java.instances._
+
+  lazy val scale:Length = Parsecs(10000)
 
   // scalastyle:off magic.number
   private[data] val bytes:Universe ⇒ Array[Byte] = universe ⇒
@@ -51,7 +53,7 @@ object Universe {
       Dist[UUID].map(Universe.apply)
 
     implicit val universeHasSparseSpace:SparseSpace3[Universe, Galaxy] =
-      SparseSpace3.fromStandardProof[Universe, Galaxy](Parsecs, Parsecs(10000))(Galaxy.apply)(bytes)
+      SparseSpace3.fromStandardProof[Universe, Galaxy](Parsecs, scale)(Galaxy.apply)(bytes)
   }
   object instances extends Instances
 }

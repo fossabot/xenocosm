@@ -6,12 +6,13 @@ inThisBuild(Seq(
 ))
 
 lazy val versions = new {
-  val cats       = "1.1.0"
+  val cats       = "1.2.0"
   val circe      = "0.9.3"
   val discipline = "0.10.0"
   val fastparse  = "1.0.0"
   val http4s     = "0.18.15"
   val logback    = "1.2.3"
+  val monocle    = "1.5.1-cats"
   val pureconfig = "0.9.1"
   val scalacheck = "1.14.0"
   val scalatest  = "3.0.5"
@@ -20,14 +21,17 @@ lazy val versions = new {
 }
 
 lazy val commonDependencies = Seq(
-  "org.typelevel"  %% "cats-core"  % versions.cats,
-  "org.typelevel"  %% "spire"      % versions.spire,
-  "org.typelevel"  %% "squants"    % versions.squants,
+  "org.typelevel"              %% "cats-core"     % versions.cats,
+  "org.typelevel"              %% "spire"         % versions.spire,
+  "org.typelevel"              %% "squants"       % versions.squants,
+  "com.github.julien-truffaut" %% "monocle-core"  % versions.monocle,
+  "com.github.julien-truffaut" %% "monocle-macro" % versions.monocle,
 
-  "org.typelevel"  %% "cats-laws"  % versions.cats       % Test,
-  "org.typelevel"  %% "spire-laws" % versions.spire      % Test,
-  "org.scalacheck" %% "scalacheck" % versions.scalacheck % Test,
-  "org.scalatest"  %% "scalatest"  % versions.scalatest  % Test
+  "org.typelevel"              %% "cats-laws"   % versions.cats       % Test,
+  "org.typelevel"              %% "spire-laws"  % versions.spire      % Test,
+  "com.github.julien-truffaut" %% "monocle-law" % versions.monocle    % Test,
+  "org.scalacheck"             %% "scalacheck"  % versions.scalacheck % Test,
+  "org.scalatest"              %% "scalatest"   % versions.scalatest  % Test
 )
 
 lazy val core = project.in(file("core"))
@@ -36,7 +40,7 @@ lazy val core = project.in(file("core"))
   .settings(moduleName := "xenocosm-core")
   .settings(xenocosmSettings ++ gitSettings ++ buildInfoSettings)
   .settings(libraryDependencies ++= Seq(
-    "com.lihaoyi"   %% "fastparse" % versions.fastparse
+    "com.lihaoyi" %% "fastparse" % versions.fastparse
   ))
 
 lazy val json = project.in(file("json"))
@@ -208,4 +212,4 @@ lazy val dockerSettings = Seq(
 addCommandAlias("validateCore", ";coverage;core/compile;core/test;core/coverageReport")
 addCommandAlias("validateJson", ";coverage;json/compile;json/test;json/coverageReport")
 addCommandAlias("validateHttp", ";coverage;http/compile;http/test;http/coverageReport")
-addCommandAlias("validate", ";clean;scalastyle;validateCore;validateJson;validateHttp;coverageAggregate;makeMicrosite")
+addCommandAlias("validate", ";clean;scalastyle;validateCore;validateJson;validateHttp;coverageAggregate")

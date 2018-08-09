@@ -1,23 +1,46 @@
 package xenocosm
 package command
 
-import cats.data.{NonEmptyList, Validated}
-import spire.random.Generator
-import spire.random.rng.Serial
+import java.util.UUID
+import galaxique.data.Point3
+import spire.math.UInt
+import spire.random.{Generator, Random, Seed}
+import squants.space.{AstronomicalUnits, Parsecs}
 
-import xenocosm.data.Moves
-import xenocosm.error.NoMovesRemaining
+import xenocosm.data._
 
 class CreateTraderSpec extends xenocosm.test.XenocosmSuite {
-  implicit val gen:Generator = Serial(0L)
+  import CommandHandler.syntax._
+  import XenocosmCommand.instances._
 
-  test("CreateTrader.valid") {
-    val cmd = CreateTrader(Moves(1))
-    CreateTrader.validate(cmd).isValid shouldBe true
+  val seed:Seed = Seed.zero
+
+  test("CommandHandler[CreateTrader].verification.success") {
+    val gen:Generator = Random.generatorFromSeed(seed)
+    val cmd = CreateTrader(UInt(1))
+
+    cmd.verify.value(gen) shouldBe Right(TraderCreated(
+      UInt(0),
+      Trader(
+        UUID.fromString("00000000-0000-0000-0000-000000000000"),
+        Ship(
+          UUID.fromString("00000000-0000-0000-0000-000000000000"),
+          CosmicLocation(
+            UUID.fromString("00000000-0000-0000-0000-000000000000"),
+            Some(Point3(Parsecs(-5000000000.0), Parsecs(-5000000000.0), Parsecs(-5000000000.0))),
+            Some(Point3(Parsecs(-5000.0), Parsecs(-5000.0), Parsecs(-5000.0))),
+            Some(Point3(AstronomicalUnits(0), AstronomicalUnits(0), AstronomicalUnits(0)))
+          ),
+          ShipModules.startingLoad
+        )
+      )
+    ))
   }
 
-  test("CreateTrader.invalid.out-of-moves") {
-    val cmd = CreateTrader(Moves(0))
-    CreateTrader.validate(cmd) shouldBe Validated.Invalid(NonEmptyList.one(NoMovesRemaining))
+  test("CommandHandler[CreateTrader].verification.failure.no-moves-remaining") {
+    val gen:Generator = Random.generatorFromSeed(seed)
+    val cmd = CreateTrader(UInt(0))
+
+    cmd.verify.value(gen) shouldBe Left(NoMovesRemaining)
   }
 }

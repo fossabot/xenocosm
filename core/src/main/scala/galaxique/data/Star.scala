@@ -26,8 +26,10 @@ final case class Star(galaxy:Galaxy, loc:Point3) { self =>
 }
 
 object Star {
-  import interop.length._
+  import interop.squants.instances._
   import Galaxy.instances._
+
+  lazy val scale:Length = AstronomicalUnits(1)
 
   private[data] val bytes:Star => Array[Byte] = star =>
     Galaxy.bytes(star.galaxy) ++ Point3.bytes(Parsecs)(star.loc)
@@ -49,7 +51,7 @@ object Star {
       } yield Star(galaxy, Point3(x, y, z))
 
     implicit val starHasSparseSpace:SparseSpace3[Star, Planet] =
-      SparseSpace3.fromStandardProof[Star, Planet](AstronomicalUnits, AstronomicalUnits(1))(Planet.apply)(bytes)
+      SparseSpace3.fromStandardProof[Star, Planet](AstronomicalUnits, Star.scale)(Planet.apply)(bytes)
   }
   object instances extends Instances
 }

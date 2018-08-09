@@ -7,7 +7,7 @@ import squants.space.{Length, Parsecs}
 
 class Point3Spec extends xenocosm.test.XenocosmSuite {
   import Point3.instances._
-  import interop.length._
+  import interop.squants.instances._
 
   checkAll("Eq[Point3]", EqTests[Point3].eqv)
   checkAll("MetricSpace[Point3]", VectorSpaceLaws[Point3, Length].metricSpace)
