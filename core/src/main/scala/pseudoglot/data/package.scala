@@ -1,5 +1,7 @@
 package pseudoglot
 
 package object data {
-  type Transcription = Map[List[Phone], String]
+  type Phones = List[Phone]
+  type PhonotacticRules = Set[PhonotacticRule]
+  type Transcription = Map[Phones, String]
 }

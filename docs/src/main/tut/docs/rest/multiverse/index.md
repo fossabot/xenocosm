@@ -31,7 +31,7 @@ Do not supply a request body with this method.
 
 ```tut:invisible
 import io.circe.syntax._
-import xenocosm.http.data.MultiverseResponse
+import xenocosm.http.response.MultiverseResponse
 import MultiverseResponse.instances._
 
 val response = MultiverseResponse

@@ -33,7 +33,7 @@ object Transcription {
       .map(_._2)
       .getOrElse("_")
 
-  def transcribeWith(ts:List[Phone], xscript:Transcription):String =
+  def transcribeWith(ts:Phones, xscript:Transcription):String =
     (ts, xscript.get(ts)) match {
       case (Nil, _) => ""
       case (_, Some(str)) => str
@@ -45,7 +45,7 @@ object Transcription {
   trait Instances {
     implicit val transcriptionHasMonoid:Monoid[Transcription] =
       new Monoid[Transcription] {
-        def empty:Transcription = Map.empty[List[Phone], String]
+        def empty:Transcription = Map.empty[Phones, String]
         def combine(x: Transcription, y: Transcription):Transcription = x ++ y
       }
   }

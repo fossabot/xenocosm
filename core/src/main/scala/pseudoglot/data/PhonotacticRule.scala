@@ -1,8 +1,10 @@
 package pseudoglot
 package data
 
+import scala.annotation.tailrec
 import cats.{Eq, Monoid, Show}
 import cats.implicits._
+import spire.random.Dist
 
 sealed trait PhonotacticRule extends Product with Serializable
 case object Empty extends PhonotacticRule
@@ -14,15 +16,25 @@ final case class Concat(xs:List[PhonotacticRule]) extends PhonotacticRule
 
 object PhonotacticRule {
   import Phone.instances._
+  import Phones.syntax._
 
-  private def ruleHasVowel(rule:PhonotacticRule):Boolean =
-    rule match {
+  val ruleHasVowel:PhonotacticRule => Boolean = {
       case AnyVowel => true
       case Literal(_:Vowel) => true
       case Concat(Nil) => false
       case Concat(x :: xs) => ruleHasVowel(x) || ruleHasVowel(Concat(xs))
       case Choose(Nil) => false
       case Choose(x :: xs) => ruleHasVowel(x) && ruleHasVowel(Choose(xs))
+      case _ => false
+    }
+
+  val startsWithVowel:PhonotacticRule => Boolean = {
+      case AnyVowel => true
+      case Literal(_:Vowel) => true
+      case Concat(Nil) => false
+      case Concat(x :: _) => startsWithVowel(x)
+      case Choose(Nil) => false
+      case Choose(x :: xs) => startsWithVowel(x) && startsWithVowel(Choose(xs))
       case _ => false
     }
 
@@ -43,6 +55,31 @@ object PhonotacticRule {
       case Concat(rules) ⇒ toNotation("", rules)
       case Choose(rules) ⇒ toNotation("|", rules)
     }
+
+  val literalPulmonic:Phones => Dist[PhonotacticRule] =
+    phones => Dist.oneOf(phones.pulmonics:_*).map(Literal.apply)
+
+  val literalVowel:Phones => Dist[PhonotacticRule] =
+    phones => Dist.oneOf(phones.vowels:_*).map(Literal.apply)
+
+  // scalastyle:off cyclomatic.complexity
+  val ruleFromPhones:Phones => Dist[PhonotacticRule] = phones => Dist.gen { gen ⇒
+    val pulmonicDist = literalPulmonic(phones)
+    val vowelDist = literalVowel(phones)
+
+    @tailrec
+    def loop(acc:PhonotacticRule):PhonotacticRule = (acc, gen.nextDouble()) match {
+      case (AnyVowel, d)            if d > PROB_LITERAL ⇒ loop(vowelDist(gen))
+      case (AnyPulmonic, d)         if d > PROB_LITERAL ⇒ loop(pulmonicDist(gen))
+      case (Literal(x:Vowel), d)    if d > PROB_CONCAT ⇒ loop(Concat(List(AnyPulmonic, Literal(x))))
+      case (Literal(x:Pulmonic), d) if d > PROB_CONCAT ⇒ loop(Concat(List(AnyVowel, Literal(x))))
+      case (Concat(xs), d)          if d > PROB_CHOOSE ⇒ Choose(xs)
+      case _ ⇒ acc
+    }
+
+    loop(gen.oneOf(AnyPulmonic, AnyVowel))
+  }
+  // scalastyle:on cyclomatic.complexity
 
   trait Instances {
     implicit val phonotacticRuleHasEq:Eq[PhonotacticRule] =
@@ -69,7 +106,8 @@ object PhonotacticRule {
 
   trait Syntax {
     implicit class PhonotacticRuleOps(underlying:PhonotacticRule) {
-      def hasVowel:Boolean = ruleHasVowel(underlying)
+      val hasVowel:Boolean = PhonotacticRule.ruleHasVowel(underlying)
+      val startsWithVowel:Boolean = PhonotacticRule.startsWithVowel(underlying)
     }
   }
   object syntax extends Syntax

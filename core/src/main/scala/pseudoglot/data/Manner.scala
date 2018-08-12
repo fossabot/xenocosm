@@ -27,15 +27,16 @@ object Manner {
     Approximant,
     LateralApproximant
   )
-  def parse(in:String):Either[String, Manner] =
-    all.find(_.label === in) match {
+
+  val parse:String => Either[String, Manner] =
+    input => all.find(_.label === input) match {
       case Some(success) => Right(success)
-      case None => Left(in)
+      case None => Left(input)
     }
 
   trait Instances {
     implicit val mannerHasShow: Show[Manner] = Show.show[Manner](_.label)
-    implicit val mannerHasOrder: Order[Manner] = Order.by(x ⇒ all.indexOf(x))
+    implicit val mannerHasOrder: Order[Manner] = Order.by(all.indexOf)
     implicit val mannerHasDist: Dist[Manner] = Dist.oneOf(all: _*)
     implicit val mannerHasMetricSpace: MetricSpace[Manner, Int] =
       (v: Manner, w: Manner) ⇒ math.abs(all.indexOf(v) - all.indexOf(w))

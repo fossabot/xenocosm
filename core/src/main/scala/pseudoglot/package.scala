@@ -16,8 +16,21 @@ package object pseudoglot {
     with data.Roundedness.Instances
     with data.Voicing.Instances
     with data.Phone.Instances
-    with data.PhoneSeq.Instances
+    with data.Phones.Instances
     with data.PhonotacticRule.Instances
+    with data.Prosody.Instances
     with data.Transcription.Instances
-    with data.PhoneSeq.Syntax
+    with data.Phones.Syntax
+
+  // Magic Constants
+  val PULMONICS_MIN = 7
+  val PULMONICS_MAX = 21
+  val VOWELS_MIN    = 3
+  val VOWELS_MAX    = 9
+  val RULES_MIN     = 5
+  val RULES_MAX     = 10
+
+  val PROB_LITERAL = 0.25
+  val PROB_CONCAT  = 0.45
+  val PROB_CHOOSE  = 0.65
 }

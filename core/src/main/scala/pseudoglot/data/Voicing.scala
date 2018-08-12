@@ -13,15 +13,16 @@ case object Voiceless extends Voicing("unvoiced")
 
 object Voicing {
   lazy val all = List(Voiced, Murmered, Voiceless)
-  def parse(in:String):Either[String, Voicing] =
-    all.find(_.label === in) match {
+
+  val parse:String => Either[String, Voicing] =
+    input => all.find(_.label === input) match {
       case Some(success) => Right(success)
-      case None => Left(in)
+      case None => Left(input)
     }
 
   trait Instances {
     implicit val voicingHasShow: Show[Voicing] = Show.show[Voicing](_.label)
-    implicit val voicingHasOrder: Order[Voicing] = Order.by(x ⇒ all.indexOf(x))
+    implicit val voicingHasOrder: Order[Voicing] = Order.by(all.indexOf)
     implicit val voicingHasDist: Dist[Voicing] = Dist.oneOf(all: _*)
     implicit val voicingHasMetricSpace: MetricSpace[Voicing, Int] =
       (v: Voicing, w: Voicing) ⇒ math.abs(all.indexOf(v) - all.indexOf(w))

@@ -21,9 +21,9 @@ trait PhonologyJson {
   implicit val phonologyHasJsonDecode:Decoder[Phonology] =
     Decoder.instance { hcur =>
       for {
-        pulmonics <- hcur.downField("pulmonics").as[Vector[Pulmonic]]
-        vowels <- hcur.downField("vowels").as[Vector[Vowel]]
-        phonotactics <- hcur.downField("phonotactics").as[Set[PhonotacticRule]]
+        pulmonics <- hcur.downField("pulmonics").as[List[Pulmonic]]
+        vowels <- hcur.downField("vowels").as[List[Vowel]]
+        phonotactics <- hcur.downField("phonotactics").as[PhonotacticRules]
       } yield Phonology(pulmonics, vowels, phonotactics)
     }
 }

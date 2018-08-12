@@ -1,23 +1,19 @@
 package pseudoglot
 package data
 
-import cats.kernel.laws.discipline.EqTests
-import cats.implicits._
+import cats.kernel.laws.discipline.{EqTests, MonoidTests}
 import spire.random.Dist
 
 class PhonotacticRuleSpec extends xenocosm.test.XenocosmSuite {
-  import PhoneSeq.syntax._
   import PhonotacticRule.instances._
 
-  private val pulmonics = IPA.pulmonics.keys.toVector
-  private val vowels = IPA.vowels.keys.toVector
+  private val pulmonics = IPA.pulmonics.keys.toList
+  private val vowels = IPA.vowels.keys.toList
   implicit private val dist:Dist[PhonotacticRule] =
-    for {
-      p <- pulmonics.distRule
-      v <- vowels.distRule
-    } yield p |+| v
+    PhonotacticRule.ruleFromPhones(pulmonics ++ vowels)
 
   checkAll("Eq[PhonotacticRule]", EqTests[PhonotacticRule].eqv)
+  checkAll("Monoid[PhonotacticRule]", MonoidTests[PhonotacticRule].monoid)
 
   test("oddball rules") {
     val emptyConcat:PhonotacticRule = Concat(List.empty[PhonotacticRule])

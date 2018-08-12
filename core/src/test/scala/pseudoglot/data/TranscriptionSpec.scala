@@ -6,25 +6,31 @@ import cats.kernel.laws.discipline.MonoidTests
 import spire.random.Dist
 
 class TranscriptionSpec extends xenocosm.test.XenocosmSuite {
-  import PhoneSeq.syntax._
+  import Phone.instances._
+  import Phones.syntax._
   import Transcription.instances._
 
-  private val pulmonics = IPA.pulmonics.keys.toVector
-  private val vowels = IPA.vowels.keys.toVector
-  private val distArr:Dist[Array[(List[Phone], String)]] =
+  private val distPhone:Dist[Phone] =
     for {
-      pSize <- Dist.intrange(0, pulmonics.size)
-      ps <- pulmonics.distPulmonic.map(x => List(x.get) -> IPA.pulmonics(x.get)).pack(pSize)
-      vSize <- Dist.intrange(0, vowels.size)
-      vs <- vowels.distVowel.map(x => List(x.get) -> IPA.vowels(x.get)).pack(vSize)
-    } yield ps ++ vs
-  implicit private val dist:Dist[Transcription] = distArr.map(_.toMap)
+      pulmonic <- Dist[Pulmonic]
+      vowel <- Dist[Vowel]
+      phone <- Dist.oneOf(pulmonic, vowel)
+    } yield phone
+
+  private val distTransript:Dist[(Phones, String)] =
+    for {
+      phones <- distPhone.pack(8).map(_.toList)
+      xscript <- Dist.char.pack(8).map(_.mkString)
+    } yield phones -> xscript
+
+  implicit private val dist:Dist[Transcription] =
+    distTransript.pack(8).map(_.toMap)
 
   checkAll("Monoid[Transcription]", MonoidTests[Transcription].monoid)
 
   test("null sequence") {
     import IPA.instances._
-    val nullSeq:Seq[Phone] = Seq(NullPhoneme)
+    val nullSeq:Phones = List(NullPhoneme)
     nullSeq.transcribe shouldBe ""
   }
 }

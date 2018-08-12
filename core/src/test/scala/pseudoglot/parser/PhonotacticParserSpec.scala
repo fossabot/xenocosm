@@ -7,25 +7,21 @@ import spire.random.Dist
 
 class PhonotacticParserSpec extends xenocosm.test.XenocosmSuite {
   import pseudoglot.data._
-  import PhoneSeq.syntax._
   import PhonotacticRule.instances._
   import PhonotacticParser.instances._
   import PhonotacticParser.syntax._
 
-  private val pulmonics = IPA.pulmonics.keys.toVector
-  private val vowels = IPA.vowels.keys.toVector
+  private val pulmonics = IPA.pulmonics.keys.toList
+  private val vowels = IPA.vowels.keys.toList
   implicit private val dist1:Dist[PhonotacticRule] =
-    for {
-      p <- pulmonics.distRule
-      v <- vowels.distRule
-    } yield p |+| v
+    PhonotacticRule.ruleFromPhones(pulmonics ++ vowels)
 
   implicit private val dist2:Dist[PhonotacticParser] = dist1.map(Right.apply)
 
   checkAll("Eq[PhonotacticParser]", EqTests[PhonotacticParser].eqv)
 
   test("PhonotacticRule.show.parse.isomorphism") {
-    forAll { (a:PhonotacticRule) ⇒ a.show.asPhonotactics should be(Right(a)) }
+    forAll { a:PhonotacticRule ⇒ a.show.asPhonotactics should be(Right(a)) }
   }
 
   test("can parse empty rule") {

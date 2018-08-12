@@ -17,15 +17,16 @@ case object Open extends Height("open")
 
 object Height {
   lazy val all = List(Close, NearClose, CloseMid, Mid, OpenMid, NearOpen, Open)
-  def parse(in:String):Either[String, Height] =
-    all.find(_.label === in) match {
+
+  val parse:String => Either[String, Height] =
+    input => all.find(_.label === input) match {
       case Some(success) => Right(success)
-      case None => Left(in)
+      case None => Left(input)
     }
 
   trait Instances {
     implicit val heightHasShow: Show[Height] = Show.show[Height](_.label)
-    implicit val heightHasOrder: Order[Height] = Order.by(x ⇒ all.indexOf(x))
+    implicit val heightHasOrder: Order[Height] = Order.by(all.indexOf)
     implicit val heightHasDist: Dist[Height] = Dist.oneOf(all: _*)
     implicit val heightHasMetricSpace: MetricSpace[Height, Int] =
       (v: Height, w: Height) ⇒ math.abs(all.indexOf(v) - all.indexOf(w))
