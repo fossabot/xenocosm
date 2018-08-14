@@ -29,17 +29,18 @@ object Phonology {
       loop(List.empty[Phone], rule)
     }
 
+  def dist(implicit magic:Magic):Dist[Phonology] =
+    for {
+      pulmonicCount <- Dist.intrange _ tupled magic.pulmonics
+      vowelCount    <- Dist.intrange _ tupled magic.vowels
+      ruleCount     <- Dist.intrange _ tupled magic.rules
+      pulmonics     <- Dist.apply[Pulmonic].pack(pulmonicCount).map(_.distinct.toList)
+      vowels        <- Dist.apply[Vowel].pack(vowelCount).map(_.distinct.toList)
+      phonotactics  <- PhonotacticRule.ruleFromPhones(pulmonics ++ vowels).pack(ruleCount)
+    } yield Phonology(pulmonics, vowels, phonotactics.distinct.toSet)
+
   trait Instances {
     implicit val phonologyHasEq:Eq[Phonology] = Eq.fromUniversalEquals[Phonology]
-    implicit val phonologyHasDist:Dist[Phonology] =
-      for {
-        pulmonicCount <- Dist.intrange(PULMONICS_MIN, PULMONICS_MAX)
-        vowelCount    <- Dist.intrange(VOWELS_MIN, VOWELS_MAX)
-        ruleCount     <- Dist.intrange(RULES_MIN, RULES_MAX)
-        pulmonics     <- Dist.apply[Pulmonic].pack(pulmonicCount).map(_.distinct.toList)
-        vowels        <- Dist.apply[Vowel].pack(vowelCount).map(_.distinct.toList)
-        phonotactics  <- PhonotacticRule.ruleFromPhones(pulmonics ++ vowels).pack(ruleCount)
-      } yield Phonology(pulmonics, vowels, phonotactics.distinct.toSet)
   }
   object instances extends Instances
 }

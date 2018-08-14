@@ -63,17 +63,17 @@ object PhonotacticRule {
     phones => Dist.oneOf(phones.vowels:_*).map(Literal.apply)
 
   // scalastyle:off cyclomatic.complexity
-  val ruleFromPhones:Phones => Dist[PhonotacticRule] = phones => Dist.gen { gen ⇒
+  def ruleFromPhones(phones:Phones)(implicit magic:Magic):Dist[PhonotacticRule] = Dist.gen { gen ⇒
     val pulmonicDist = literalPulmonic(phones)
     val vowelDist = literalVowel(phones)
 
     @tailrec
     def loop(acc:PhonotacticRule):PhonotacticRule = (acc, gen.nextDouble()) match {
-      case (AnyVowel, d)            if d > PROB_LITERAL ⇒ loop(vowelDist(gen))
-      case (AnyPulmonic, d)         if d > PROB_LITERAL ⇒ loop(pulmonicDist(gen))
-      case (Literal(x:Vowel), d)    if d > PROB_CONCAT ⇒ loop(Concat(List(AnyPulmonic, Literal(x))))
-      case (Literal(x:Pulmonic), d) if d > PROB_CONCAT ⇒ loop(Concat(List(AnyVowel, Literal(x))))
-      case (Concat(xs), d)          if d > PROB_CHOOSE ⇒ Choose(xs)
+      case (AnyVowel, d)            if d > magic.literal ⇒ loop(vowelDist(gen))
+      case (AnyPulmonic, d)         if d > magic.literal ⇒ loop(pulmonicDist(gen))
+      case (Literal(x:Vowel), d)    if d > magic.concat ⇒ loop(Concat(List(AnyPulmonic, Literal(x))))
+      case (Literal(x:Pulmonic), d) if d > magic.concat ⇒ loop(Concat(List(AnyVowel, Literal(x))))
+      case (Concat(xs), d)          if d > magic.choose ⇒ Choose(xs)
       case _ ⇒ acc
     }
 

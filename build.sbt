@@ -92,11 +92,16 @@ lazy val testkit = project.in(file("testkit"))
     )
   ))
 
+lazy val xenocosm = project.in(file("."))
+  .dependsOn(core, json)
+  .settings(moduleName := "xenocosm")
+  .settings(xenocosmSettings)
+
 lazy val commonSettings = Seq(
   libraryDependencies ++= commonDependencies,
   parallelExecution in Test := false,
   scalacOptions ++= commonScalacOptions
-) ++ consoleScalacOptions
+)
 
 lazy val xenocosmSettings = commonSettings ++ warnUnusedImport ++ scoverageSettings
 
@@ -123,17 +128,6 @@ lazy val warnUnusedImport = Seq(
   scalacOptions ++= Seq("-Ywarn-unused-import"),
   scalacOptions in (Compile, console) ~= {_.filterNot("-Ywarn-unused-import" == _)},
   scalacOptions in (Test, console) := (scalacOptions in (Compile, console)).value
-)
-
-lazy val consoleScalacOptions = Seq(
-  initialCommands in console := """
-    |import cats.implicits._
-    |import io.circe.syntax._
-    |import spire.random.rng.BurtleRot2
-    |
-    |val seed = BurtleRot2.randomSeed
-    |val gen = BurtleRot2.fromSeed(seed)
-    |""".stripMargin
 )
 
 lazy val scoverageSettings = Seq(
