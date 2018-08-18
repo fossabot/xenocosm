@@ -6,11 +6,13 @@ import cats.kernel.Eq
 import monocle.Lens
 import monocle.macros.GenLens
 import spire.random.Dist
+import squants.motion.{SpeedOfLight, Velocity}
 import squants.space.{CubicMeters, Length, Volume}
 import squants.time.{Seconds, Time}
 
 final case class Ship(uuid:UUID, loc:CosmicLocation, modules:ShipModules) { self =>
-  def travel(to:CosmicLocation):(Ship, Time) = Ship.travel(self, to)
+  def travelTo(to:CosmicLocation):(Ship, Time, Time) =
+    Ship.maybeTravel(self, to).getOrElse((self, Seconds(0), Seconds(0)))
   lazy val maxNavDistance:Length = ShipModules.maxNavDistance(modules)
   lazy val maxTravelDistance:Length = ShipModules.maxTravelDistance(modules)
   lazy val unusedFuel:Volume = ShipModules.unusedFuel(modules)
@@ -22,22 +24,29 @@ object Ship {
 
   private val loc:Lens[Ship, CosmicLocation] = GenLens[Ship](_.loc)
   private val modules:Lens[Ship, ShipModules] = GenLens[Ship](_.modules)
-  private val update:CosmicLocation => ShipModules => Ship => Ship =
-    x => ys => modules.set(ys) andThen loc.set(x)
 
-  def travel(ship:Ship, to:CosmicLocation):(Ship, Time) =
-    ShipModules
-      .bestEngine(ship.modules)
-      .map(engine => (engine, ShipModule.fuelNeeded(engine, ship.loc, to)))
-      .map({ case (engine:Engine, needed:Volume) =>
-        ShipModules.consumeFuel(ship.modules, needed) match {
-          case (xs:ShipModules, CubicMeters(0)) =>
-            val (_, time) = ShipModule.travel(engine, needed)
-            (update(to)(xs)(ship), time)
-          case _ => (ship, Seconds(0))
-        }
-      })
-      .getOrElse((ship, Seconds(0)))
+  private val v2c2:Velocity => Double =
+    velocity =>
+      (velocity.toMetersPerSecond * velocity.toMetersPerSecond) /
+      (SpeedOfLight.toMetersPerSecond * SpeedOfLight.toMetersPerSecond)
+
+  val objectiveElapsedTime:Velocity => Time => Time =
+    velocity => shipTime => shipTime / Math.sqrt(1 - v2c2(velocity))
+
+  // Only consume fuel if we have enough to satisfy the need
+  val consumeFuel:Ship => Volume => Option[Ship] =
+    ship => needed => ShipModules.consumeFuel(ship.modules, needed) match {
+      case (xs:ShipModules, CubicMeters(0)) => Some(modules.set(xs)(ship))
+      case _ => None
+    }
+
+  def maybeTravel(ship:Ship, to:CosmicLocation):Option[(Ship, Time, Time)] =
+    for {
+      engine <- ShipModules.bestEngine(ship.modules)
+      demand = ShipModule.fuelNeeded(engine, ship.loc, to)
+      consumed <- consumeFuel(ship)(demand)
+      (velocity, time) = ShipModule.travel(engine, demand)
+    } yield (loc.set(to)(consumed), time, objectiveElapsedTime(velocity)(time))
 
   trait Instances {
     implicit val shipHasEq:Eq[Ship] = Eq.fromUniversalEquals[Ship]

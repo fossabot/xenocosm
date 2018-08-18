@@ -50,7 +50,8 @@ class MoveShipSpec extends xenocosm.test.XenocosmSuite {
           Engine(SpeedOfLight * 0.01, CubicMetersPerSecond(0.001))
         )
       ),
-      Seconds(86430.16388241478)
+      Seconds(86430.16388241478),
+      Seconds(86434.48571474903)
     ))
   }
 

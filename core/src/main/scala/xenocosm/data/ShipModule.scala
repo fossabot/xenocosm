@@ -28,10 +28,8 @@ object ShipModule {
       (FuelTank(tank.used + need, tank.unused - need), CubicMeters(0))
     }
 
-  def travel(engine:Engine, consumedFuel:Volume):(Length, Time) = {
-    val time = consumedFuel / engine.consumptionRate
-    (engine.speed * time, time)
-  }
+  def travel(engine:Engine, consumedFuel:Volume):(Velocity, Time) =
+    (engine.speed, consumedFuel / engine.consumptionRate)
 
   def fuelNeeded(engine:Engine, from:CosmicLocation, to:CosmicLocation):Volume =
     engine.consumptionRate * ((from distance to) / engine.speed)

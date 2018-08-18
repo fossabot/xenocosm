@@ -4,12 +4,11 @@ package data
 import java.util.UUID
 import cats.kernel.laws.discipline.EqTests
 import galaxique.data.Point3
-import squants.motion.{CubicMetersPerSecond, SpeedOfLight}
+import squants.motion.{CubicMetersPerSecond, MetersPerSecond, SpeedOfLight}
 import squants.space.{AstronomicalUnits, CubicMeters}
 import squants.time.Seconds
 
 class ShipModuleSpec extends xenocosm.test.XenocosmSuite {
-  import squants.space.LengthConversions._
   import ShipModule.instances._
 
   checkAll("Eq[ShipModule]", EqTests[ShipModule].eqv)
@@ -38,9 +37,9 @@ class ShipModuleSpec extends xenocosm.test.XenocosmSuite {
   test("ShipModule.travel") {
     val engine = Engine(SpeedOfLight * 0.01, CubicMetersPerSecond(0.01))
     val consumedFuel = CubicMeters(100)
-    val (distance, time) = ShipModule.travel(engine, consumedFuel)
+    val (velocity, time) = ShipModule.travel(engine, consumedFuel)
 
-    distance shouldBe 29979245800.0.meters
+    velocity shouldBe MetersPerSecond(2997924.58)
     time shouldBe Seconds(10000)
   }
 

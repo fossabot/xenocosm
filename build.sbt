@@ -10,7 +10,7 @@ lazy val versions = new {
   val circe      = "0.9.3"
   val discipline = "0.10.0"
   val fastparse  = "1.0.0"
-  val http4s     = "0.18.15"
+  val http4s     = "0.18.16"
   val logback    = "1.2.3"
   val monocle    = "1.5.1-cats"
   val pureconfig = "0.9.1"
@@ -91,11 +91,6 @@ lazy val testkit = project.in(file("testkit"))
       "org.scalatest"  %% "scalatest"  % versions.scalatest
     )
   ))
-
-lazy val xenocosm = project.in(file("."))
-  .dependsOn(core, json)
-  .settings(moduleName := "xenocosm")
-  .settings(xenocosmSettings)
 
 lazy val commonSettings = Seq(
   libraryDependencies ++= commonDependencies,

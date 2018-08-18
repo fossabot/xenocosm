@@ -18,30 +18,33 @@ class ShipSpec extends xenocosm.test.XenocosmSuite {
   checkAll("Eq[Ship]", EqTests[Ship].eqv)
 
   test("Ship.travel") {
-    val to = from.copy(locS = Some(Point3(AstronomicalUnits(1), AstronomicalUnits(1), AstronomicalUnits(1))))
+    val loc = from.copy(locS = Some(Point3(AstronomicalUnits(1), AstronomicalUnits(1), AstronomicalUnits(1))))
     val ship = Ship(UUID.randomUUID(), from, ShipModules.startingLoad)
-    val (ship2, time) = Ship.travel(ship, to)
+    val (ship2, elapsedShip, elapsedObjective) = ship.travelTo(loc)
 
-    ship2.loc shouldBe to
+    ship2.loc shouldBe loc
     ship2.unusedFuel.floor shouldBe CubicMeters(13)
-    time.floor shouldBe Seconds(86430)
+    elapsedShip.floor shouldBe Seconds(86430)
+    elapsedObjective shouldBe Seconds(86434.48571474903)
   }
 
   test("Ship.travel.must-have-an-engine") {
-    val to = arbFromDist[CosmicLocation].arbitrary.sample.get
+    val loc = arbFromDist[CosmicLocation].arbitrary.sample.get
     val ship = Ship(UUID.randomUUID(), from, ShipModules.empty)
-    val (ship2, time) = Ship.travel(ship, to)
+    val (ship2, elapsedShip, elapsedObjective) = ship.travelTo(loc)
 
     ship shouldBe ship2
-    time shouldBe Seconds(0)
+    elapsedShip shouldBe Seconds(0)
+    elapsedObjective shouldBe Seconds(0)
   }
 
   test("Ship.travel.must-have-fuel") {
-    val to = arbFromDist[CosmicLocation].arbitrary.sample.get
+    val loc = arbFromDist[CosmicLocation].arbitrary.sample.get
     val ship = Ship(UUID.randomUUID(), from, List(Engine(SpeedOfLight, CubicMetersPerSecond(1))))
-    val (ship2, time) = ship.travel(to)
+    val (ship2, elapsedShip, elapsedObjective) = ship.travelTo(loc)
 
     ship shouldBe ship2
-    time shouldBe Seconds(0)
+    elapsedShip shouldBe Seconds(0)
+    elapsedObjective shouldBe Seconds(0)
   }
 }

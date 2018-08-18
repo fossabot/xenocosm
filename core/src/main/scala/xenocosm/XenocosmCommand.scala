@@ -51,8 +51,8 @@ object XenocosmCommand {
           _ <- checkTravelDistance(cmd.ship, cmd.loc)
         } yield (),
         cmd => Dist.constant {
-          val (ship, time) = cmd.ship.travel(cmd.loc)
-          ShipMoved(cmd.moves - UInt(1), ship, time)
+          val (ship, elapsedShip, elapsedUniverse) = cmd.ship.travelTo(cmd.loc)
+          ShipMoved(cmd.moves - UInt(1), ship, elapsedShip, elapsedUniverse)
         }
       )
   }
