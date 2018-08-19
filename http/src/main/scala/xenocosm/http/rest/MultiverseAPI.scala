@@ -1,5 +1,5 @@
 package xenocosm.http
-package service
+package rest
 
 import cats.effect.IO
 import io.circe.Json

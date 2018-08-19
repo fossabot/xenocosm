@@ -12,7 +12,7 @@ import spire.random.rng.SecureJava
 
 import xenocosm.data.Trader
 import xenocosm.http.middleware.XenocosmAuthentication
-import xenocosm.http.service._
+import xenocosm.http.rest._
 import xenocosm.http.services.{DataStore, MemoryDataStore}
 
 object Main extends StreamApp[IO] {
