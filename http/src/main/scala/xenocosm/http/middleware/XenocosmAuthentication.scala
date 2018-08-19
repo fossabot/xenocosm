@@ -17,12 +17,11 @@ import xenocosm.data.Trader
 import xenocosm.http.services.DataStore
 
 final class XenocosmAuthentication(val key:PrivateKey, val data:DataStore) {
-  private val cookieName:String = "xenoAuth"
   private val crypto:CryptoBits = CryptoBits(key)
   private val clock:Clock = Clock.systemUTC
 
   val toCookie:Trader => Cookie =
-    trader => Cookie(cookieName, crypto.signToken(trader.uuid.toString, clock.millis.toString))
+    trader => Cookie(XenocosmAuthentication.cookieName, crypto.signToken(trader.uuid.toString, clock.millis.toString))
 
   private val getTrader:UUID => IO[Either[String, Trader]] =
     data.selectTrader(_).map({
@@ -33,9 +32,9 @@ final class XenocosmAuthentication(val key:PrivateKey, val data:DataStore) {
   private val getTraderID:Request[IO] => Either[String, UUID] = request =>
     for {
       header <- headers.Cookie.from(request.headers).toRight("missing cookies")
-      cookie <- header.values.toList.find(_.name == cookieName).toRight("missing auth cookie")
+      cookie <- header.values.toList.find(_.name == XenocosmAuthentication.cookieName).toRight("missing auth cookie")
       token <- crypto.validateSignedToken(cookie.content).toRight("invalid cookie signature")
-      message <- Either.catchNonFatal(UUID.fromString(token)).leftMap(_ => "invalid Trader UUID")
+      message <- Either.catchNonFatal(UUID.fromString(token)).leftMap(_ => "invalid UUID")
     } yield message
 
   private val authUser:Kleisli[IO, Request[IO], Either[String, Trader]] =
@@ -53,6 +52,8 @@ final class XenocosmAuthentication(val key:PrivateKey, val data:DataStore) {
 }
 
 object XenocosmAuthentication {
+  val cookieName:String = "xenoAuth"
+
   def apply(keyStr:String, data:DataStore):XenocosmAuthentication = {
     val key:PrivateKey = PrivateKey(scala.io.Codec.toUTF8(keyStr))
     new XenocosmAuthentication(key, data)

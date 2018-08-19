@@ -3,7 +3,7 @@ package pseudoglot.json
 import io.circe.syntax._
 import pseudoglot.data.Manner
 
-class MannerJsonSpec extends xenocosm.test.XenocosmSuite {
+class MannerJsonSpec extends xenocosm.test.XenocosmFunSuite {
   import Manner.instances._
   import manner._
 

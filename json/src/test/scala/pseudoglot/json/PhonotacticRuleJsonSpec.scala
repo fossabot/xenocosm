@@ -6,7 +6,7 @@ import spire.random.Dist
 import pseudoglot.IPA
 import pseudoglot.data.PhonotacticRule
 
-class PhonotacticRuleJsonSpec extends xenocosm.test.XenocosmSuite {
+class PhonotacticRuleJsonSpec extends xenocosm.test.XenocosmFunSuite {
   import phonotacticRule._
 
   implicit private val dist:Dist[PhonotacticRule] =

@@ -6,7 +6,7 @@ import cats.kernel.laws.discipline.OrderTests
 import spire.laws._
 import spire.std.int._
 
-class RoundednessSpec extends xenocosm.test.XenocosmSuite {
+class RoundednessSpec extends xenocosm.test.XenocosmFunSuite {
   import Roundedness.instances._
 
   checkAll("Order[Roundedness]", OrderTests[Roundedness].order)

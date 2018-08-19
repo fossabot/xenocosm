@@ -5,7 +5,7 @@ import cats.implicits._
 import cats.kernel.laws.discipline.MonoidTests
 import spire.random.Dist
 
-class TranscriptionSpec extends xenocosm.test.XenocosmSuite {
+class TranscriptionSpec extends xenocosm.test.XenocosmFunSuite {
   import Phone.instances._
   import Phones.syntax._
   import Transcription.instances._

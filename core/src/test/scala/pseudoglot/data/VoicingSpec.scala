@@ -6,7 +6,7 @@ import cats.kernel.laws.discipline.OrderTests
 import spire.laws._
 import spire.std.int._
 
-class VoicingSpec extends xenocosm.test.XenocosmSuite {
+class VoicingSpec extends xenocosm.test.XenocosmFunSuite {
   import Voicing.instances._
 
   checkAll("Order[Voicing]", OrderTests[Voicing].order)

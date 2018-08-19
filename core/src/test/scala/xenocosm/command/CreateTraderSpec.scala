@@ -9,7 +9,7 @@ import squants.space.{AstronomicalUnits, Parsecs}
 
 import xenocosm.data._
 
-class CreateTraderSpec extends xenocosm.test.XenocosmSuite {
+class CreateTraderSpec extends xenocosm.test.XenocosmFunSuite {
   import CommandHandler.syntax._
   import XenocosmCommand.instances._
 

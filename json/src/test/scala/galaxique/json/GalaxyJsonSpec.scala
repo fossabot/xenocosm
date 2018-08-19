@@ -3,7 +3,7 @@ package galaxique.json
 import io.circe.syntax._
 import galaxique.data.Galaxy
 
-class GalaxyJsonSpec extends xenocosm.test.XenocosmSuite {
+class GalaxyJsonSpec extends xenocosm.test.XenocosmFunSuite {
   import Galaxy.instances._
   import galaxy._
 

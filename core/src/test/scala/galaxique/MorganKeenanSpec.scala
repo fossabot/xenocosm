@@ -2,7 +2,7 @@ package galaxique
 
 import spire.random.Dist
 
-class MorganKeenanSpec extends xenocosm.test.XenocosmSuite {
+class MorganKeenanSpec extends xenocosm.test.XenocosmFunSuite {
   import MorganKeenan.instances._
 
   test("parse.classification.option") {

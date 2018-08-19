@@ -4,7 +4,7 @@ import io.circe.syntax._
 import pseudoglot.data.{Magic, Phonology}
 import spire.random.Dist
 
-class PhonologyJsonSpec extends xenocosm.test.XenocosmSuite {
+class PhonologyJsonSpec extends xenocosm.test.XenocosmFunSuite {
   import Magic.default
   import phonology._
 

@@ -8,7 +8,7 @@ import squants.motion.{CubicMetersPerSecond, MetersPerSecond, SpeedOfLight}
 import squants.space.{AstronomicalUnits, CubicMeters}
 import squants.time.Seconds
 
-class ShipModuleSpec extends xenocosm.test.XenocosmSuite {
+class ShipModuleSpec extends xenocosm.test.XenocosmFunSuite {
   import ShipModule.instances._
 
   checkAll("Eq[ShipModule]", EqTests[ShipModule].eqv)

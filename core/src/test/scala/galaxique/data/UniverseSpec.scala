@@ -4,7 +4,7 @@ package data
 import java.util.UUID
 import cats.kernel.laws.discipline.EqTests
 
-class UniverseSpec extends xenocosm.test.XenocosmSuite {
+class UniverseSpec extends xenocosm.test.XenocosmFunSuite {
   import Point3.instances._
   import Universe.instances._
   import SparseSpace3.syntax._

@@ -3,7 +3,7 @@ package pseudoglot.json
 import io.circe.syntax._
 import pseudoglot.data.Roundedness
 
-class RoundednessJsonSpec extends xenocosm.test.XenocosmSuite {
+class RoundednessJsonSpec extends xenocosm.test.XenocosmFunSuite {
   import Roundedness.instances._
   import roundedness._
 

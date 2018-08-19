@@ -1,18 +1,13 @@
-package xenocosm
-package test
+package xenocosm.test
 
 import cats.Eq
 import org.scalacheck.{Arbitrary, Cogen, Gen}
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.Matchers
 import org.scalatest.prop.PropertyChecks
-import org.typelevel.discipline.scalatest.Discipline
 import spire.random.Dist
 import spire.random.rng.BurtleRot2
 
-trait XenocosmSuite extends FunSuite
-  with Matchers
-  with PropertyChecks
-  with Discipline {
+trait XenocosmSuiteBase extends Matchers with PropertyChecks {
   private def genFromDist[T](dist:Dist[T]):Gen[T] =
     for {
       a <- Gen.chooseNum(Int.MinValue, Int.MaxValue)

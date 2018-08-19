@@ -6,7 +6,7 @@ import cats.instances.option._
 import spire.laws._
 import spire.std.int._
 
-class BacknessSpec extends xenocosm.test.XenocosmSuite {
+class BacknessSpec extends xenocosm.test.XenocosmFunSuite {
   import Backness.instances._
 
   checkAll("Order[Backness]", OrderTests[Backness].order)

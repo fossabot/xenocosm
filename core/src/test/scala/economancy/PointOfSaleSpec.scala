@@ -3,7 +3,7 @@ package economancy
 import java.time.Instant
 import squants.market.Currency
 
-class PointOfSaleSpec extends xenocosm.test.XenocosmSuite {
+class PointOfSaleSpec extends xenocosm.test.XenocosmFunSuite {
   import pointOfSale._
 
   object Zorkmid extends Currency("ZMD", "Zorkmid", "Z", 2)

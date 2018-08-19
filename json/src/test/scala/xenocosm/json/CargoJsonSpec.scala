@@ -5,7 +5,7 @@ import io.circe.syntax._
 
 import xenocosm.data.Cargo
 
-class CargoJsonSpec extends xenocosm.test.XenocosmSuite {
+class CargoJsonSpec extends xenocosm.test.XenocosmFunSuite {
   import Cargo.instances._
   import cargo._
 

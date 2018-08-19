@@ -3,7 +3,7 @@ package galaxique.json
 import galaxique.MorganKeenan
 import io.circe.syntax._
 
-class MorganKeenanJsonSpec extends xenocosm.test.XenocosmSuite {
+class MorganKeenanJsonSpec extends xenocosm.test.XenocosmFunSuite {
   import MorganKeenan.instances._
   import morganKeenan._
 

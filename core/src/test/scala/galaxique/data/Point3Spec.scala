@@ -5,7 +5,7 @@ import cats.kernel.laws.discipline.EqTests
 import spire.laws._
 import squants.space.{Length, Parsecs}
 
-class Point3Spec extends xenocosm.test.XenocosmSuite {
+class Point3Spec extends xenocosm.test.XenocosmFunSuite {
   import Point3.instances._
   import interop.squants.instances._
 

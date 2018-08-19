@@ -11,7 +11,7 @@ import squants.time.Seconds
 
 import xenocosm.data._
 
-class MoveShipSpec extends xenocosm.test.XenocosmSuite {
+class MoveShipSpec extends xenocosm.test.XenocosmFunSuite {
   import CommandHandler.syntax._
   import XenocosmCommand.instances._
 

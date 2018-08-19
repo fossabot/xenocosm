@@ -5,7 +5,7 @@ import cats.kernel.laws.discipline.EqTests
 import spire.laws._
 import spire.std.int._
 
-class PhoneSpec extends xenocosm.test.XenocosmSuite {
+class PhoneSpec extends xenocosm.test.XenocosmFunSuite {
   import Phone.instances._
 
   checkAll("Eq[Pulmonic]", EqTests[Pulmonic].eqv)

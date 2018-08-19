@@ -3,7 +3,7 @@ package data
 
 import spire.random.Dist
 
-class ProsodySpec extends xenocosm.test.XenocosmSuite {
+class ProsodySpec extends xenocosm.test.XenocosmFunSuite {
   import Magic.default
   import Phones.syntax._
 

@@ -3,7 +3,7 @@ package pseudoglot.json
 import io.circe.syntax._
 import pseudoglot.data.Height
 
-class HeightJsonSpec extends xenocosm.test.XenocosmSuite {
+class HeightJsonSpec extends xenocosm.test.XenocosmFunSuite {
   import Height.instances._
   import height._
 

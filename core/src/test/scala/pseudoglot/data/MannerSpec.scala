@@ -6,7 +6,7 @@ import cats.instances.option._
 import spire.laws._
 import spire.std.int._
 
-class MannerSpec extends xenocosm.test.XenocosmSuite {
+class MannerSpec extends xenocosm.test.XenocosmFunSuite {
   import Manner.instances._
 
   checkAll("Order[Manner]", OrderTests[Manner].order)

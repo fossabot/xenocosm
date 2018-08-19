@@ -6,7 +6,7 @@ import cats.instances.option._
 import spire.laws._
 import spire.std.int._
 
-class HeightSpec extends xenocosm.test.XenocosmSuite {
+class HeightSpec extends xenocosm.test.XenocosmFunSuite {
   import Height.instances._
 
   checkAll("Order[Height]", OrderTests[Height].order)

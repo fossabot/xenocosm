@@ -6,7 +6,7 @@ import spire.random.Dist
 
 import pseudoglot.data._
 
-class PhonesParserSpec extends xenocosm.test.XenocosmSuite {
+class PhonesParserSpec extends xenocosm.test.XenocosmFunSuite {
   import Phone.instances._
   import Phones.instances._
 

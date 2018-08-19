@@ -6,7 +6,7 @@ import io.circe.syntax._
 
 import xenocosm.data.CosmicLocation
 
-class CosmicLocationJsonSpec extends xenocosm.test.XenocosmSuite {
+class CosmicLocationJsonSpec extends xenocosm.test.XenocosmFunSuite {
   import CosmicLocation.instances._
   import cosmicLocation._
 

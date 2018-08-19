@@ -3,7 +3,7 @@ package xenocosm.json
 import io.circe.syntax._
 import xenocosm.data.Trader
 
-class TraderJsonSpec extends xenocosm.test.XenocosmSuite {
+class TraderJsonSpec extends xenocosm.test.XenocosmFunSuite {
   import Trader.instances._
   import trader._
 

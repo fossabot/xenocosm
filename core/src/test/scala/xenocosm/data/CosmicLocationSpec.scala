@@ -6,7 +6,7 @@ import cats.kernel.laws.discipline.EqTests
 import galaxique.data.Point3
 import squants.space.Meters
 
-class CosmicLocationSpec extends xenocosm.test.XenocosmSuite {
+class CosmicLocationSpec extends xenocosm.test.XenocosmFunSuite {
   import CosmicLocation.instances._
 
   checkAll("Eq[CosmicLocation]", EqTests[CosmicLocation].eqv)

@@ -8,7 +8,7 @@ case object OuterSpace
 final case class InnerSpace(loc:Point3)
 final case class SubSpace(inner:InnerSpace, loc:Point3)
 
-class SparseSpace3Spec extends xenocosm.test.XenocosmSuite {
+class SparseSpace3Spec extends xenocosm.test.XenocosmFunSuite {
   import Point3.instances._
   import SparseSpace3.syntax._
 

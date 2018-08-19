@@ -4,7 +4,7 @@ import galaxique.data.Point3
 import org.http4s.dsl.impl._
 import squants.space.{AstronomicalUnits, Parsecs}
 
-class Point3SegmentSpec extends xenocosm.test.XenocosmSuite {
+class Point3SegmentSpec extends xenocosm.test.XenocosmFunSuite {
 
   test("Point3Segment.path.unapply.intergalactic") {
     val loc1 = Point3(Parsecs(10000), Parsecs(10000), Parsecs(10000))

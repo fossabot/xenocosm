@@ -7,7 +7,7 @@ import spire.random.Dist
 import xenocosm.MoveShip
 import xenocosm.data.{CosmicLocation, Ship}
 
-class MoveShipJsonSpec extends xenocosm.test.XenocosmSuite {
+class MoveShipJsonSpec extends xenocosm.test.XenocosmFunSuite {
   import instances._
   import CosmicLocation.instances._
   import Ship.instances._

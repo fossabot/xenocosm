@@ -4,7 +4,7 @@ package data
 import cats.kernel.laws.discipline.{EqTests, MonoidTests}
 import spire.random.Dist
 
-class PhonotacticRuleSpec extends xenocosm.test.XenocosmSuite {
+class PhonotacticRuleSpec extends xenocosm.test.XenocosmFunSuite {
   import PhonotacticRule.instances._
 
   private val pulmonics = IPA.pulmonics.keys.toList

@@ -5,7 +5,7 @@ import cats.kernel.laws.discipline.EqTests
 import cats.implicits._
 import spire.random.Dist
 
-class PhonotacticParserSpec extends xenocosm.test.XenocosmSuite {
+class PhonotacticParserSpec extends xenocosm.test.XenocosmFunSuite {
   import pseudoglot.data._
   import PhonotacticRule.instances._
   import PhonotacticParser.instances._

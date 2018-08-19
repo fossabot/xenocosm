@@ -3,7 +3,7 @@ package xenocosm.http
 import java.util.UUID
 import org.http4s.dsl.impl._
 
-class UuidSegmentSpec extends xenocosm.test.XenocosmSuite {
+class UuidSegmentSpec extends xenocosm.test.XenocosmFunSuite {
 
   test("UuidSegment.path.unapply") {
     val uuid1 = UUID.fromString("00000000-0000-0000-0000-000000000000")

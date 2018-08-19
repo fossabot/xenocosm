@@ -4,7 +4,7 @@ package data
 import squants.motion.{CubicMetersPerSecond, KilometersPerSecond, SpeedOfLight}
 import squants.space.{CubicMeters, Meters, Parsecs}
 
-class ShipModulesSpec extends xenocosm.test.XenocosmSuite {
+class ShipModulesSpec extends xenocosm.test.XenocosmFunSuite {
 
   test("ShipModules.consumeFuel") {
     val (modules1, remaining1) = ShipModules.consumeFuel(List(

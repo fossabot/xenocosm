@@ -3,7 +3,7 @@ package pseudoglot.json
 import io.circe.syntax._
 import pseudoglot.data.Voicing
 
-class VoicingJsonSpec extends xenocosm.test.XenocosmSuite {
+class VoicingJsonSpec extends xenocosm.test.XenocosmFunSuite {
   import Voicing.instances._
   import voicing._
 

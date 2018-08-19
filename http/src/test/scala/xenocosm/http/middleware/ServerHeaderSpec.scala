@@ -6,7 +6,7 @@ import org.http4s.{HttpService, Method, Request, Response, Uri}
 import org.http4s.dsl.io._
 import org.http4s.util.CaseInsensitiveString
 
-class ServerHeaderSpec extends xenocosm.test.XenocosmSuite {
+class ServerHeaderSpec extends xenocosm.test.XenocosmFunSuite {
 
   def service200:HttpService[IO] = ServerHeader.wrap(HttpService[IO] { case GET -> Root => Ok() })
   def service400:HttpService[IO] = ServerHeader.wrap(HttpService[IO] { case GET -> Root => BadRequest() })

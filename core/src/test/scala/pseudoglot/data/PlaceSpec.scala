@@ -6,7 +6,7 @@ import cats.kernel.laws.discipline.OrderTests
 import spire.laws._
 import spire.std.int._
 
-class PlaceSpec extends xenocosm.test.XenocosmSuite {
+class PlaceSpec extends xenocosm.test.XenocosmFunSuite {
   import Place.instances._
 
   checkAll("Order[Place]", OrderTests[Place].order)

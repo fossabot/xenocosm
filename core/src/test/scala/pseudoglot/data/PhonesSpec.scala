@@ -4,7 +4,7 @@ package data
 import cats.kernel.laws.discipline.EqTests
 import spire.random.Dist
 
-class PhonesSpec extends xenocosm.test.XenocosmSuite {
+class PhonesSpec extends xenocosm.test.XenocosmFunSuite {
   import Phone.instances._
   import Phones.instances._
 

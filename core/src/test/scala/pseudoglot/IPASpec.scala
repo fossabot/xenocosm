@@ -2,7 +2,7 @@ package pseudoglot
 
 import spire.random.Dist
 
-class IPASpec extends xenocosm.test.XenocosmSuite {
+class IPASpec extends xenocosm.test.XenocosmFunSuite {
   import IPA.instances._
   import data.Phone.instances._
   import data.{Pulmonic, Vowel}

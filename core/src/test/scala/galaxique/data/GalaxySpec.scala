@@ -5,7 +5,7 @@ import java.util.UUID
 import cats.kernel.laws.discipline.EqTests
 import squants.space.Parsecs
 
-class GalaxySpec extends xenocosm.test.XenocosmSuite {
+class GalaxySpec extends xenocosm.test.XenocosmFunSuite {
   import Point3.instances._
   import Galaxy.instances._
   import SparseSpace3.syntax._

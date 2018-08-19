@@ -6,7 +6,7 @@ import spire.random.Dist
 
 import xenocosm.CreateTrader
 
-class CreateTraderJsonSpec extends xenocosm.test.XenocosmSuite {
+class CreateTraderJsonSpec extends xenocosm.test.XenocosmFunSuite {
   import instances._
 
   implicit val createTraderDist:Dist[CreateTrader] =

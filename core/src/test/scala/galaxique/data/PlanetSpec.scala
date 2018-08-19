@@ -5,7 +5,7 @@ import java.util.UUID
 import cats.kernel.laws.discipline.EqTests
 import squants.space.{AstronomicalUnits, Parsecs}
 
-class PlanetSpec extends xenocosm.test.XenocosmSuite {
+class PlanetSpec extends xenocosm.test.XenocosmFunSuite {
   import Planet.instances._
 
   checkAll("Eq[Planet]", EqTests[Planet].eqv)

@@ -4,7 +4,7 @@ package data
 import cats.kernel.laws.discipline.EqTests
 import spire.random.Dist
 
-class PhonologySpec extends xenocosm.test.XenocosmSuite {
+class PhonologySpec extends xenocosm.test.XenocosmFunSuite {
   import Magic.default
   import Phonology.instances._
 

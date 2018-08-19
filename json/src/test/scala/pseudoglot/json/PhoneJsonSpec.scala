@@ -3,7 +3,7 @@ package pseudoglot.json
 import io.circe.syntax._
 import pseudoglot.data.{Phone, Pulmonic, Vowel}
 
-class PhoneJsonSpec extends xenocosm.test.XenocosmSuite {
+class PhoneJsonSpec extends xenocosm.test.XenocosmFunSuite {
   import Phone.instances._
   import pulmonic._
   import vowel._

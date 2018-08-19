@@ -3,7 +3,7 @@ package response
 
 import io.circe.syntax._
 
-class MultiverseResponseSpec extends xenocosm.test.XenocosmSuite {
+class MultiverseResponseSpec extends xenocosm.test.XenocosmFunSuite {
   import MultiverseResponse.instances._
 
   test("MultiverseResponse.json.isomorphism") {

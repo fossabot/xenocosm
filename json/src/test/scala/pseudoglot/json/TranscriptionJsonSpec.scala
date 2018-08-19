@@ -4,7 +4,7 @@ import io.circe.syntax._
 import pseudoglot.IPA
 import pseudoglot.data.Transcription
 
-class TranscriptionJsonSpec extends xenocosm.test.XenocosmSuite {
+class TranscriptionJsonSpec extends xenocosm.test.XenocosmFunSuite {
   import transcription._
 
   test("Transcription.json.isomorphism") {
