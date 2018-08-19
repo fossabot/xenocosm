@@ -8,6 +8,7 @@ inThisBuild(Seq(
 lazy val versions = new {
   val cats       = "1.2.0"
   val circe      = "0.9.3"
+  val cryptobits = "1.2"
   val discipline = "0.10.0"
   val fastparse  = "1.0.0"
   val http4s     = "0.18.16"
@@ -67,6 +68,7 @@ lazy val http = project.in(file("http"))
     "org.http4s"            %% "http4s-blaze-server" % versions.http4s,
     "org.http4s"            %% "http4s-blaze-client" % versions.http4s,
     "org.http4s"            %% "http4s-circe"        % versions.http4s,
+    "org.reactormonk"       %% "cryptobits"          % versions.cryptobits,
     "com.github.pureconfig" %% "pureconfig"          % versions.pureconfig,
     "com.github.pureconfig" %% "pureconfig-http4s"   % versions.pureconfig,
     "com.github.pureconfig" %% "pureconfig-squants"  % versions.pureconfig,

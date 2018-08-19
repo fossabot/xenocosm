@@ -4,12 +4,13 @@ package service
 import cats.effect.IO
 import io.circe.Json
 import io.circe.syntax._
-import org.http4s.HttpService
+import org.http4s.AuthedService
 import org.http4s.circe._
 import org.http4s.dsl.io._
-
 import galaxique.SparseSpace3
 import galaxique.data._
+
+import xenocosm.data.Trader
 import xenocosm.http.response._
 
 object MultiverseAPI {
@@ -23,16 +24,16 @@ object MultiverseAPI {
   import Galaxy.instances._
   import Star.instances._
 
-  val service:HttpService[IO] = HttpService[IO] {
-    case GET -> Root / "v1" / "multiverse" ⇒
+  val service:AuthedService[Trader, IO] = AuthedService[Trader, IO] {
+    case GET -> Root as trader ⇒
       Ok(MultiverseResponse.asJson, jsonHal)
 
-    case GET -> Root / "v1" / "multiverse" / ⎈(uuid) ⇒
+    case GET -> Root / ⎈(uuid) as trader ⇒
       val range = Universe.scale
       val response = UniverseResponse(Universe(uuid), Point3.zero, range)
       Ok(response.asJson, jsonHal)
 
-    case GET -> Root / "v1" / "multiverse" / ⎈(uuid) / ✺(locU) ⇒
+    case GET -> Root / ⎈(uuid) / ✺(locU) as trader ⇒
       val range = Galaxy.scale
       val located = for {
         galaxy <-  Universe(uuid).locate(locU)
@@ -46,7 +47,7 @@ object MultiverseAPI {
           NotFound(Json.Null, jsonHal)
       }
 
-    case GET -> Root / "v1" / "multiverse" / ⎈(uuid) / ✺(locU) / ✨(locG) ⇒
+    case GET -> Root / ⎈(uuid) / ✺(locU) / ✨(locG) as trader ⇒
       val range = Star.scale
       val located = for {
         galaxy <-  Universe(uuid).locate(locU)
@@ -61,7 +62,7 @@ object MultiverseAPI {
           NotFound(Json.Null, jsonHal)
       }
 
-    case GET -> Root / "v1" / "multiverse" / ⎈(uuid) / ✺(locU) / ✨(locG) / ★(locS) ⇒
+    case GET -> Root / ⎈(uuid) / ✺(locU) / ✨(locG) / ★(locS) as trader ⇒
       val located = for {
         galaxy <-  Universe(uuid).locate(locU)
         star <- galaxy.locate(locG)

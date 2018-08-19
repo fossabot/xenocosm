@@ -21,7 +21,7 @@ object TraderAPI {
   private implicit val decoder:EntityDecoder[IO, CreateTrader] = jsonOf[IO, CreateTrader]
 
   val service:Generator => HttpService[IO] = gen => HttpService[IO] {
-    case req @ POST -> Root / "v1" / "trader" ⇒
+    case req @ POST -> Root ⇒
       req.as[CreateTrader].flatMap( _.verify.value(gen) match {
         case Right(TraderCreated(moves, trader)) =>
           Created(trader.asJson, jsonHal)
@@ -33,7 +33,6 @@ object TraderAPI {
           InternalServerError()
       })
 
-    case GET -> Root / "v1" / "trader" ⇒
-      Ok(Json.Null, jsonHal)
+    case GET -> Root / UuidSegment(_) ⇒ Ok(Json.Null, jsonHal)
   }
 }
