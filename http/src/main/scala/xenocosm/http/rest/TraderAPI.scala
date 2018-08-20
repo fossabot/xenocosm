@@ -4,14 +4,17 @@ package rest
 import cats.effect.IO
 import io.circe._
 import io.circe.syntax._
-import org.http4s.{EntityDecoder, HttpService}
+import org.http4s.{AuthedService, EntityDecoder}
 import org.http4s.circe._
 import org.http4s.dsl.io._
 import spire.random.Generator
 
 import xenocosm.{CreateTrader, NoMovesRemaining, TooFar, TraderCreated}
+import xenocosm.data.Identity
+import xenocosm.http.middleware.XenocosmAuthentication
+import xenocosm.http.services.DataStore
 
-object TraderAPI {
+final class TraderAPI(val auth:XenocosmAuthentication, val data:DataStore, val gen:Generator) {
   import xenocosm.CommandHandler.syntax._
   import xenocosm.XenocosmCommand.instances._
   import xenocosm.json.command.instances._
@@ -20,9 +23,9 @@ object TraderAPI {
 
   private implicit val decoder:EntityDecoder[IO, CreateTrader] = jsonOf[IO, CreateTrader]
 
-  val service:Generator => HttpService[IO] = gen => HttpService[IO] {
-    case req @ POST -> Root ⇒
-      req.as[CreateTrader].flatMap( _.verify.value(gen) match {
+  val service:AuthedService[Identity, IO] = AuthedService[Identity, IO] {
+    case req @ POST -> Root as identity ⇒
+      req.req.as[CreateTrader].flatMap( _.verify.value(gen) match {
         case Right(TraderCreated(moves, trader)) =>
           Created(trader.asJson, jsonHal)
         case Left(err:NoMovesRemaining.type) =>
@@ -33,6 +36,7 @@ object TraderAPI {
           InternalServerError()
       })
 
-    case GET -> Root / UuidSegment(_) ⇒ Ok(Json.Null, jsonHal)
+    case GET -> Root / UuidSegment(_) as identity ⇒
+      Ok(Json.Null, jsonHal)
   }
 }

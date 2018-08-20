@@ -10,7 +10,7 @@ import org.http4s.server.middleware.GZip
 import spire.random.Generator
 import spire.random.rng.SecureJava
 
-import xenocosm.data.Trader
+import xenocosm.data.Identity
 import xenocosm.http.middleware.XenocosmAuthentication
 import xenocosm.http.rest._
 import xenocosm.http.services.{DataStore, MemoryDataStore}
@@ -29,7 +29,7 @@ object Main extends StreamApp[IO] {
   val unauthenticated:HttpService[IO] => HttpService[IO] =
     gzip compose middleware.ServerHeader.wrap
 
-  val authenticated:AuthedService[Trader, IO] => HttpService[IO] =
+  val authenticated:AuthedService[Identity, IO] => HttpService[IO] =
     unauthenticated compose auth.wrap
 
   val gen:Generator = SecureJava.apply()
@@ -37,7 +37,8 @@ object Main extends StreamApp[IO] {
   override def stream(args: List[String], requestShutdown: IO[Unit]): Stream[IO, ExitCode] =
     BlazeBuilder[IO]
       .bindHttp(config.http.port, config.http.host)
-      .mountService(unauthenticated(TraderAPI.service(gen)), "/v1/trader")
-      .mountService(authenticated(MultiverseAPI.service), "/v1/multiverse")
+      .mountService(unauthenticated(new AuthAPI(auth, data).service), "/auth")
+      .mountService(authenticated(new TraderAPI(auth, data, gen).service), "/v1/trader")
+      .mountService(authenticated(new MultiverseAPI(auth, data).service), "/v1/multiverse")
       .serve
 }

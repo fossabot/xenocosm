@@ -5,3 +5,5 @@ trait All
   with CosmicLocationJson
   with ShipModuleJson
   with TraderJson
+  with ForeignIDJson
+  with IdentityJson

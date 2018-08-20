@@ -8,23 +8,29 @@ import org.http4s.{AuthedService, Cookie, HttpService, Method, Request, Response
 import org.http4s.circe._
 import org.http4s.dsl.io._
 import org.reactormonk.{CryptoBits, PrivateKey}
-import org.scalacheck.Arbitrary
+import org.scalacheck.Gen
+import spire.math.UInt
 
-import xenocosm.data.Trader
+import xenocosm.data.{ForeignID, Identity}
 import xenocosm.http.services.MemoryDataStore
 
 class XenocosmAuthenticationSpec extends xenocosm.test.XenocosmFunSuite with HttpCheck {
-  import Trader.instances._
-  import xenocosm.json.trader._
+  import xenocosm.json.identity._
 
-  val traderA:Trader = implicitly[Arbitrary[Trader]].arbitrary.sample.get
+  val genIdentity:Gen[Identity] = for {
+    uuid <- Gen.uuid
+    ref <- Gen.option(Gen.alphaNumStr.map(ForeignID.apply))
+    moves <- Gen.posNum[Int].map(UInt.apply)
+  } yield Identity(uuid, ref, moves)
+
+  val identityA:Identity = genIdentity.sample.get
   val crypto: CryptoBits = CryptoBits(PrivateKey(scala.io.Codec.toUTF8("test")))
   val data = new MemoryDataStore()
   val auth = XenocosmAuthentication("test", data)
   val uri:Uri = Uri.uri("/")
 
-  val service: HttpService[IO] = auth.wrap(AuthedService[Trader, IO] {
-    case GET -> Root as traderB => Ok(traderB.asJson)
+  val service: HttpService[IO] = auth.wrap(AuthedService[Identity, IO] {
+    case GET -> Root as identityB => Ok(identityB.asJson)
   })
 
   test("handle no cookies provided") {
@@ -62,12 +68,12 @@ class XenocosmAuthenticationSpec extends xenocosm.test.XenocosmFunSuite with Htt
     checkBody[Json](response).get shouldBe Json.fromString("invalid UUID")
   }
 
-  test("handle Trader cannot be found by UUID") {
-    val cookie = auth.toCookie(traderA)
+  test("handle Identity cannot be found by UUID") {
+    val cookie = auth.toCookie(identityA)
     val request: Request[IO] = Request(method = Method.GET, uri = uri).addCookie(cookie)
     val response: IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
     checkStatus[Json](response) shouldBe Status.Forbidden
-    checkBody[Json](response).get shouldBe Json.fromString("Trader not found")
+    checkBody[Json](response).get shouldBe Json.fromString("Identity not found")
   }
 }

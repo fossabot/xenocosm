@@ -5,23 +5,29 @@ import cats.effect.IO
 import io.circe.Json
 import org.http4s._
 import org.http4s.circe._
-import org.scalacheck.Arbitrary
+import org.scalacheck.Gen
+import spire.math.UInt
 
-import xenocosm.data.Trader
+import xenocosm.data.{ForeignID, Identity}
 import xenocosm.http.middleware.XenocosmAuthentication
 import xenocosm.http.services.MemoryDataStore
-import xenocosm.data.Trader.instances._
 
 class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
-  val trader:Trader = implicitly[Arbitrary[Trader]].arbitrary.sample.get
+  val genIdentity:Gen[Identity] = for {
+    uuid <- Gen.uuid
+    ref <- Gen.option(Gen.alphaNumStr.map(ForeignID.apply))
+    moves <- Gen.posNum[Int].map(UInt.apply)
+  } yield Identity(uuid, ref, moves)
+
+  val identity:Identity = genIdentity.sample.get
 
   "GET /" when {
     val data = new MemoryDataStore()
     val auth = XenocosmAuthentication("test", data)
-    val cookie:Cookie = auth.toCookie(trader)
-    val service:HttpService[IO] = auth.wrap(MultiverseAPI.service)
+    val cookie:Cookie = auth.toCookie(identity)
+    val service:HttpService[IO] = auth.wrap(new MultiverseAPI(auth, data).service)
     val uri = Uri.uri("/")
-    data.createTrader(trader)
+    data.createIdentity(identity)
 
     "unauthenticated" should {
       val request:Request[IO] = Request(method = Method.GET, uri = uri)
@@ -49,10 +55,10 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
   "GET /:universeID" when {
     val data = new MemoryDataStore()
     val auth = XenocosmAuthentication("test", data)
-    val cookie:Cookie = auth.toCookie(trader)
-    val service:HttpService[IO] = auth.wrap(MultiverseAPI.service)
+    val cookie:Cookie = auth.toCookie(identity)
+    val service:HttpService[IO] = auth.wrap(new MultiverseAPI(auth, data).service)
     val uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA")
-    data.createTrader(trader)
+    data.createIdentity(identity)
 
     "unauthenticated" should {
       val request:Request[IO] = Request(method = Method.GET, uri = uri)
@@ -80,9 +86,9 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
   "GET /:universeID/:locU" when {
     val data = new MemoryDataStore()
     val auth = XenocosmAuthentication("test", data)
-    val cookie:Cookie = auth.toCookie(trader)
-    val service:HttpService[IO] = auth.wrap(MultiverseAPI.service)
-    data.createTrader(trader)
+    val cookie:Cookie = auth.toCookie(identity)
+    val service:HttpService[IO] = auth.wrap(new MultiverseAPI(auth, data).service)
+    data.createIdentity(identity)
 
     "unauthenticated" should {
       val uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA/-1,-1,0")
@@ -126,9 +132,9 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
   "GET /:universeID/:locU/:locG" when {
     val data = new MemoryDataStore()
     val auth = XenocosmAuthentication("test", data)
-    val cookie:Cookie = auth.toCookie(trader)
-    val service:HttpService[IO] = auth.wrap(MultiverseAPI.service)
-    data.createTrader(trader)
+    val cookie:Cookie = auth.toCookie(identity)
+    val service:HttpService[IO] = auth.wrap(new MultiverseAPI(auth, data).service)
+    data.createIdentity(identity)
 
     "unauthenticated" should {
       val uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA/-1,-1,0/0,-1,0")
@@ -172,9 +178,9 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
   "GET /:universeID/:locU/:locG/:locS" when {
     val data = new MemoryDataStore()
     val auth = XenocosmAuthentication("test", data)
-    val cookie:Cookie = auth.toCookie(trader)
-    val service:HttpService[IO] = auth.wrap(MultiverseAPI.service)
-    data.createTrader(trader)
+    val cookie:Cookie = auth.toCookie(identity)
+    val service:HttpService[IO] = auth.wrap(new MultiverseAPI(auth, data).service)
+    data.createIdentity(identity)
 
     "unauthenticated" should {
       val uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA/-1,-1,0/0,-1,0/-1,0,-1")

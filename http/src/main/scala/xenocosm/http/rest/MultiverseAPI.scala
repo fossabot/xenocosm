@@ -10,10 +10,12 @@ import org.http4s.dsl.io._
 import galaxique.SparseSpace3
 import galaxique.data._
 
-import xenocosm.data.Trader
+import xenocosm.data.Identity
+import xenocosm.http.middleware.XenocosmAuthentication
 import xenocosm.http.response._
+import xenocosm.http.services.DataStore
 
-object MultiverseAPI {
+final class MultiverseAPI(val auth:XenocosmAuthentication, val data:DataStore) {
   import MultiverseResponse.instances._
   import UniverseResponse.instances._
   import GalaxyResponse.instances._
@@ -24,16 +26,16 @@ object MultiverseAPI {
   import Galaxy.instances._
   import Star.instances._
 
-  val service:AuthedService[Trader, IO] = AuthedService[Trader, IO] {
-    case GET -> Root as trader ⇒
+  val service:AuthedService[Identity, IO] = AuthedService[Identity, IO] {
+    case GET -> Root as identity ⇒
       Ok(MultiverseResponse.asJson, jsonHal)
 
-    case GET -> Root / ⎈(uuid) as trader ⇒
+    case GET -> Root / ⎈(uuid) as identity ⇒
       val range = Universe.scale
       val response = UniverseResponse(Universe(uuid), Point3.zero, range)
       Ok(response.asJson, jsonHal)
 
-    case GET -> Root / ⎈(uuid) / ✺(locU) as trader ⇒
+    case GET -> Root / ⎈(uuid) / ✺(locU) as identity ⇒
       val range = Galaxy.scale
       val located = for {
         galaxy <-  Universe(uuid).locate(locU)
@@ -47,7 +49,7 @@ object MultiverseAPI {
           NotFound(Json.Null, jsonHal)
       }
 
-    case GET -> Root / ⎈(uuid) / ✺(locU) / ✨(locG) as trader ⇒
+    case GET -> Root / ⎈(uuid) / ✺(locU) / ✨(locG) as identity ⇒
       val range = Star.scale
       val located = for {
         galaxy <-  Universe(uuid).locate(locU)
@@ -62,7 +64,7 @@ object MultiverseAPI {
           NotFound(Json.Null, jsonHal)
       }
 
-    case GET -> Root / ⎈(uuid) / ✺(locU) / ✨(locG) / ★(locS) as trader ⇒
+    case GET -> Root / ⎈(uuid) / ✺(locU) / ✨(locG) / ★(locS) as identity ⇒
       val located = for {
         galaxy <-  Universe(uuid).locate(locU)
         star <- galaxy.locate(locG)
