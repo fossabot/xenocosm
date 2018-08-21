@@ -27,7 +27,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
     val cookie:Cookie = auth.toCookie(identity)
     val service:HttpService[IO] = auth.wrap(new MultiverseAPI(auth, data).service)
     val uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA")
-    data.createIdentity(identity)
+    data.createIdentity(identity).unsafeRunSync()
 
     "unauthenticated" should {
       val request:Request[IO] = Request(method = Method.GET, uri = uri)
@@ -57,7 +57,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
     val auth = XenocosmAuthentication("test", data)
     val cookie:Cookie = auth.toCookie(identity)
     val service:HttpService[IO] = auth.wrap(new MultiverseAPI(auth, data).service)
-    data.createIdentity(identity)
+    data.createIdentity(identity).unsafeRunSync()
 
     "unauthenticated" should {
       val uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA/-1,-1,0")
@@ -103,7 +103,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
     val auth = XenocosmAuthentication("test", data)
     val cookie:Cookie = auth.toCookie(identity)
     val service:HttpService[IO] = auth.wrap(new MultiverseAPI(auth, data).service)
-    data.createIdentity(identity)
+    data.createIdentity(identity).unsafeRunSync()
 
     "unauthenticated" should {
       val uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA/-1,-1,0/0,-1,0")
@@ -149,7 +149,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
     val auth = XenocosmAuthentication("test", data)
     val cookie:Cookie = auth.toCookie(identity)
     val service:HttpService[IO] = auth.wrap(new MultiverseAPI(auth, data).service)
-    data.createIdentity(identity)
+    data.createIdentity(identity).unsafeRunSync()
 
     "unauthenticated" should {
       val uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA/-1,-1,0/0,-1,0/-1,0,-1")

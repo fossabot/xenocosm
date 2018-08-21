@@ -26,6 +26,9 @@ final class XenocosmAuthentication(val key:PrivateKey, val data:DataStore) {
       crypto.signToken(identity.uuid.toString, clock.millis.toString)
     )
 
+  val withAuthToken:Identity => Response[IO] => Response[IO] =
+    identity => _.addCookie(toCookie(identity))
+
   private val getIdentity:UUID => IO[Either[String, Identity]] =
     data.selectIdentity(_).map({
       case Some(identity) => Right(identity)
@@ -40,7 +43,7 @@ final class XenocosmAuthentication(val key:PrivateKey, val data:DataStore) {
       message <- Either.catchNonFatal(UUID.fromString(token)).leftMap(_ => "invalid UUID")
     } yield message
 
-  private val authUser:Kleisli[IO, Request[IO], Either[String, Identity]] =
+  val authUserFromRequest:Kleisli[IO, Request[IO], Either[String, Identity]] =
     Kleisli(getUUID.andThen({
       case Right(identityID) => getIdentity(identityID)
       case Left(x) => IO.pure(Left(x))
@@ -49,7 +52,7 @@ final class XenocosmAuthentication(val key:PrivateKey, val data:DataStore) {
   private val onFailure:AuthedService[String, IO] =
     Kleisli(request => OptionT.liftF(Forbidden(request.authInfo.asJson)))
 
-  private val middleware:AuthMiddleware[IO, Identity] = AuthMiddleware(authUser, onFailure)
+  private val middleware:AuthMiddleware[IO, Identity] = AuthMiddleware(authUserFromRequest, onFailure)
 
   val wrap:AuthedService[Identity, IO] => HttpService[IO] = middleware
 }
