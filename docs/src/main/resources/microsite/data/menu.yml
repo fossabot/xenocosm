@@ -28,21 +28,7 @@ options:
     menu_section: cavernetics
 
   - title: REST API
-    url: /docs/rest
-    menu_section: rest
-
-    nested_options:
-     - title: Universe API
-       url: /docs/rest/universe
-
-     - title: Galaxy API
-       url: /docs/rest/galaxy
-
-     - title: Star API
-       url: /docs/rest/star
-
-     - title: Planet API
-       url: /docs/rest/planet
+    url: https://xenocosm.docs.apiary.io/
 
   - title: Scaladoc
     url: /api

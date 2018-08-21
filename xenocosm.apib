@@ -1,0 +1,48 @@
+FORMAT: 1A
+HOST: https://xenocosm.com/
+
+# Xenocosm API v0
+
+Xenocosm is a space-trader played exclusively through this API.
+
+## Authentication [/auth]
+
+### Authenticate (Basic Auth) [POST]
+
+Currently, any non-empty username in the Basic Auth credentials will result in success. This
+will change in the future.
+
++ Request
+
+    + Headers
+
+            Authorization: Basic Zm9vOmJhcg==
+
++ Response 303
+
+    + Headers
+
+            Location: /
+
++ Response 401
+
+    + Headers
+
+            WWW-Authenticate: Basic realm="xenocosm"
+
+### Check auth token [HEAD]
+
+This can be used as a "heartbeat" to avoid the session timing out. Any valid token will
+have its expiration reset.
+
++ Response 204
+
++ Response 401
+
+    + Headers
+
+            WWW-Authenticate: Basic realm="xenocosm"
+
+### Revoke auth token [DELETE]
+
++ Response 204
