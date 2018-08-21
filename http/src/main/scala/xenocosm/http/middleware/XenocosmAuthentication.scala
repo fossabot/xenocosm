@@ -7,6 +7,7 @@ import scala.concurrent.duration._
 import cats.data.{Kleisli, OptionT}
 import cats.effect.IO
 import cats.implicits._
+import io.circe.Json
 import io.circe.syntax._
 import org.http4s._
 import org.http4s.circe._
@@ -15,6 +16,7 @@ import org.http4s.server._
 import org.reactormonk.{CryptoBits, PrivateKey}
 
 import xenocosm.data.Identity
+import xenocosm.http.response.apiCurie
 import xenocosm.http.services.DataStore
 
 final class XenocosmAuthentication(val key:PrivateKey, val data:DataStore) {
@@ -55,7 +57,7 @@ final class XenocosmAuthentication(val key:PrivateKey, val data:DataStore) {
     }))
 
   private val onFailure:AuthedService[String, IO] =
-    Kleisli(request => OptionT.liftF(Forbidden(request.authInfo.asJson)))
+    Kleisli(request => OptionT.liftF(Forbidden(XenocosmAuthentication.errorResponse(request.authInfo), jsonHal)))
 
   private val middleware:AuthMiddleware[IO, Identity] = AuthMiddleware(authUserFromRequest, onFailure)
 
@@ -69,4 +71,12 @@ object XenocosmAuthentication {
     val key:PrivateKey = PrivateKey(scala.io.Codec.toUTF8(keyStr))
     new XenocosmAuthentication(key, data)
   }
+
+  val errorResponse:String => Json = message => Json.obj(
+    "_links" -> Json.obj(
+      "curies" -> Json.arr(apiCurie),
+      "api:authentication" -> "/auth".asJson
+    ),
+    "error" -> message.asJson
+  )
 }

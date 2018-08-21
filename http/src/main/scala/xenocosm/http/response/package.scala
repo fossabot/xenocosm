@@ -7,7 +7,7 @@ package object response {
 
   val apiCurie:Json = Json.obj(
     "name" -> "api".asJson,
-    "href" -> "https://robotsnowfall.github.io/xenocosm/docs/rest/{rel}".asJson,
+    "href" -> "https://xenocosm.docs.apiary.io/#reference/0/{rel}".asJson,
     "templated" -> Json.True
   )
 }

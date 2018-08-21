@@ -38,7 +38,7 @@ class XenocosmAuthenticationSpec extends xenocosm.test.XenocosmFunSuite with Htt
     val response: IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
     checkStatus(response) shouldBe Status.Forbidden
-    checkBody[Json](response).get shouldBe Json.fromString("missing cookies")
+    checkBody[Json](response).get shouldBe XenocosmAuthentication.errorResponse("missing cookies")
   }
 
   test("handle no auth cookie provided") {
@@ -47,7 +47,7 @@ class XenocosmAuthenticationSpec extends xenocosm.test.XenocosmFunSuite with Htt
     val response: IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
     checkStatus(response) shouldBe Status.Forbidden
-    checkBody[Json](response).get shouldBe Json.fromString("missing auth cookie")
+    checkBody[Json](response).get shouldBe XenocosmAuthentication.errorResponse("missing auth cookie")
   }
 
   test("handle auth cookie with bad signature") {
@@ -56,7 +56,7 @@ class XenocosmAuthenticationSpec extends xenocosm.test.XenocosmFunSuite with Htt
     val response: IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
     checkStatus(response) shouldBe Status.Forbidden
-    checkBody[Json](response).get shouldBe Json.fromString("invalid cookie signature")
+    checkBody[Json](response).get shouldBe XenocosmAuthentication.errorResponse("invalid cookie signature")
   }
 
   test("handle auth cookie with bad UUID") {
@@ -65,7 +65,7 @@ class XenocosmAuthenticationSpec extends xenocosm.test.XenocosmFunSuite with Htt
     val response: IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
     checkStatus(response) shouldBe Status.Forbidden
-    checkBody[Json](response).get shouldBe Json.fromString("invalid UUID")
+    checkBody[Json](response).get shouldBe XenocosmAuthentication.errorResponse("invalid UUID")
   }
 
   test("handle Identity cannot be found by UUID") {
@@ -74,6 +74,6 @@ class XenocosmAuthenticationSpec extends xenocosm.test.XenocosmFunSuite with Htt
     val response: IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
     checkStatus(response) shouldBe Status.Forbidden
-    checkBody[Json](response).get shouldBe Json.fromString("Identity not found")
+    checkBody[Json](response).get shouldBe XenocosmAuthentication.errorResponse("Identity not found")
   }
 }
