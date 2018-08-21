@@ -1,8 +1,9 @@
 package xenocosm.http
 package middleware
 
-import java.time.Clock
+import java.time.{Clock, Instant}
 import java.util.UUID
+import scala.concurrent.duration._
 import cats.data.{Kleisli, OptionT}
 import cats.effect.IO
 import cats.implicits._
@@ -19,11 +20,15 @@ import xenocosm.http.services.DataStore
 final class XenocosmAuthentication(val key:PrivateKey, val data:DataStore) {
   private val crypto:CryptoBits = CryptoBits(key)
   private val clock:Clock = Clock.systemUTC
+  private val cookieDuration:FiniteDuration = 5.minutes
+  private def expiration:Option[HttpDate] = HttpDate.fromInstant(Instant.now(clock).plusSeconds(cookieDuration.toSeconds)).toOption
 
   val toCookie:Identity => Cookie =
     identity => Cookie(
-      XenocosmAuthentication.cookieName,
-      crypto.signToken(identity.uuid.toString, clock.millis.toString)
+      name = XenocosmAuthentication.cookieName,
+      content = crypto.signToken(identity.uuid.toString, clock.millis.toString),
+      expires = expiration,
+      httpOnly = true
     )
 
   val withAuthToken:Identity => Response[IO] => Response[IO] =
