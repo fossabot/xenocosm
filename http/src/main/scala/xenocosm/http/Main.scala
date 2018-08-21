@@ -38,7 +38,7 @@ object Main extends StreamApp[IO] {
     BlazeBuilder[IO]
       .bindHttp(config.http.port, config.http.host)
       .mountService(unauthenticated(new AuthAPI(auth, data).service), "/auth")
-      .mountService(authenticated(new TraderAPI(auth, data, gen).service), "/v1/trader")
-      .mountService(authenticated(new MultiverseAPI(auth, data).service), "/v1/multiverse")
+      .mountService(authenticated(new TraderAPI(auth, data, gen).service), apiTrader)
+      .mountService(authenticated(new MultiverseAPI(auth, data).service), apiMultiverse)
       .serve
 }

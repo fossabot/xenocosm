@@ -21,37 +21,6 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
 
   val identity:Identity = genIdentity.sample.get
 
-  "GET /" when {
-    val data = new MemoryDataStore()
-    val auth = XenocosmAuthentication("test", data)
-    val cookie:Cookie = auth.toCookie(identity)
-    val service:HttpService[IO] = auth.wrap(new MultiverseAPI(auth, data).service)
-    val uri = Uri.uri("/")
-    data.createIdentity(identity)
-
-    "unauthenticated" should {
-      val request:Request[IO] = Request(method = Method.GET, uri = uri)
-      val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
-
-      "respond with 403 status" in {
-        checkStatus[Json](response) shouldBe Status.Forbidden
-      }
-    }
-
-    "all is well" should {
-      val request:Request[IO] = Request(method = Method.GET, uri = uri).addCookie(cookie)
-      val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
-
-      "respond with 200 status" in {
-        checkStatus[Json](response) shouldBe Status.Ok
-      }
-
-      "respond with JSON body" in {
-        checkBody[Json](response).get shouldBe a[Json]
-      }
-    }
-  }
-
   "GET /:universeID" when {
     val data = new MemoryDataStore()
     val auth = XenocosmAuthentication("test", data)
@@ -65,7 +34,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
       "respond with 403 status" in {
-        checkStatus[Json](response) shouldBe Status.Forbidden
+        checkStatus(response) shouldBe Status.Forbidden
       }
     }
 
@@ -74,7 +43,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
       "respond with 200 status" in {
-        checkStatus[Json](response) shouldBe Status.Ok
+        checkStatus(response) shouldBe Status.Ok
       }
 
       "respond with JSON body" in {
@@ -96,7 +65,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
       "respond with 403 status" in {
-        checkStatus[Json](response) shouldBe Status.Forbidden
+        checkStatus(response) shouldBe Status.Forbidden
       }
     }
 
@@ -106,7 +75,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
       "respond with 200 status" in {
-        checkStatus[Json](response) shouldBe Status.Ok
+        checkStatus(response) shouldBe Status.Ok
       }
 
       "respond with JSON body" in {
@@ -120,7 +89,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
       "respond with 404 status" in {
-        checkStatus[Json](response) shouldBe Status.NotFound
+        checkStatus(response) shouldBe Status.NotFound
       }
 
       "respond with JSON body" in {
@@ -142,7 +111,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
       "respond with 403 status" in {
-        checkStatus[Json](response) shouldBe Status.Forbidden
+        checkStatus(response) shouldBe Status.Forbidden
       }
     }
 
@@ -152,7 +121,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
       "respond with 200 status" in {
-        checkStatus[Json](response) shouldBe Status.Ok
+        checkStatus(response) shouldBe Status.Ok
       }
 
       "respond with JSON body" in {
@@ -166,7 +135,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
       "respond with 404 status" in {
-        checkStatus[Json](response) shouldBe Status.NotFound
+        checkStatus(response) shouldBe Status.NotFound
       }
 
       "respond with JSON body" in {
@@ -188,7 +157,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
       "respond with 403 status" in {
-        checkStatus[Json](response) shouldBe Status.Forbidden
+        checkStatus(response) shouldBe Status.Forbidden
       }
     }
 
@@ -198,7 +167,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
       "respond with 200 status" in {
-        checkStatus[Json](response) shouldBe Status.Ok
+        checkStatus(response) shouldBe Status.Ok
       }
 
       "respond with JSON body" in {
@@ -212,7 +181,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
       "respond with 404 status" in {
-        checkStatus[Json](response) shouldBe Status.NotFound
+        checkStatus(response) shouldBe Status.NotFound
       }
 
       "respond with JSON body" in {

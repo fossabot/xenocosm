@@ -128,14 +128,14 @@ lazy val warnUnusedImport = Seq(
 )
 
 lazy val scoverageSettings = Seq(
-  coverageMinimum := 0,
+  coverageMinimum := 80,
   coverageFailOnMinimum := true,
   coverageHighlighting := true
 )
 
 lazy val gitSettings = Seq(
   git.useGitDescribe := true,
-  git.baseVersion := "40.0"
+  git.baseVersion := "0.0"
 )
 
 lazy val micrositeSettings = Seq(

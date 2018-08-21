@@ -5,7 +5,7 @@ import org.http4s._
 
 trait HttpCheck {
 
-  def checkStatus[A](actual:IO[Response[IO]])(implicit ev: EntityDecoder[IO, A]):Status =
+  def checkStatus(actual:IO[Response[IO]]):Status =
     actual.unsafeRunSync.status
 
   def checkBody[A](actual:IO[Response[IO]])(implicit ev: EntityDecoder[IO, A]):Option[A] = {

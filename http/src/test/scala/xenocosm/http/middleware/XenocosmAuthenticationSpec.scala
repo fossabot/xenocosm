@@ -37,7 +37,7 @@ class XenocosmAuthenticationSpec extends xenocosm.test.XenocosmFunSuite with Htt
     val request: Request[IO] = Request(method = Method.GET, uri = uri)
     val response: IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
-    checkStatus[Json](response) shouldBe Status.Forbidden
+    checkStatus(response) shouldBe Status.Forbidden
     checkBody[Json](response).get shouldBe Json.fromString("missing cookies")
   }
 
@@ -46,7 +46,7 @@ class XenocosmAuthenticationSpec extends xenocosm.test.XenocosmFunSuite with Htt
     val request: Request[IO] = Request(method = Method.GET, uri = uri).addCookie(cookie)
     val response: IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
-    checkStatus[Json](response) shouldBe Status.Forbidden
+    checkStatus(response) shouldBe Status.Forbidden
     checkBody[Json](response).get shouldBe Json.fromString("missing auth cookie")
   }
 
@@ -55,7 +55,7 @@ class XenocosmAuthenticationSpec extends xenocosm.test.XenocosmFunSuite with Htt
     val request: Request[IO] = Request(method = Method.GET, uri = uri).addCookie(cookie)
     val response: IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
-    checkStatus[Json](response) shouldBe Status.Forbidden
+    checkStatus(response) shouldBe Status.Forbidden
     checkBody[Json](response).get shouldBe Json.fromString("invalid cookie signature")
   }
 
@@ -64,7 +64,7 @@ class XenocosmAuthenticationSpec extends xenocosm.test.XenocosmFunSuite with Htt
     val request: Request[IO] = Request(method = Method.GET, uri = uri).addCookie(cookie)
     val response: IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
-    checkStatus[Json](response) shouldBe Status.Forbidden
+    checkStatus(response) shouldBe Status.Forbidden
     checkBody[Json](response).get shouldBe Json.fromString("invalid UUID")
   }
 
@@ -73,7 +73,7 @@ class XenocosmAuthenticationSpec extends xenocosm.test.XenocosmFunSuite with Htt
     val request: Request[IO] = Request(method = Method.GET, uri = uri).addCookie(cookie)
     val response: IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
-    checkStatus[Json](response) shouldBe Status.Forbidden
+    checkStatus(response) shouldBe Status.Forbidden
     checkBody[Json](response).get shouldBe Json.fromString("Identity not found")
   }
 }

@@ -16,7 +16,6 @@ import xenocosm.http.response._
 import xenocosm.http.services.DataStore
 
 final class MultiverseAPI(val auth:XenocosmAuthentication, val data:DataStore) {
-  import MultiverseResponse.instances._
   import UniverseResponse.instances._
   import GalaxyResponse.instances._
   import StarResponse.instances._
@@ -27,8 +26,6 @@ final class MultiverseAPI(val auth:XenocosmAuthentication, val data:DataStore) {
   import Star.instances._
 
   val service:AuthedService[Identity, IO] = AuthedService[Identity, IO] {
-    case GET -> Root as identity ⇒
-      Ok(MultiverseResponse.asJson, jsonHal)
 
     case GET -> Root / ⎈(uuid) as identity ⇒
       val range = Universe.scale
