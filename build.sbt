@@ -128,7 +128,7 @@ lazy val warnUnusedImport = Seq(
 )
 
 lazy val scoverageSettings = Seq(
-  coverageMinimum := 80,
+  coverageMinimum := 70,
   coverageFailOnMinimum := true,
   coverageHighlighting := true
 )
