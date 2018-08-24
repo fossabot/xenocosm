@@ -4,9 +4,9 @@ import io.circe.{Decoder, Encoder}
 import spire.math.UInt
 
 trait UIntJson {
-  implicit val densityHasJsonEncode:Encoder[UInt] =
+  implicit val uintHasJsonEncode:Encoder[UInt] =
     Encoder.encodeInt.contramap[UInt](_.toInt)
 
-  implicit val densityHasJsonDecode:Decoder[UInt] =
+  implicit val uintHasJsonDecode:Decoder[UInt] =
     Decoder.decodeInt.map(UInt.apply)
 }

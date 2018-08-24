@@ -1,7 +1,7 @@
 package pseudoglot
 package parser
 
-import cats.data.EitherT
+import cats.data.{EitherT, NonEmptyList}
 import cats.implicits._
 import fastparse.all._
 
@@ -9,7 +9,7 @@ object PhonesParser extends PhoneParser {
   import data.{Phones, Transcription}
 
   protected lazy val phoneSeq:Parser[Phones] =
-    P(phone ~ ("::" ~ phone).rep).map({ case (head, tail) => (head +: tail).toList })
+    P(phone ~ ("::" ~ phone).rep).map({ case (head, tail) => NonEmptyList(head, tail.toList) })
 
   private lazy val notation:Parser[Phones] =
     P(Start ~ phoneSeq ~ End)

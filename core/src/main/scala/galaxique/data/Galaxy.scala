@@ -19,7 +19,6 @@ final case class Galaxy(universe:Universe, loc:Point3) { self =>
 
 object Galaxy {
   import interop.squants.instances._
-  import Universe.instances._
 
   lazy val scale:Length = Parsecs(1)
 
@@ -42,20 +41,23 @@ object Galaxy {
   private lazy val mass:Interval[Mass] = Interval(massMin, massMax)
   private lazy val massDist:Dist[Mass] = mass.dist(massMin, massMax, massMin / 100)
 
+  // Scale a double from [0.0, 1.0) to correspond to a point within the galaxy
+  private val toCoordinate:Galaxy => Double => Length = galaxy => d =>
+    scale * ((galaxy.diameter * ((2 * d) - 1)) / scale).floor
+
+  //FIXME: Calculate z-axis
+  val point:Galaxy => Dist[Point3] = galaxy =>
+    for {
+      x <- Dist.double
+      y <- Dist.double
+    } yield Point3(
+      toCoordinate(galaxy)(x),
+      toCoordinate(galaxy)(y),
+      Parsecs(0)
+    )
+
   trait Instances {
     implicit val galaxyHasEq:Eq[Galaxy] = Eq.fromUniversalEquals[Galaxy]
-    implicit val galaxyHasDist:Dist[Galaxy] =
-      for {
-        universe <- Dist[Universe]
-        interval = Interval(-universe.radius, universe.radius)
-        dist = interval.dist(-universe.radius, universe.radius, universe.radius / 1000)
-        x0 <- dist
-        y0 <- dist
-        z0 <- dist
-        x = (x0.in(Parsecs) / 10000).floor * 10000
-        y = (y0.in(Parsecs) / 10000).floor * 10000
-        z = (z0.in(Parsecs) / 10000).floor * 10000
-      } yield Galaxy(universe, Point3(x, y, z))
 
     implicit val galaxyHasSparseSpace:SparseSpace3[Galaxy, Star] =
       SparseSpace3.fromStandardProof[Galaxy, Star](Parsecs, Galaxy.scale)(Star.apply)(bytes)

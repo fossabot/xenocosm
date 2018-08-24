@@ -96,7 +96,7 @@ import USEnglish.instances._
 
 ## Transcribe the phonology
 
-Now with all the bookkeeping out of the way, lets see what we got. First, we'll
+Now with all the bookkeeping out of the way, lets see what we have. First, we'll
 generate an alphabet (of sorts), which simply transcribes each `Phone` in our
 `Prosody` using the above `Transcription`. Since our `USEnglish` transcription
 doesn't provide a mapping for every possible vowel and consonant, the
@@ -105,9 +105,10 @@ mapping available. If there is nothing close, it will transcribe the `Phone` as
 an underscore (`_`).
 
 ```tut
-val alphabet = prosody.phonology.pulmonics ++ prosody.phonology.vowels
+import cats.data.NonEmptyList
 
-println(alphabet.map(p => List(p).transcribe).mkString(", "))
+println(prosody.phonology.pulmonics.map(p => NonEmptyList.one(p).transcribe).toList.mkString(", "))
+println(prosody.phonology.vowels.map(v => NonEmptyList.one(v).transcribe).toList.mkString(", "))
 ```
 
 ## Get some monosyllables from the Prosody

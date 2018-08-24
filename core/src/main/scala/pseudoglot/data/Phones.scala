@@ -1,18 +1,18 @@
 package pseudoglot
 package data
 
-import cats.{Eq, Show}
+import cats.{Eq, Eval, Show}
 import cats.implicits._
 
 object Phones {
   import Phone.instances._
 
   val stringify:Phones => String =
-    _.foldRight(List.empty[String])({
+    _.foldRight(Eval.now(List.empty[String]))({
       case (NullPhoneme, ys) => ys
-      case (x:Pulmonic, ys) => x.show :: ys
-      case (x:Vowel, ys) => x.show :: ys
-    }).mkString("::")
+      case (x:Pulmonic, ys) => ys.map(x.show :: _)
+      case (x:Vowel, ys) => ys.map(x.show :: _)
+    }).value.mkString("::")
 
   trait Instances {
     implicit val phonesHaveEq:Eq[Phones] = Eq.fromUniversalEquals[Phones]

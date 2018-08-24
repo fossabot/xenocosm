@@ -23,16 +23,28 @@ object Phone {
   lazy val pulmonicCount:Int = Voicing.all.size * Place.all.size * Manner.all.size
   lazy val vowelCount:Int = Roundedness.all.size * Height.all.size * Backness.all.size
 
+  trait NullPhonemeInstances {
+    implicit val nullPhonemeHasEq:Eq[NullPhoneme.type] =
+      Eq.fromUniversalEquals[NullPhoneme.type]
+
+    implicit val nullPhonemeHasDist:Dist[NullPhoneme.type] =
+      Dist.constant(NullPhoneme)
+
+    implicit val nullPhonemeHasShow:Show[NullPhoneme.type] =
+      Show.show(_ => "")
+
+    // Chebyshev (chess) distance
+    implicit val nullPhonemeHasMetricSpace:MetricSpace[NullPhoneme.type, Int] =
+      (_: NullPhoneme.type, _: NullPhoneme.type) => 0
+  }
+
   trait PulmonicInstances {
     implicit val pulmonicHasEq: Eq[Pulmonic] =
       Eq.fromUniversalEquals[Pulmonic]
 
+    // Only IPA Pulmonics by default
     implicit val pulmonicHasDist: Dist[Pulmonic] =
-      for {
-        voicing <- Dist[Voicing]
-        place <- Dist[Place]
-        manner <- Dist[Manner]
-      } yield Pulmonic(voicing, place, manner)
+      Dist.oneOf(IPA.pulmonics.keys.toSeq:_*)
 
     implicit val pulmonicHasShow: Show[Pulmonic] =
       Show.show(p => Seq(p.voicing.show, p.place.show, p.manner.show).mkString(":"))
@@ -50,12 +62,9 @@ object Phone {
     implicit val vowelHasEq: Eq[Vowel] =
       Eq.fromUniversalEquals[Vowel]
 
+    // Only IPA Vowels by default
     implicit val vowelHasDist: Dist[Vowel] =
-      for {
-        roundedness <- Dist[Roundedness]
-        height <- Dist[Height]
-        backness <- Dist[Backness]
-      } yield Vowel(roundedness, height, backness)
+      Dist.oneOf(IPA.vowels.keys.toSeq:_*)
 
     implicit val vowelHasShow: Show[Vowel] =
       Show.show(v => Seq(v.roundedness.show, v.height.show, v.backness.show).mkString(":"))
@@ -69,6 +78,6 @@ object Phone {
       ).max
   }
 
-  trait Instances extends PulmonicInstances with VowelInstances
+  trait Instances extends NullPhonemeInstances with PulmonicInstances with VowelInstances
   object instances extends Instances
 }

@@ -6,11 +6,8 @@ import cats.data.Kleisli
   * Provides data types and typeclasses for rogue-like elements such as NPCs.
   *
   * ==Overview==
-  * As much as possible, all data types have an instance of `spire.random.Dist`
-  * in the companion object.
+  * TODO
   */
 package object cavernetics {
-
   type FSM[T, E] = Kleisli[Eval, (T, E), T]
-
 }

@@ -4,8 +4,7 @@ package response
 import galaxique.data.{Planet, Point3, Star}
 import galaxique.implicits._
 import io.circe._
-import spire.random.Dist
-import squants.space.{AstronomicalUnits, Length}
+import squants.space.Length
 
 final case class StarResponse(star:Star, loc:Point3, range:Length) {
   lazy val planets:Iterator[Planet] = star.nearby(loc, range)
@@ -17,9 +16,6 @@ object StarResponse {
     import galaxique.json.star._
     import interop.squants.json.instances._
     import io.circe.syntax._
-
-    implicit val starResponseHasDist:Dist[StarResponse] =
-      Dist[Star].map(star => StarResponse(star, Point3.zero.in(AstronomicalUnits), Star.scale))
 
     implicit val starResponseHasJsonEncoder:Encoder[StarResponse] =
       Encoder.instance(res => Json.obj(

@@ -210,7 +210,7 @@ object MorganKeenan {
 
   trait Instances {
     implicit val morganKeenanHasDist:Dist[MorganKeenan] =
-      Dist.weightedMix[MorganKeenan](weightedDist:_*)
+      Dist.weightedMix[MorganKeenan](Observed.all.map(mk => mk.frequency -> Dist.constant(mk)):_*)
   }
   object instances extends Instances
 }

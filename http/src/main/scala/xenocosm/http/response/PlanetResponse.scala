@@ -2,9 +2,7 @@ package xenocosm.http
 package response
 
 import galaxique.data.Planet
-import galaxique.implicits._
 import io.circe._
-import spire.random.Dist
 
 final case class PlanetResponse(planet:Planet)
 
@@ -12,9 +10,6 @@ object PlanetResponse {
   trait Instances {
     import galaxique.json.planet._
     import io.circe.syntax._
-
-    implicit val planetResponseHasDist:Dist[PlanetResponse] =
-      Dist[Planet].map(PlanetResponse.apply)
 
     implicit val planetResponseHasJsonEncoder:Encoder[PlanetResponse] =
       Encoder.instance({ res =>

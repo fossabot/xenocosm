@@ -4,21 +4,13 @@ package rest
 import cats.effect.IO
 import org.http4s._
 import org.http4s.headers.{`WWW-Authenticate`, Authorization, Location}
-import org.scalacheck.Gen
-import spire.math.UInt
 
 import xenocosm.data.{ForeignID, Identity}
 import xenocosm.http.middleware.XenocosmAuthentication
 import xenocosm.http.services.MemoryDataStore
 
 class AuthAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
-  val genIdentity:Gen[Identity] = for {
-    uuid <- Gen.uuid
-    ref <- Gen.option(Gen.alphaNumStr.map(ForeignID.apply))
-    moves <- Gen.posNum[Int].map(UInt.apply)
-  } yield Identity(uuid, ref, moves)
-
-  val identity:Identity = genIdentity.sample.get.copy(ref = Some(ForeignID("foo")))
+  val identity:Identity = xenocosm.gen.identity.sample.get
 
   "POST /" when {
     val uri = Uri.uri("/")

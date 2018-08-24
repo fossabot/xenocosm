@@ -46,6 +46,21 @@ object Universe {
   private lazy val diameter:Interval[Length] = Interval(diameterMin, diameterMax)
   private lazy val diameterDist:Dist[Length] = diameter.dist(diameterMin, diameterMax, diameterMin / 1000)
 
+  // Scale a double from [0.0, 1.0) to correspond to a point within the universe
+  private val toCoordinate:Universe => Double => Length = universe => d =>
+    scale * ((universe.diameter * ((2 * d) - 1)) / scale).floor
+
+  //FIXME: Calculate z-axis
+  val point:Universe => Dist[Point3] = universe =>
+    for {
+      x <- Dist.double
+      y <- Dist.double
+    } yield Point3(
+      toCoordinate(universe)(x),
+      toCoordinate(universe)(y),
+      Parsecs(0)
+    )
+
   trait Instances {
     implicit val universeHasEq:Eq[Universe] = Eq.fromUniversalEquals[Universe]
 

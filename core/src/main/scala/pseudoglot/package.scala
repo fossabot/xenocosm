@@ -3,8 +3,7 @@
   * Provides data types and typeclasses for procedurally-generated phonologies
   *
   * ==Overview==
-  * As much as possible, all data types have an instance of `spire.random.Dist`
-  * in the companion object.
+  * TODO
   */
 package object pseudoglot {
 

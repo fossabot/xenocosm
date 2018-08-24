@@ -3,12 +3,14 @@ package xenocosm.json
 import java.util.UUID
 import galaxique.data.Point3
 import io.circe.syntax._
+import org.scalacheck.Arbitrary
 
 import xenocosm.data.CosmicLocation
 
 class CosmicLocationJsonSpec extends xenocosm.test.XenocosmFunSuite {
-  import CosmicLocation.instances._
   import cosmicLocation._
+
+  implicit val arb:Arbitrary[CosmicLocation] = Arbitrary(xenocosm.gen.cosmicLocation)
 
   test("CosmicLocation.json.isomorphism") {
     forAll { a:CosmicLocation =>

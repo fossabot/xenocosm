@@ -1,14 +1,13 @@
 package pseudoglot.json
 
 import io.circe.syntax._
-import pseudoglot.data.{Magic, Phonology}
-import spire.random.Dist
+import org.scalacheck.Arbitrary
+import pseudoglot.data.Phonology
 
 class PhonologyJsonSpec extends xenocosm.test.XenocosmFunSuite {
-  import Magic.default
   import phonology._
 
-  implicit val dist:Dist[Phonology] = Phonology.dist
+  implicit val arb:Arbitrary[Phonology] = Arbitrary(pseudoglot.gen.phonology)
 
   test("Phonology.json.isomorphism") {
     forAll { a:Phonology =>

@@ -3,8 +3,7 @@
   * Provides data types and typeclasses for procedurally-generated markets
   *
   * ==Overview==
-  * As much as possible, all data types have an instance of `spire.random.Dist`
-  * in the companion object.
+  * TODO
   */
 package object economancy {
   object pointOfSale extends PointOfSale.Syntax

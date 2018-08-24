@@ -1,14 +1,14 @@
 package xenocosm
 package data
 
-import spire.random.Dist
+import cats.kernel.Eq
 
 sealed trait Cargo
 case object Vacuum extends Cargo
 
 object Cargo {
   trait Instances {
-    implicit val cargoHasDist:Dist[Cargo] = Dist.constant(Vacuum)
+    implicit val cargoHasEq:Eq[Cargo] = Eq.fromUniversalEquals[Cargo]
   }
   object instances extends Instances
 }

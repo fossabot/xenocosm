@@ -9,14 +9,14 @@ object Prosody {
   import PhonotacticRule.syntax._
 
   def syllableRule(prosody:Prosody):Dist[PhonotacticRule] = {
-    val consonantRules = AnyPulmonic :: prosody.phonology.phonotactics.filterNot(_.hasVowel).toList
-    val vowelRules = AnyVowel :: prosody.phonology.phonotactics.filter(_.hasVowel).toList
+    val consonantRules = AnyPulmonic :: prosody.phonology.phonotactics.filterNot(_.hasVowel)
+    val vowelRules = AnyVowel :: prosody.phonology.phonotactics.filter(_.hasVowel)
     for {
       cluster <- Dist.oneOf(consonantRules: _*)
       onset <- Dist.oneOf(Empty, cluster)
       rhyme <- Dist.oneOf(vowelRules: _*)
     } yield if (rhyme.startsWithVowel) {
-      Concat(List(onset, rhyme))
+      Concat(onset, rhyme)
     } else {
       rhyme
     }

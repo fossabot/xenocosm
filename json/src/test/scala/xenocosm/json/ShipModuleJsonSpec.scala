@@ -2,12 +2,14 @@ package xenocosm.json
 
 import io.circe.{CursorOp, DecodingFailure, Json}
 import io.circe.syntax._
+import org.scalacheck.Arbitrary
 
 import xenocosm.data.ShipModule
 
 class ShipModuleJsonSpec extends xenocosm.test.XenocosmFunSuite {
-  import ShipModule.instances._
   import shipModule._
+
+  implicit val arb:Arbitrary[ShipModule] = Arbitrary(xenocosm.gen.shipModule)
 
   test("ShipModule.json.isomorphism") {
     forAll { a:ShipModule =>

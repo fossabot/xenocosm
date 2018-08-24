@@ -3,8 +3,7 @@
   * Provides data types and typeclasses for procedurally-generated universes
   *
   * ==Overview==
-  * As much as possible, all data types have an instance of `spire.random.Dist`
-  * in the companion object.
+  * TODO
   */
 package object galaxique {
   // 6.67408(31)×10−11 m3⋅kg−1⋅s−2

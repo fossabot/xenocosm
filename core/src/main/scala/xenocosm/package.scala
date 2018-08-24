@@ -1,7 +1,15 @@
-import cats.data.Kleisli
-import spire.random.Dist
-
+/**
+  * Provides data types and typeclasses for Xenocosm, a space trader
+  *
+  */
 package object xenocosm {
-  // A type alias for the output of a `CommandHandler.verify`
-  type Verification[C <: XenocosmCommand, E <: XenocosmEvent] = Kleisli[Dist, C, Either[XenocosmError, E]]
+  object instances
+    extends data.Cargo.Instances
+       with data.CosmicLocation.Instances
+       with data.CosmicLocation.Syntax
+       with data.ForeignID.Instances
+       with data.Identity.Instances
+       with data.Ship.Instances
+       with data.ShipModule.Instances
+       with data.Trader.Instances
 }

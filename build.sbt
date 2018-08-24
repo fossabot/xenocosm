@@ -37,7 +37,6 @@ lazy val commonDependencies = Seq(
 
 lazy val core = project.in(file("core"))
   .enablePlugins(BuildInfoPlugin, GitVersioning)
-  .dependsOn(testkit % Test)
   .settings(moduleName := "xenocosm-core")
   .settings(xenocosmSettings ++ gitSettings ++ buildInfoSettings)
   .settings(libraryDependencies ++= Seq(
@@ -84,6 +83,7 @@ lazy val docs = project.in(file("docs"))
   .settings(xenocosmSettings ++ micrositeSettings ++ unidocSettings)
 
 lazy val testkit = project.in(file("testkit"))
+  .dependsOn(core)
   .settings(moduleName := "xenocosm-testkit")
   .settings(xenocosmSettings)
   .settings(Seq(
@@ -200,7 +200,7 @@ lazy val dockerSettings = Seq(
   dockerUpdateLatest := true
 )
 
-addCommandAlias("validateCore", ";coverage;core/compile;core/test;core/coverageReport")
-addCommandAlias("validateJson", ";coverage;json/compile;json/test;json/coverageReport")
-addCommandAlias("validateHttp", ";coverage;http/compile;http/test;http/coverageReport")
-addCommandAlias("validate", ";clean;scalastyle;validateCore;validateJson;validateHttp;coverageAggregate")
+addCommandAlias("testCore", ";coverage;core/compile;testkit/test;core/coverageReport")
+addCommandAlias("testJson", ";coverage;json/compile;json/test;json/coverageReport")
+addCommandAlias("testHttp", ";coverage;http/compile;http/test;http/coverageReport")
+addCommandAlias("validate", ";clean;scalastyle;testCore;testJson;testHttp;coverageAggregate")

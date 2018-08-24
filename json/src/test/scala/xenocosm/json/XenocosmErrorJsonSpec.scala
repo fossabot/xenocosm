@@ -1,21 +1,14 @@
 package xenocosm.json
 
 import io.circe.syntax._
-import org.scalacheck.{Arbitrary, Gen}
-import squants.space.Parsecs
+import org.scalacheck.Arbitrary
 
-import xenocosm.{NoMovesRemaining, TooFar, XenocosmError}
+import xenocosm.XenocosmError
 
 class XenocosmErrorJsonSpec extends xenocosm.test.XenocosmFunSuite {
   import xenocosmError._
 
-  val gen:Gen[XenocosmError] =
-    for {
-      distance <- Gen.posNum[Int].map(Parsecs[Int])
-      error <- Gen.oneOf(NoMovesRemaining, TooFar(distance))
-    } yield error
-
-  implicit val arb:Arbitrary[XenocosmError] = Arbitrary(gen)
+  implicit val arb:Arbitrary[XenocosmError] = Arbitrary(xenocosm.gen.error)
 
   test("XenocosmError.json.isomorphism") {
     forAll { a:XenocosmError =>

@@ -25,10 +25,10 @@ trait ShipJson {
 
   implicit val shipHasJsonDecoder:Decoder[Ship] =
     Decoder.instance { hcur =>
-        for {
-          uuid <- hcur.downField("uuid").as[UUID]
-          loc <- hcur.downField("loc").as[CosmicLocation]
-          modules <- hcur.downField("modules").as[List[ShipModule]]
-        } yield Ship(uuid, loc, modules)
+      for {
+        uuid <- hcur.downField("uuid").as[UUID]
+        loc <- hcur.downField("loc").as[CosmicLocation]
+        modules <- hcur.downField("modules").as[List[ShipModule]]
+      } yield Ship(uuid, loc, modules)
     }
 }

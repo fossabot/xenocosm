@@ -14,6 +14,8 @@ final case class Planet(star:Star, loc:Point3) { self =>
   val radius:Length = Planet.radiusDist(gen).in(Kilometers)
   val mass:Mass = Planet.massDist(gen).in(Kilograms)
   val semiMajorAxis:Length = Planet.semiMajorAxisDist(gen).in(AstronomicalUnits)
+  val eccentricity:Double = gen.nextDouble()
+  lazy val semiMinorAxis:Length = semiMajorAxis * Math.sqrt(1 - Math.pow(eccentricity, 2d))
   lazy val volume:Volume = (radius.cubed * Math.PI * 4) / 3
   lazy val density:Density = mass / volume
   lazy val orbitalPeriod:Time = Seconds(Math.sqrt(semiMajorAxis.cubed.to(CubicMeters) / star.μ) * Math.PI * 2)
@@ -21,7 +23,6 @@ final case class Planet(star:Star, loc:Point3) { self =>
 
 object Planet {
   import interop.squants.instances._
-  import Star.instances._
 
   private[data] val bytes:Planet => Array[Byte] = planet =>
     Star.bytes(planet.star) ++ Point3.bytes(AstronomicalUnits)(planet.loc)
@@ -49,23 +50,6 @@ object Planet {
 
   trait Instances {
     implicit val planetHasEq:Eq[Planet] = Eq.fromUniversalEquals[Planet]
-    implicit val planetHasDist:Dist[Planet] =
-      for {
-        star <- Dist[Star]
-        radius <- radiusDist
-        mass <- massDist
-        volume = (radius.cubed * Math.PI * 4) / 3
-        density = mass / volume
-        rocheLimit = star.rocheLimit(density)
-        interval = Interval(rocheLimit, AstronomicalUnits(100))
-        dist = interval.dist(rocheLimit, AstronomicalUnits(100), rocheLimit / 10)
-        x0 <- dist
-        y0 <- dist
-        z0 <- dist
-        x = x0.in(AstronomicalUnits).floor
-        y = y0.in(AstronomicalUnits).floor
-        z = z0.in(AstronomicalUnits).floor
-      } yield Planet(star, Point3(x, y, z))
   }
   object instances extends Instances
 }

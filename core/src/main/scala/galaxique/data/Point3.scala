@@ -5,9 +5,8 @@ import java.nio.ByteBuffer
 import cats.kernel.Eq
 import spire.algebra.MetricSpace
 import spire.math.Bounded
-import spire.random.Dist
 import squants.UnitOfMeasure
-import squants.space.{Length, LightYears, Meters}
+import squants.space.{Length, Meters}
 
 final case class Point3(x:Length, y:Length, z:Length) {
   def in(uom:UnitOfMeasure[Length]):Point3 =
@@ -37,15 +36,11 @@ object Point3 {
   trait Instances {
 
     implicit val point3HasMetricSpace:MetricSpace[Point3, Length] =
-      new MetricSpace[Point3, Length] {
-        def distance(v:Point3, w:Point3):Length =
-          ((v.x - w.x).squared + (v.y - w.y).squared + (v.z - w.z).squared).squareRoot
-      }
+      (v:Point3, w:Point3) =>
+        ((v.x - w.x).squared + (v.y - w.y).squared + (v.z - w.z).squared).squareRoot
 
     implicit val point3HasEq:Eq[Point3] = Eq.fromUniversalEquals[Point3]
 
-    implicit val point3HasDist:Dist[Point3] =
-      Dist.array[Int](3, 3).map(xs => Point3(LightYears(xs(0)), LightYears(xs(1)), LightYears(xs(2))))
   }
   object instances extends Instances
 }

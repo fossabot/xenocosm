@@ -9,6 +9,7 @@ package object json {
   object shipModule extends ShipModuleJson
   object trader extends TraderJson
   object xenocosmError extends XenocosmErrorJson
+  object xenocosmEvent extends XenocosmEventJson
 
   object implicits extends All
 }

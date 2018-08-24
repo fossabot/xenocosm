@@ -2,7 +2,8 @@ package pseudoglot
 package data
 
 import scala.annotation.tailrec
-import cats.{Eq, Monoid, Show}
+import cats.{Eq, Show}
+import cats.data.NonEmptyList
 import cats.implicits._
 import spire.random.Dist
 
@@ -11,8 +12,8 @@ case object Empty extends PhonotacticRule
 case object AnyPulmonic extends PhonotacticRule
 case object AnyVowel extends PhonotacticRule
 final case class Literal[T <: Phone](t:T) extends PhonotacticRule
-final case class Choose(xs:List[PhonotacticRule]) extends PhonotacticRule
-final case class Concat(xs:List[PhonotacticRule]) extends PhonotacticRule
+final case class Choose(lhs:PhonotacticRule, rhs:PhonotacticRule) extends PhonotacticRule
+final case class Concat(lhs:PhonotacticRule, rhs:PhonotacticRule) extends PhonotacticRule
 
 object PhonotacticRule {
   import Phone.instances._
@@ -21,20 +22,16 @@ object PhonotacticRule {
   val ruleHasVowel:PhonotacticRule => Boolean = {
       case AnyVowel => true
       case Literal(_:Vowel) => true
-      case Concat(Nil) => false
-      case Concat(x :: xs) => ruleHasVowel(x) || ruleHasVowel(Concat(xs))
-      case Choose(Nil) => false
-      case Choose(x :: xs) => ruleHasVowel(x) && ruleHasVowel(Choose(xs))
+      case Concat(lhs, rhs) => ruleHasVowel(lhs) || ruleHasVowel(rhs)
+      case Choose(lhs, rhs) => ruleHasVowel(lhs) && ruleHasVowel(rhs)
       case _ => false
     }
 
   val startsWithVowel:PhonotacticRule => Boolean = {
       case AnyVowel => true
       case Literal(_:Vowel) => true
-      case Concat(Nil) => false
-      case Concat(x :: _) => startsWithVowel(x)
-      case Choose(Nil) => false
-      case Choose(x :: xs) => startsWithVowel(x) && startsWithVowel(Choose(xs))
+      case Concat(lhs, _) => startsWithVowel(lhs)
+      case Choose(lhs, rhs) => startsWithVowel(lhs) && startsWithVowel(rhs)
       case _ => false
     }
 
@@ -52,8 +49,8 @@ object PhonotacticRule {
       case Literal(NullPhoneme) ⇒ ""
       case Literal(p:Pulmonic) ⇒ s"[${p.show}]"
       case Literal(v:Vowel) ⇒ s"[${v.show}]"
-      case Concat(rules) ⇒ toNotation("", rules)
-      case Choose(rules) ⇒ toNotation("|", rules)
+      case Concat(lhs, rhs) ⇒ toNotation("", List(lhs, rhs))
+      case Choose(lhs, rhs) ⇒ toNotation("|", List(lhs, rhs))
     }
 
   val literalPulmonic:Phones => Dist[PhonotacticRule] =
@@ -61,6 +58,14 @@ object PhonotacticRule {
 
   val literalVowel:Phones => Dist[PhonotacticRule] =
     phones => Dist.oneOf(phones.vowels:_*).map(Literal.apply)
+
+  val minimize:PhonotacticRule => PhonotacticRule = {
+    case Choose(Empty, rule) => minimize(rule)
+    case Choose(rule, Empty) => minimize(rule)
+    case Concat(Empty, rule) => minimize(rule)
+    case Concat(rule, Empty) => minimize(rule)
+    case rule => rule
+  }
 
   // scalastyle:off cyclomatic.complexity
   def ruleFromPhones(phones:Phones)(implicit magic:Magic):Dist[PhonotacticRule] = Dist.gen { gen ⇒
@@ -71,33 +76,25 @@ object PhonotacticRule {
     def loop(acc:PhonotacticRule):PhonotacticRule = (acc, gen.nextDouble()) match {
       case (AnyVowel, d)            if d > magic.literal ⇒ loop(vowelDist(gen))
       case (AnyPulmonic, d)         if d > magic.literal ⇒ loop(pulmonicDist(gen))
-      case (Literal(x:Vowel), d)    if d > magic.concat ⇒ loop(Concat(List(AnyPulmonic, Literal(x))))
-      case (Literal(x:Pulmonic), d) if d > magic.concat ⇒ loop(Concat(List(AnyVowel, Literal(x))))
-      case (Concat(xs), d)          if d > magic.choose ⇒ Choose(xs)
+      case (Literal(x:Vowel), d)    if d > magic.concat ⇒ loop(Concat(AnyPulmonic, Literal(x)))
+      case (Literal(x:Pulmonic), d) if d > magic.concat ⇒ loop(Concat(AnyVowel, Literal(x)))
+      case (Concat(lhs, rhs), d)    if d > magic.choose ⇒ Choose(lhs, rhs)
       case _ ⇒ acc
     }
 
-    loop(gen.oneOf(AnyPulmonic, AnyVowel))
+    minimize(loop(gen.oneOf(AnyPulmonic, AnyVowel)))
   }
   // scalastyle:on cyclomatic.complexity
+
+  def ruleFromPhones(phones:List[Phone])(implicit magic:Magic):Dist[PhonotacticRule] =
+    phones match {
+      case Nil => Dist.constant(AnyVowel)
+      case x :: xs => ruleFromPhones(NonEmptyList(x, xs))
+    }
 
   trait Instances {
     implicit val phonotacticRuleHasEq:Eq[PhonotacticRule] =
       Eq.fromUniversalEquals[PhonotacticRule]
-
-    implicit val phonotacticRuleHasMonoid:Monoid[PhonotacticRule] =
-      new Monoid[PhonotacticRule] {
-        def empty:PhonotacticRule = Empty
-        def combine(x:PhonotacticRule, y:PhonotacticRule): PhonotacticRule =
-          (x, y) match {
-            case (Empty, b) => b
-            case (a, Empty) => a
-            case (Concat(as), Concat(bs)) => Concat(as ++ bs)
-            case (a, Concat(bs)) => Concat(a :: bs)
-            case (Concat(as), b) => Concat(as :+ b)
-            case _ => Concat(List(x, y))
-          }
-      }
 
     implicit val phonotacticRuleHasShow:Show[PhonotacticRule] =
       Show.show[PhonotacticRule](toNotation)

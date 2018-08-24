@@ -43,6 +43,8 @@ object SparseSpace3 {
     implicit class SparseSpace3Ops[A, B](underlying:A)(implicit ev:SparseSpace3[A, B]) {
       def locate(loc:Point3):Option[B] = ev.locate(underlying, loc)
       def nearby(origin:Point3, range:Length):Iterator[B] = ev.nearby(underlying, origin, range)
+      def nearest(origin:Point3, range:Length):Option[B] =
+        nearby(origin, range).take(1).toList.headOption
     }
   }
   object syntax extends Syntax
