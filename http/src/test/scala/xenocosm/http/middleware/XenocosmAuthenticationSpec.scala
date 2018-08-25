@@ -8,22 +8,14 @@ import org.http4s.{AuthedService, Cookie, HttpService, Method, Request, Response
 import org.http4s.circe._
 import org.http4s.dsl.io._
 import org.reactormonk.{CryptoBits, PrivateKey}
-import org.scalacheck.Gen
-import spire.math.UInt
 
-import xenocosm.data.{ForeignID, Identity}
+import xenocosm.data.Identity
 import xenocosm.http.services.MemoryDataStore
 
 class XenocosmAuthenticationSpec extends xenocosm.test.XenocosmFunSuite with HttpCheck {
   import xenocosm.json.identity._
 
-  val genIdentity:Gen[Identity] = for {
-    uuid <- Gen.uuid
-    ref <- Gen.option(Gen.alphaNumStr.map(ForeignID.apply))
-    moves <- Gen.posNum[Int].map(UInt.apply)
-  } yield Identity(uuid, ref, moves)
-
-  val identityA:Identity = genIdentity.sample.get
+  val identityA:Identity = xenocosm.gen.identity.sample.get
   val crypto: CryptoBits = CryptoBits(PrivateKey(scala.io.Codec.toUTF8("test")))
   val data = new MemoryDataStore()
   val auth = XenocosmAuthentication("test", data)

@@ -1,13 +1,11 @@
 package xenocosm.http
 package rest
 
-import java.util.UUID
 import cats.data.OptionT
 import cats.effect.IO
 import org.http4s.{BasicCredentials, Challenge, HttpService, Request, Response, Uri}
 import org.http4s.dsl.io._
 import org.http4s.headers.{`WWW-Authenticate`, Authorization, Location}
-import spire.math.UInt
 
 import xenocosm.data.{ForeignID, Identity}
 import xenocosm.http.middleware.XenocosmAuthentication
@@ -28,7 +26,7 @@ final class AuthAPI(val auth:XenocosmAuthentication, val data:DataStore) {
   private val selectOrCreate:ForeignID => IO[Identity] = ref =>
     data.selectIdentity(ref).flatMap({
       case None =>
-        val identity = Identity(UUID.randomUUID(), Some(ref), UInt(100))
+        val identity = Identity(ref)
         data.createIdentity(identity).map(_ => identity)
       case Some(identity) => IO.pure(identity)
     })

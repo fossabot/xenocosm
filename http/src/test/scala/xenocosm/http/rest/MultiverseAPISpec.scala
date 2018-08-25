@@ -5,21 +5,13 @@ import cats.effect.IO
 import io.circe.Json
 import org.http4s._
 import org.http4s.circe._
-import org.scalacheck.Gen
-import spire.math.UInt
 
-import xenocosm.data.{ForeignID, Identity}
+import xenocosm.data.Identity
 import xenocosm.http.middleware.XenocosmAuthentication
 import xenocosm.http.services.MemoryDataStore
 
 class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
-  val genIdentity:Gen[Identity] = for {
-    uuid <- Gen.uuid
-    ref <- Gen.option(Gen.alphaNumStr.map(ForeignID.apply))
-    moves <- Gen.posNum[Int].map(UInt.apply)
-  } yield Identity(uuid, ref, moves)
-
-  val identity:Identity = genIdentity.sample.get
+  val identity:Identity = xenocosm.gen.identity.sample.get
 
   "GET /:universeID" when {
     val data = new MemoryDataStore()

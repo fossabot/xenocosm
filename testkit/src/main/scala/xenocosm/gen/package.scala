@@ -19,13 +19,6 @@ package object gen {
       locS <- galaxique.gen.point3
     } yield CosmicLocation(uuid, Some(locU), Some(locG), Some(locS))
 
-  lazy val identity:Gen[Identity] =
-    for {
-      uuid <- Gen.uuid
-      ref <- Gen.option(foreignID)
-      moves <- Gen.posNum[Int].map(UInt.apply)
-    } yield Identity(uuid, ref, moves)
-
   lazy val cargo:Gen[Cargo] = Gen.const(Vacuum)
 
   private lazy val cargoManifest:Gen[(Cargo, Volume)] =
@@ -58,11 +51,26 @@ package object gen {
       modules <- shipModules
     } yield Ship(uuid, loc, modules)
 
+  lazy val elapsedTime:Gen[ElapsedTime] =
+    for {
+      local <- Gen.posNum[Long].map(Seconds.apply[Long])
+      reference <- Gen.posNum[Long].map(Seconds.apply[Long])
+    } yield ElapsedTime(local, reference)
+
   lazy val trader:Gen[Trader] =
     for {
       uuid <- Gen.uuid
       ship <- ship
-    } yield Trader(uuid, ship)
+      elapsedTime <- elapsedTime
+    } yield Trader(uuid, ship, elapsedTime)
+
+  lazy val identity:Gen[Identity] =
+    for {
+      uuid <- Gen.uuid
+      ref <- Gen.option(foreignID)
+      moves <- Gen.posNum[Int].map(UInt.apply)
+      trader <- Gen.option(trader)
+    } yield Identity(uuid, ref, moves, trader)
 
   private lazy val errTooFar:Gen[XenocosmError] =
     for {
@@ -81,9 +89,8 @@ package object gen {
     for {
       moves <- Gen.posNum[Int].map(UInt.apply)
       ship <- ship
-      moving <- Gen.posNum[Double].map(Seconds.apply[Double])
-      stationary <- Gen.posNum[Double].map(Seconds.apply[Double])
-    } yield ShipMoved(moves, ship, moving, stationary)
+      elapsedTime<- elapsedTime
+    } yield ShipMoved(moves, ship, elapsedTime)
 
   lazy val event:Gen[XenocosmEvent] =
     Gen.oneOf(evtShipMoved, evtTraderCreated)

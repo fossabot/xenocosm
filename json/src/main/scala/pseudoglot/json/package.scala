@@ -13,5 +13,15 @@ package object json {
   object voicing extends VoicingJson
   object vowel extends VowelJson
 
-  object implicits extends All
+  object implicits extends BacknessJson
+                      with HeightJson
+                      with MannerJson
+                      with PhonologyJson
+                      with PhonotacticRuleJson
+                      with PlaceJson
+                      with PulmonicJson
+                      with RoundednessJson
+                      with TranscriptionJson
+                      with VoicingJson
+                      with VowelJson
 }

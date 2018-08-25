@@ -11,15 +11,15 @@ final class MemoryDataStore extends DataStore {
   import ForeignID.instances._
 
   private val identities:MutMap[UUID, Identity] = MutMap.empty[UUID, Identity]
-  private val traders:MutMap[UUID, Trader] = MutMap.empty[UUID, Trader]
+  private val traders:MutMap[(UUID, UUID), Trader] = MutMap.empty[(UUID, UUID), Trader]
 
   def createIdentity(identity:Identity):IO[Unit] = IO.pure {
     identities += (identity.uuid -> identity)
     ()
   }
 
-  def deleteIdentity(identity:Identity):IO[Unit] = IO.pure {
-    identities -= identity.uuid
+  def deleteIdentity(identityID:UUID):IO[Unit] = IO.pure {
+    identities -= identityID
     ()
   }
 
@@ -34,21 +34,25 @@ final class MemoryDataStore extends DataStore {
     ()
   }
 
-  def createTrader(trader:Trader):IO[Unit] = IO.pure {
-    traders += (trader.uuid -> trader)
+  def listTraders(identity:Identity):IO[List[Trader]] = IO.pure {
+    traders.filterKeys(_._1 === identity.uuid).values.toList
+  }
+
+  def createTrader(identity:Identity, trader:Trader):IO[Unit] = IO.pure {
+    traders += ((identity.uuid, trader.uuid) -> trader)
     ()
   }
 
-  def deleteTrader(trader:Trader):IO[Unit] = IO.pure {
-    traders -= trader.uuid
+  def deleteTrader(identityID:UUID, traderID:UUID):IO[Unit] = IO.pure {
+    traders -= ((identityID, traderID))
     ()
   }
 
-  def selectTrader(traderID:UUID):IO[Option[Trader]] =
-    IO.pure(traders.get(traderID))
+  def selectTrader(identityID:UUID, traderID:UUID):IO[Option[Trader]] =
+    IO.pure(traders.get((identityID, traderID)))
 
-  def updateTrader(trader:Trader):IO[Unit] = IO.pure {
-    traders += (trader.uuid -> trader)
+  def updateTrader(identity:Identity, trader:Trader):IO[Unit] = IO.pure {
+    traders += ((identity.uuid, trader.uuid) -> trader)
     ()
   }
 }

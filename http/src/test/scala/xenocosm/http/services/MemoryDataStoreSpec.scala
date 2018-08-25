@@ -24,19 +24,24 @@ class MemoryDataStoreSpec extends xenocosm.test.XenocosmFunSuite {
 
   test("Trader CRUD operations") {
     val data = new MemoryDataStore()
+    val identity = xenocosm.gen.identity.sample.get
     val trader = xenocosm.gen.trader.sample.get
     val ship = xenocosm.gen.ship.sample.get
 
-    data.selectTrader(trader.uuid).unsafeRunSync() shouldBe None
+    data.selectTrader(identity.uuid, trader.uuid).unsafeRunSync() shouldBe None
 
-    data.createTrader(trader).unsafeRunSync()
-    data.selectTrader(trader.uuid).unsafeRunSync() shouldBe Some(trader)
+    data.createTrader(identity, trader).unsafeRunSync()
+    data.selectTrader(identity.uuid, trader.uuid).unsafeRunSync() shouldBe Some(trader)
 
     val updated = trader.copy(ship = ship)
-    data.updateTrader(updated).unsafeRunSync()
-    data.selectTrader(trader.uuid).unsafeRunSync() shouldBe Some(updated)
+    data.updateTrader(identity, updated).unsafeRunSync()
+    data.selectTrader(identity.uuid, trader.uuid).unsafeRunSync() shouldBe Some(updated)
 
-    data.deleteTrader(trader).unsafeRunSync()
-    data.selectTrader(trader.uuid).unsafeRunSync() shouldBe None
+    data.listTraders(identity).unsafeRunSync() shouldBe List(updated)
+
+    data.deleteTrader(identity, trader).unsafeRunSync()
+    data.selectTrader(identity.uuid, trader.uuid).unsafeRunSync() shouldBe None
+
+    data.listTraders(identity).unsafeRunSync() shouldBe empty
   }
 }
