@@ -7,37 +7,34 @@
 
 <h2 id="run-the-http-service-with-docker">Run the HTTP service with Docker</h2>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>docker pull robotsnowfall/xenocosm-http
-docker run -d -p 8080:8080 robotsnowfall/xenocosm-http:latest
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull robotsnowfall/xenocosm-http
+docker run <span class="nt">-d</span> <span class="nt">-p</span> 8080:8080 robotsnowfall/xenocosm-http:latest
+</code></pre></div></div>
 
 <h2 id="vanilla-client">Vanilla client</h2>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
 
 <span class="nv">URL</span><span class="o">=</span><span class="s2">"http://127.0.0.1:8080</span><span class="k">${</span><span class="nv">1</span><span class="k">}</span><span class="s2">"</span>
-curl --include <span class="se">\</span>
-     --location <span class="se">\</span>
-     --cookie xenocosm.txt <span class="se">\</span>
-     --cookie-jar xenocosm.txt <span class="se">\</span>
+curl <span class="nt">--include</span> <span class="se">\</span>
+     <span class="nt">--location</span> <span class="se">\</span>
+     <span class="nt">--cookie</span> xenocosm.txt <span class="se">\</span>
+     <span class="nt">--cookie-jar</span> xenocosm.txt <span class="se">\</span>
      <span class="s2">"</span><span class="k">${</span><span class="nv">URL</span><span class="k">}</span><span class="s2">"</span>
 <span class="nb">echo</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="collectors-edition-client-goty-version">Collector’s Edition client (GOTY version)</h2>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
 
 <span class="nv">URL</span><span class="o">=</span><span class="s2">"http://127.0.0.1:8080</span><span class="k">${</span><span class="nv">1</span><span class="k">}</span><span class="s2">"</span>
-curl --silent <span class="se">\</span>
-     --location <span class="se">\</span>
-     --cookie xenocosm.txt <span class="se">\</span>
-     --cookie-jar xenocosm.txt <span class="se">\</span>
+curl <span class="nt">--silent</span> <span class="se">\</span>
+     <span class="nt">--location</span> <span class="se">\</span>
+     <span class="nt">--cookie</span> xenocosm.txt <span class="se">\</span>
+     <span class="nt">--cookie-jar</span> xenocosm.txt <span class="se">\</span>
      <span class="s2">"</span><span class="k">${</span><span class="nv">URL</span><span class="k">}</span><span class="s2">"</span> | jq
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="implementors">Implementors</h2>
 

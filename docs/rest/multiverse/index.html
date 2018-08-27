@@ -37,42 +37,39 @@
 
 <h4 id="request">Request</h4>
 
-<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">GET</span> <span class="nn">/</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">GET</span> <span class="nn">/</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="p">:</span> <span class="s">xenocosm.com</span>
 <span class="na">Accept</span><span class="p">:</span> <span class="s">application/hal+json</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h4 id="response-headers">Response Headers</h4>
 
-<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/hal+json; charset=UTF-8</span>
 <span class="na">Server</span><span class="p">:</span> <span class="s">xenocosm/0.0.0</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h4 id="response-body">Response Body</h4>
 
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"_links"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"self"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"href"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"/"</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"_links"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"self"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"href"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"/"</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"curies"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"curies"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"href"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"https://robotsnowfall.github.io/xenocosm/docs/rest/{rel}"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"templated"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="s2">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"href"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"https://robotsnowfall.github.io/xenocosm/docs/rest/{rel}"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"templated"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
-    </span><span class="nt">"api:universe"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"href"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"/{uuid}"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"templated"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="s2">"api:universe"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"href"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"/{uuid}"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"templated"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 </section></div></div></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script><script src="/xenocosm/highlight/highlight.pack.js"></script><script>hljs.configure({
 languages:['scala','java','bash']

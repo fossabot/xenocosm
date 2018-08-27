@@ -7,7 +7,7 @@ padding removed. This will always be 22 characters in length.</p>
 
 <p>Example encoding below.</p>
 
-<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">java.nio.ByteBuffer</span>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">java.nio.ByteBuffer</span>
 <span class="k">import</span> <span class="nn">java.nio.ByteBuffer</span>
 
 <span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">java.util.UUID</span>
@@ -29,8 +29,7 @@ padding removed. This will always be 22 characters in length.</p>
 <span class="n">scala</span><span class="o">&gt;</span> <span class="c1">// b64 those bytes
 </span>     <span class="o">|</span> <span class="nc">Base64</span><span class="o">.</span><span class="n">getUrlEncoder</span><span class="o">.</span><span class="n">withoutPadding</span><span class="o">.</span><span class="n">encodeToString</span><span class="o">(</span><span class="n">buffer</span><span class="o">.</span><span class="n">array</span><span class="o">())</span>
 <span class="n">res2</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="nc">AAAAAAAAAAAAAAAAAAAAAA</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="prerequisites">Prerequisites</h3>
 
@@ -65,54 +64,51 @@ padding removed. This will always be 22 characters in length.</p>
 
 <h4 id="request">Request</h4>
 
-<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="nf">GET</span> <span class="nn">/AAAAAAAAAAAAAAAAAAAAAA</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">GET</span> <span class="nn">/AAAAAAAAAAAAAAAAAAAAAA</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Host</span><span class="p">:</span> <span class="s">xenocosm.com</span>
 <span class="na">Accept</span><span class="p">:</span> <span class="s">application/hal+json</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h4 id="response-headers">Response Headers</h4>
 
-<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/hal+json; charset=UTF-8</span>
 <span class="na">Server</span><span class="p">:</span> <span class="s">xenocosm/0.0.0</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h4 id="response-body">Response Body</h4>
 
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"_links"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"self"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"href"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"/AAAAAAAAAAAAAAAAAAAAAA"</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"_links"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"self"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"href"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"/AAAAAAAAAAAAAAAAAAAAAA"</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"curies"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"curies"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"href"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"https://robotsnowfall.github.io/xenocosm/docs/rest/{rel}"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"templated"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="s2">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"href"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"https://robotsnowfall.github.io/xenocosm/docs/rest/{rel}"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"templated"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
-    </span><span class="nt">"api:galaxy"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"api:galaxy"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"href"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"/AAAAAAAAAAAAAAAAAAAAAA/-1,-1,0"</span><span class="w">
+        </span><span class="s2">"href"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"/AAAAAAAAAAAAAAAAAAAAAA/-1,-1,0"</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"universe"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"age"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">9000000000</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"diameter"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"10000000000.0 pc"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"radius"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"5000000000.0 pc"</span><span class="w">
+  </span><span class="s2">"universe"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"age"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">9000000000</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"diameter"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"10000000000.0 pc"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"radius"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"5000000000.0 pc"</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"loc"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"loc"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="s2">"0.0 pc"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"0.0 pc"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"0.0 pc"</span><span class="w">
   </span><span class="p">],</span><span class="w">
-  </span><span class="nt">"scan-range"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"10000.0 pc"</span><span class="w">
+  </span><span class="s2">"scan-range"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"10000.0 pc"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 </section></div></div></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script><script src="/xenocosm/highlight/highlight.pack.js"></script><script>hljs.configure({
 languages:['scala','java','bash']
