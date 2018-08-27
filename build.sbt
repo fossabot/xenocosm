@@ -195,7 +195,7 @@ lazy val buildInfoSettings = Seq(
 )
 
 lazy val dockerSettings = Seq(
-  dockerBaseImage := "openjdk:8-jre",
+  dockerBaseImage := "openjdk:8-jre-alpine",
   dockerExposedPorts := Seq(8080),
   dockerLabels := Map(
     "maintainer" -> "doug.hurst@protonmail.com"
