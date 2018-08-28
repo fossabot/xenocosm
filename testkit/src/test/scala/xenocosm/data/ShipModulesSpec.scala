@@ -7,24 +7,22 @@ import squants.space.{CubicMeters, Meters, Parsecs}
 class ShipModulesSpec extends xenocosm.test.XenocosmFunSuite {
 
   test("ShipModules.consumeFuel") {
-    val (modules1, remaining1) = ShipModules.consumeFuel(List(
+    val modules1 = ShipModules.consumeFuel(List(
       FuelTank(CubicMeters(0), CubicMeters(100)),
       EmptyModule
-    ), CubicMeters(90))
-    val (modules2, remaining2) = ShipModules.consumeFuel(List(
+    ))(CubicMeters(90))
+    val modules2 = ShipModules.consumeFuel(List(
       FuelTank(CubicMeters(5), CubicMeters(20)),
       FuelTank(CubicMeters(5), CubicMeters(20)),
       FuelTank(CubicMeters(5), CubicMeters(20)),
       FuelTank(CubicMeters(5), CubicMeters(20))
-    ), CubicMeters(70))
+    ))(CubicMeters(70))
 
-    modules1.size shouldBe 2
-    ShipModules.unusedFuel(modules1) shouldBe CubicMeters(10)
-    remaining1 shouldBe CubicMeters(0)
+    modules1.map(_.size) shouldBe Some(2)
+    modules1.map(ShipModules.unusedFuel) shouldBe Some(CubicMeters(10))
 
-    modules2.size shouldBe 4
-    ShipModules.unusedFuel(modules2) shouldBe CubicMeters(10)
-    remaining2 shouldBe CubicMeters(0)
+    modules2.map(_.size) shouldBe Some(4)
+    modules2.map(ShipModules.unusedFuel) shouldBe Some(CubicMeters(10))
   }
 
   test("ShipModules.bestEngine") {

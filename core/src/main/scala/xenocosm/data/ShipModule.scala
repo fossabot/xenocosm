@@ -4,7 +4,6 @@ import cats.kernel.Eq
 import spire.random.Dist
 import squants.motion.{Velocity, VolumeFlow}
 import squants.space._
-import squants.time.Time
 
 sealed trait ShipModule
 case object EmptyModule extends ShipModule
@@ -14,25 +13,30 @@ final case class Navigation(range:Length) extends ShipModule
 final case class Engine(speed:Velocity, consumptionRate:VolumeFlow) extends ShipModule
 
 object ShipModule {
-  def empty:ShipModule = EmptyModule
-  def emptyCargo(max:Volume):ShipModule = CargoHold(Map(Vacuum -> max))
-  def emptyFuel(max:Volume):ShipModule = FuelTank(CubicMeters(0), max)
-  def fuelEfficiency(engine:Engine):Double =
+  val empty:ShipModule = EmptyModule
+
+  val emptyCargo:Volume => ShipModule = max => CargoHold(Map(Vacuum -> max))
+  val emptyFuel:Volume => ShipModule = FuelTank(CubicMeters(0), _)
+
+  val fuelEfficiency:Engine => Double = engine =>
     engine.speed.toKilometersPerSecond /
     engine.consumptionRate.toCubicMetersPerSecond
 
-  def consumeFuel(tank:FuelTank, need:Volume):(FuelTank, Volume) =
+  val consumeFuel:FuelTank => Volume => (FuelTank, Volume) = tank => need =>
     if (tank.unused < need) {
       (FuelTank(tank.used + tank.unused, CubicMeters(0)), need - tank.unused)
     } else {
       (FuelTank(tank.used + need, tank.unused - need), CubicMeters(0))
     }
 
-  def travel(engine:Engine, consumedFuel:Volume):(Velocity, Time) =
-    (engine.speed, consumedFuel / engine.consumptionRate)
+  val travelTime:Engine => Volume => ElapsedTime = engine => demand =>
+    ElapsedTime.fromVelocity(engine.speed, demand / engine.consumptionRate)
+
+  def fuelNeeded(engine:Engine, distance:Length):Volume =
+    engine.consumptionRate * (distance / engine.speed)
 
   def fuelNeeded(engine:Engine, from:CosmicLocation, to:CosmicLocation):Volume =
-    engine.consumptionRate * ((from distance to) / engine.speed)
+    fuelNeeded(engine, from distance to)
 
   trait Instances {
     implicit val shipModuleHasEq:Eq[ShipModule] = Eq.fromUniversalEquals[ShipModule]

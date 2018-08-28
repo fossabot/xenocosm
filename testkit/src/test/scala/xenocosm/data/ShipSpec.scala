@@ -3,49 +3,51 @@ package data
 
 import java.util.UUID
 import cats.kernel.laws.discipline.EqTests
-import galaxique.data.Point3
+import galaxique.data.{Galaxy, Point3, Star, Universe}
 import org.scalacheck.Arbitrary
-import squants.motion.{CubicMetersPerSecond, SpeedOfLight}
-import squants.space.{AstronomicalUnits, CubicMeters}
+import squants.motion.CubicMetersPerSecond
+import squants.space.{CubicMeters, LightYears}
 import squants.time.Seconds
 
 class ShipSpec extends xenocosm.test.XenocosmFunSuite {
+  import cavernetics.FSM.syntax._
   import Ship.instances._
 
   implicit val arb:Arbitrary[Ship] = Arbitrary(gen.ship)
-  private val universe = UUID.randomUUID()
-  private val from = CosmicLocation(universe, Some(Point3.zero), Some(Point3.zero), Some(Point3.zero))
 
   checkAll("Eq[Ship]", EqTests[Ship].eqv)
 
-  test("Ship.travel") {
-    val loc = from.copy(locS = Some(Point3(AstronomicalUnits(1), AstronomicalUnits(1), AstronomicalUnits(1))))
-    val ship = Ship(UUID.randomUUID(), from, ShipModules.startingLoad)
-    val (ship2, elapsedShip, elapsedObjective) = ship.travelTo(loc)
+  private val locA = CosmicLocation(
+    UUID.randomUUID(),
+    Some(Point3(Universe.scale, Universe.scale, Universe.scale)),
+    Some(Point3(Galaxy.scale, Galaxy.scale, Galaxy.scale)),
+    Some(Point3(Star.scale, Star.scale, Star.scale))
+  )
 
-    ship2.loc shouldBe loc
-    ship2.unusedFuel.floor shouldBe CubicMeters(13)
-    elapsedShip.floor shouldBe Seconds(86430)
-    elapsedObjective shouldBe Seconds(86434.48571474903)
+  private val ship = Ship(UUID.randomUUID(), locA, List(
+    Navigation(LightYears(1)),
+    FuelTank(CubicMeters(0), CubicMeters(1000)),
+    Engine(Star.scale / Seconds(1000), CubicMetersPerSecond(1))
+  ))
+
+  test("FSM: ShipMoved: too far to navigate") {
+    val locSB = locA.locS.map(coords => coords.copy(x = coords.x + LightYears(2)))
+    val locB = locA.copy(locS = locSB)
+
+    ship.transition(ShipMoved(locB)) shouldBe Left(CannotNavigate(ship.maxNavDistance))
   }
 
-  test("Ship.travel.must-have-an-engine") {
-    val loc = gen.cosmicLocation.sample.get
-    val ship = Ship(UUID.randomUUID(), from, ShipModules.empty)
-    val (ship2, elapsedShip, elapsedObjective) = ship.travelTo(loc)
+  test("FSM: ShipMoved: not enough fuel") {
+    val locSB = locA.locS.map(coords => coords.copy(x = coords.x * 3))
+    val locB = locA.copy(locS = locSB)
 
-    ship shouldBe ship2
-    elapsedShip shouldBe Seconds(0)
-    elapsedObjective shouldBe Seconds(0)
+    ship.transition(ShipMoved(locB)) shouldBe Left(NotEnoughFuel(ship.unusedFuel))
   }
 
-  test("Ship.travel.must-have-fuel") {
-    val loc = gen.cosmicLocation.sample.get
-    val ship = Ship(UUID.randomUUID(), from, List(Engine(SpeedOfLight, CubicMetersPerSecond(1))))
-    val (ship2, elapsedShip, elapsedObjective) = ship.travelTo(loc)
+  test("FSM: ShipMoved: success") {
+    val locSB = locA.locS.map(coords => coords.copy(x = coords.x * 2))
+    val locB = locA.copy(locS = locSB)
 
-    ship shouldBe ship2
-    elapsedShip shouldBe Seconds(0)
-    elapsedObjective shouldBe Seconds(0)
+    ship.transition(ShipMoved(locB)).map(_.loc) shouldBe Right(locB)
   }
 }

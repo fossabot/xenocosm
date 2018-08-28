@@ -7,26 +7,43 @@ class FSMSpec extends xenocosm.test.XenocosmFunSuite {
   case object CoinInserted extends Event
   case object KnobTurned extends Event
 
+  sealed trait Error
+  case object NoCandiesLeft extends Error
+  case object NoCoinInserted extends Error
+  case object CoinAlreadyInserted extends Error
+
   case class CandyMachine(locked: Boolean, candies: Int, coins: Int)
 
-  implicit val fsm:FSM[CandyMachine, Event] = FSM[CandyMachine, Event] {
-    case (machine, CoinInserted) if machine.locked && machine.candies > 0 =>
-      machine.copy(locked = false, coins = machine.coins + 1)
+  implicit val fsm:FSM[CandyMachine, Event, Error] = FSM[CandyMachine, Event, Error] {
+    case (machine, CoinInserted) if !machine.locked =>
+      Left(CoinAlreadyInserted)
 
-    case (machine, KnobTurned) if !machine.locked && machine.candies > 0 =>
-      machine.copy(locked = true, candies = machine.candies - 1)
+    case (machine, CoinInserted) if machine.candies <= 0 =>
+      Left(NoCandiesLeft)
+
+    case (machine, CoinInserted) =>
+      Right(machine.copy(locked = false, coins = machine.coins + 1))
+
+    case (machine, KnobTurned) if machine.locked =>
+      Left(NoCoinInserted)
+
+    case (machine, KnobTurned) if machine.candies <= 0 =>
+      Left(NoCandiesLeft)
+
+    case (machine, KnobTurned) =>
+      Right(machine.copy(locked = true, candies = machine.candies - 1))
   }
 
   test("can transition state") {
     val machine = CandyMachine(locked = true, 10, 0)
 
-    machine.transition(CoinInserted).value shouldBe CandyMachine(locked = false, 10, 1)
+    machine.transition(CoinInserted) shouldBe Right(CandyMachine(locked = false, 10, 1))
   }
 
-  test("invalid events result in no transition") {
+  test("invalid events result in Left type") {
     val machine = CandyMachine(locked = true, 10, 0)
 
-    machine.transition(KnobTurned).value shouldBe machine
+    machine.transition(KnobTurned) shouldBe Left(NoCoinInserted)
   }
 
   test("can sequence transitions") {
@@ -45,7 +62,7 @@ class FSMSpec extends xenocosm.test.XenocosmFunSuite {
       mX <- m9.transition(KnobTurned)
     } yield mX
 
-    mFinal.value shouldBe CandyMachine(locked = true, 5, 5)
+    mFinal shouldBe Right(CandyMachine(locked = true, 5, 5))
 
   }
 
@@ -55,7 +72,7 @@ class FSMSpec extends xenocosm.test.XenocosmFunSuite {
 
     val mFinal = m0.transition(events)
 
-    mFinal.value shouldBe CandyMachine(locked = true, 5, 5)
+    mFinal shouldBe Right(CandyMachine(locked = true, 5, 5))
 
   }
 

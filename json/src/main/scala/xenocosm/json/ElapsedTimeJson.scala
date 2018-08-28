@@ -12,16 +12,16 @@ trait ElapsedTimeJson {
   implicit val elapsedTimeHasJsonEncoder:Encoder[ElapsedTime] =
     Encoder.instance({ elapsed =>
       Json.obj(
-        "local" -> elapsed.local.asJson,
-        "reference" -> elapsed.reference.asJson
+        "moving" -> elapsed.moving.asJson,
+        "rest" -> elapsed.rest.asJson
       )
     })
 
   implicit val elapsedTimeHasJsonDecoder:Decoder[ElapsedTime] =
     Decoder.instance { hcur =>
       for {
-        local <- hcur.downField("local").as[Time]
-        reference <- hcur.downField("reference").as[Time]
-      } yield ElapsedTime(local, reference)
+        moving <- hcur.downField("moving").as[Time]
+        rest <- hcur.downField("rest").as[Time]
+      } yield ElapsedTime(moving, rest)
     }
 }

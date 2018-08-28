@@ -1,36 +1,29 @@
 package xenocosm.json
 
 import io.circe._
-import spire.math.UInt
 
 import xenocosm.{ShipMoved, TraderCreated, TraderSelected, XenocosmEvent}
-import xenocosm.data.{ElapsedTime, Ship, Trader}
+import xenocosm.data.{CosmicLocation, Trader}
 
 trait XenocosmEventJson {
   import io.circe.syntax._
-  import interop.spire.json.instances._
-  import elapsedTime._
-  import ship._
+  import cosmicLocation._
   import trader._
 
   implicit val xenocosmEventHasJsonEncoder:Encoder[XenocosmEvent] =
     Encoder.instance({
-      case ShipMoved(moves, ship, elapsed) => Json.obj(
+      case ShipMoved(loc) => Json.obj(
         "event" -> "ship-moved".asJson,
-        "moves" -> moves.asJson,
-        "ship" -> ship.asJson,
-        "elapsed" -> elapsed.asJson
+        "loc" -> loc.asJson
       )
 
-      case TraderCreated(moves, trader) => Json.obj(
+      case TraderCreated(trader) => Json.obj(
         "event" -> "trader-created".asJson,
-        "moves" -> moves.asJson,
         "trader" -> trader.asJson
       )
 
-      case TraderSelected(moves, trader) => Json.obj(
+      case TraderSelected(trader) => Json.obj(
         "event" -> "trader-selected".asJson,
-        "moves" -> moves.asJson,
         "trader" -> trader.asJson
       )
     })
@@ -40,22 +33,18 @@ trait XenocosmEventJson {
       hcur.downField("event").as[String].flatMap({
         case "ship-moved" =>
           for {
-            moves <- hcur.downField("moves").as[UInt]
-            ship <- hcur.downField("ship").as[Ship]
-            elapsed <- hcur.downField("elapsed").as[ElapsedTime]
-          } yield ShipMoved(moves, ship, elapsed)
+            loc <- hcur.downField("loc").as[CosmicLocation]
+          } yield ShipMoved(loc)
 
         case "trader-created" =>
           for {
-            moves <- hcur.downField("moves").as[UInt]
             trader <- hcur.downField("trader").as[Trader]
-          } yield TraderCreated(moves, trader)
+          } yield TraderCreated(trader)
 
         case "trader-selected" =>
           for {
-            moves <- hcur.downField("moves").as[UInt]
             trader <- hcur.downField("trader").as[Trader]
-          } yield TraderSelected(moves, trader)
+          } yield TraderSelected(trader)
 
         case event =>
           Left(DecodingFailure.apply(s"unrecognized event type: $event", List.empty[CursorOp]))

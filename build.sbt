@@ -6,19 +6,20 @@ inThisBuild(Seq(
 ))
 
 lazy val versions = new {
-  val cats       = "1.2.0"
-  val circe      = "0.9.3"
-  val cryptobits = "1.2"
-  val discipline = "0.10.0"
-  val fastparse  = "1.0.0"
-  val http4s     = "0.18.16"
-  val logback    = "1.2.3"
-  val monocle    = "1.5.1-cats"
-  val pureconfig = "0.9.1"
-  val scalacheck = "1.14.0"
-  val scalatest  = "3.0.5"
-  val spire      = "0.16.0"
-  val squants    = "1.3.0"
+  val cats          = "1.2.0"
+  val circe         = "0.9.3"
+  val cryptobits    = "1.2"
+  val discipline    = "0.10.0"
+  val fastparse     = "1.0.0"
+  val http4s        = "0.18.16"
+  val kindProjector = "0.9.7"
+  val logback       = "1.2.3"
+  val monocle       = "1.5.1-cats"
+  val pureconfig    = "0.9.1"
+  val scalacheck    = "1.14.0"
+  val scalatest     = "3.0.5"
+  val spire         = "0.16.0"
+  val squants       = "1.3.0"
 }
 
 lazy val commonDependencies = Seq(
@@ -32,7 +33,9 @@ lazy val commonDependencies = Seq(
   "org.typelevel"              %% "spire-laws"  % versions.spire      % Test,
   "com.github.julien-truffaut" %% "monocle-law" % versions.monocle    % Test,
   "org.scalacheck"             %% "scalacheck"  % versions.scalacheck % Test,
-  "org.scalatest"              %% "scalatest"   % versions.scalatest  % Test
+  "org.scalatest"              %% "scalatest"   % versions.scalatest  % Test,
+
+  compilerPlugin("org.spire-math" %% "kind-projector" % versions.kindProjector)
 )
 
 lazy val core = project.in(file("core"))

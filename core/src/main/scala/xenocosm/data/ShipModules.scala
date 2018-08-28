@@ -11,41 +11,49 @@ object ShipModules {
 
   lazy val startingLoad:ShipModules =
     List(
-      Engine(SpeedOfLight * 0.01, CubicMetersPerSecond(0.001)),
+      Engine(SpeedOfLight * 0.1, CubicMetersPerSecond(0.001)),
       Navigation(Galaxy.scale),
       ShipModule.emptyCargo(CubicMeters(100)),
       FuelTank(CubicMeters(0), CubicMeters(100)),
       EmptyModule
     )
 
-  def navModules(modules:ShipModules):List[Navigation] =
-    modules.collect({ case m @ Navigation(_) => m })
+  val navModules:ShipModules => List[Navigation] =
+    _ collect { case m:Navigation => m }
 
-  def engineModules(modules:ShipModules):List[Engine] =
-    modules.collect({ case m @ Engine(_, _) => m })
+  val engineModules:ShipModules => List[Engine] =
+    _ collect { case m:Engine => m }
 
-  def fuelModules(modules:ShipModules):List[FuelTank] =
-    modules.collect({ case m @ FuelTank(_, _) => m })
+  val fuelModules:ShipModules => List[FuelTank] =
+    _ collect { case m:FuelTank => m }
 
-  def maxNavDistance(modules:ShipModules):Length =
-    Try(navModules(modules).map(_.range).max).getOrElse(LightYears(0))
+  val maxNavDistance:ShipModules => Length = modules =>
+    Try(navModules(modules).map(_.range).max)
+      .getOrElse(LightYears(0))
 
-  def unusedFuel(modules:ShipModules):Volume =
-    fuelModules(modules).foldLeft(CubicMeters(0))(_ + _.unused)
+  val unusedFuel:ShipModules => Volume = modules =>
+    fuelModules(modules)
+      .foldLeft(CubicMeters(0))(_ + _.unused)
 
-  def bestEngine(modules:ShipModules):Option[Engine] =
-    Try(engineModules(modules).maxBy(ShipModule.fuelEfficiency)).toOption
+  val bestEngine:ShipModules => Option[Engine] = modules =>
+    Try(engineModules(modules).maxBy(ShipModule.fuelEfficiency))
+      .toOption
 
-  def maxTravelDistance(modules:ShipModules):Length =
+  val maxTravelDistance:ShipModules => Length = modules =>
     bestEngine(modules)
       .map(engine => (unusedFuel(modules) / engine.consumptionRate) * engine.speed)
       .getOrElse(LightYears(0))
 
-  def consumeFuel(modules:ShipModules, fuel:Volume):(ShipModules, Volume) =
-    modules.foldLeft((ShipModules.empty, fuel))({
-      case ((acc:ShipModules, need:Volume), tank:FuelTank) =>
-        val (updated, remainingNeed) = ShipModule.consumeFuel(tank, need)
-        (updated :: acc, remainingNeed)
-      case ((acc:ShipModules, need:Volume), x) => (x::acc, need)
-    })
+  // Only consume fuel if we have enough to satisfy the need
+  val consumeFuel:ShipModules => Volume => Option[ShipModules] = modules => fuel =>
+    modules
+      .foldLeft((ShipModules.empty, fuel))({
+        case ((acc:ShipModules, need:Volume), tank:FuelTank) =>
+          val (updated, remainingNeed) = ShipModule.consumeFuel(tank)(need)
+          (updated :: acc, remainingNeed)
+        case ((acc:ShipModules, need:Volume), x) => (x :: acc, need)
+      }) match {
+        case (xs:ShipModules, CubicMeters(0)) => Some(xs)
+        case _ => None
+      }
 }

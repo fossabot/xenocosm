@@ -15,6 +15,7 @@ final case class Point3(x:Length, y:Length, z:Length) {
 
 object Point3 {
   import interop.squants.instances._
+  import spire.syntax.metricSpace._
 
   val zero:Point3 = Point3(Meters(0), Meters(0), Meters(0))
 
@@ -43,4 +44,13 @@ object Point3 {
 
   }
   object instances extends Instances
+  import instances._
+
+  def distance(a:Option[Point3], b:Option[Point3]):Length =
+    (a, b) match {
+      case (Some(locA), Some(locB)) => locA distance locB
+      case (None, Some(locB)) => Point3.zero distance locB
+      case (Some(locA), None) => Point3.zero distance locA
+      case _ => Point3.zero.x
+    }
 }

@@ -11,6 +11,9 @@ import spire.math.UInt
 final case class Identity(uuid:UUID, ref:Option[ForeignID], moves:UInt, trader:Option[Trader])
 
 object Identity {
+  import Trader.instances._
+  import FSM.syntax._
+
   val startingMoves:UInt = UInt(100)
 
   def apply(ref:ForeignID):Identity =
@@ -22,26 +25,28 @@ object Identity {
   val traderPO:Optional[Identity, Trader] =
     Optional[Identity, Trader](_.trader)(trader => _.copy(trader = Some(trader)))
 
-  val shipPO:Optional[Identity, Ship] =
-    traderPO.composeLens(Trader.shipPL)
-
-  def elapse(identity:Identity, elapsedTime:ElapsedTime):Identity =
-    identity.trader match {
-      case Some(trader) => traderPO.set(Trader.elapse(trader, elapsedTime))(identity)
-      case None => identity
-    }
-
   trait Instances {
     implicit val identityHasEq:Eq[Identity] = Eq.fromUniversalEquals[Identity]
-    implicit val identityHasFSM:FSM[Identity, XenocosmEvent] = FSM {
-      case (identity, ShipMoved(moves, ship, elapsed)) =>
-        (movesPL.set(moves) andThen shipPO.set(ship))(elapse(identity, elapsed))
 
-      case (identity, TraderCreated(moves, trader)) =>
-        (movesPL.set(moves) andThen traderPO.set(trader))(identity)
+    implicit val identityHasFSM:FSM[Identity, XenocosmEvent, XenocosmError] = FSM {
+      case (identity, TraderCreated(trader)) =>
+        Right(traderPO.set(trader)(identity))
 
-      case (identity, TraderSelected(moves, trader)) =>
-        (movesPL.set(moves) andThen traderPO.set(trader))(identity)
+      case (identity, TraderSelected(trader)) =>
+        Right(traderPO.set(trader)(identity))
+
+      case (identity, _) if identity.moves <= UInt(0) =>
+        Left(NoMovesRemaining)
+
+      case (identity, event) =>
+        identity.trader match {
+          case None => Left(NoTraderSelected)
+          case Some(trader) =>
+            trader
+              .transition(event)
+              .map(traderPO.set(_) andThen movesPL.set(identity.moves - UInt(1)))
+              .map(_ apply identity)
+        }
     }
   }
   object instances extends Instances

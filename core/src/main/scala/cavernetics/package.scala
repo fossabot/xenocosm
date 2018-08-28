@@ -1,4 +1,3 @@
-import cats.Eval
 import cats.data.Kleisli
 
 /**
@@ -9,5 +8,5 @@ import cats.data.Kleisli
   * TODO
   */
 package object cavernetics {
-  type FSM[T, E] = Kleisli[Eval, (T, E), T]
+  type FSM[A, B, C] = Kleisli[Either[C, ?], (A, B), A]
 }

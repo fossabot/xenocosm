@@ -1,9 +1,9 @@
 package xenocosm.json
 
 import io.circe._
-import squants.space.Length
+import squants.space.{Length, Volume}
 
-import xenocosm.{NoMovesRemaining, TooFar, XenocosmError}
+import xenocosm._
 
 trait XenocosmErrorJson {
   import io.circe.syntax._
@@ -14,10 +14,19 @@ trait XenocosmErrorJson {
       case NoMovesRemaining =>
         Json.obj("message" -> "no-moves-remaining".asJson)
 
-      case TooFar(distance) =>
+      case NoTraderSelected =>
+        Json.obj("message" -> "no-trader-selected".asJson)
+
+      case CannotNavigate(maxNavDistance) =>
         Json.obj(
-          "message" -> "too-far".asJson,
-          "distance" -> distance.asJson
+          "message" -> "cannot-navigate".asJson,
+          "maxNavDistance" -> maxNavDistance.asJson
+        )
+
+      case NotEnoughFuel(unusedFuel) =>
+        Json.obj(
+          "message" -> "not-enough-fuel".asJson,
+          "unusedFuel" -> unusedFuel.asJson
         )
     })
 
@@ -27,8 +36,14 @@ trait XenocosmErrorJson {
         case "no-moves-remaining" =>
           Right(NoMovesRemaining)
 
-        case "too-far" =>
-          hcur.downField("distance").as[Length].map(TooFar.apply)
+        case "no-trader-selected" =>
+          Right(NoTraderSelected)
+
+        case "cannot-navigate" =>
+          hcur.downField("maxNavDistance").as[Length].map(CannotNavigate.apply)
+
+        case "not-enough-fuel" =>
+          hcur.downField("unusedFuel").as[Volume].map(NotEnoughFuel.apply)
 
         case message =>
           Left(DecodingFailure.apply(s"unrecognized error type: $message", List.empty[CursorOp]))

@@ -5,7 +5,7 @@ import java.util.UUID
 import cats.kernel.laws.discipline.EqTests
 import galaxique.data.Point3
 import org.scalacheck.Arbitrary
-import squants.motion.{CubicMetersPerSecond, MetersPerSecond, SpeedOfLight}
+import squants.motion.{CubicMetersPerSecond, SpeedOfLight}
 import squants.space.{AstronomicalUnits, CubicMeters}
 import squants.time.Seconds
 
@@ -24,26 +24,25 @@ class ShipModuleSpec extends xenocosm.test.XenocosmFunSuite {
   test("ShipModule.consumeFuel") {
     val tank = FuelTank(CubicMeters(0), CubicMeters(100))
 
-    val (tank1, remaining1) = ShipModule.consumeFuel(tank, CubicMeters(99))
+    val (tank1, remaining1) = ShipModule.consumeFuel(tank)(CubicMeters(99))
     tank1 shouldBe FuelTank(CubicMeters(99), CubicMeters(1))
     remaining1 shouldBe CubicMeters(0)
 
-    val (tank2, remaining2) = ShipModule.consumeFuel(tank, CubicMeters(100))
+    val (tank2, remaining2) = ShipModule.consumeFuel(tank)(CubicMeters(100))
     tank2 shouldBe FuelTank(CubicMeters(100), CubicMeters(0))
     remaining2 shouldBe CubicMeters(0)
 
-    val (tank3, remaining3) = ShipModule.consumeFuel(tank, CubicMeters(101))
+    val (tank3, remaining3) = ShipModule.consumeFuel(tank)(CubicMeters(101))
     tank3 shouldBe FuelTank(CubicMeters(100), CubicMeters(0))
     remaining3 shouldBe CubicMeters(1)
   }
 
-  test("ShipModule.travel") {
+  test("ShipModule.travelTime") {
     val engine = Engine(SpeedOfLight * 0.01, CubicMetersPerSecond(0.01))
-    val consumedFuel = CubicMeters(100)
-    val (velocity, time) = ShipModule.travel(engine, consumedFuel)
+    val demand = CubicMeters(100)
+    val elapsed = ShipModule.travelTime(engine)(demand)
 
-    velocity shouldBe MetersPerSecond(2997924.58)
-    time shouldBe Seconds(10000)
+    elapsed shouldBe ElapsedTime(Seconds(10000), Seconds(10000.500037503127))
   }
 
   test("ShipModule.fuelNeeded") {

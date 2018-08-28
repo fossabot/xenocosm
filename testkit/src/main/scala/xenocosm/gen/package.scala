@@ -2,7 +2,7 @@ package xenocosm
 
 import org.scalacheck.Gen
 import spire.math.UInt
-import squants.motion.{CubicMetersPerSecond, MetersPerSecond}
+import squants.motion.{CubicMetersPerSecond, MetersPerSecond, SpeedOfLight}
 import squants.space.{CubicMeters, Meters, Volume}
 import squants.time.Seconds
 
@@ -35,9 +35,9 @@ package object gen {
 
   lazy val engine:Gen[Engine] =
     for {
-      speed <- Gen.posNum[Double].map(MetersPerSecond.apply[Double])
+      speed <- Gen.chooseNum[Double](0, (SpeedOfLight * 0.99999).toMetersPerSecond)
       consumptionRate <- Gen.posNum[Double].map(CubicMetersPerSecond.apply[Double])
-    } yield Engine(speed, consumptionRate)
+    } yield Engine(MetersPerSecond(speed), consumptionRate)
 
   lazy val navigation:Gen[Navigation] = Gen.posNum[Double].map(x => Navigation(Meters(x)))
   lazy val cargoHold:Gen[CargoHold] = Gen.mapOf(cargoManifest).map(CargoHold.apply)
@@ -53,9 +53,9 @@ package object gen {
 
   lazy val elapsedTime:Gen[ElapsedTime] =
     for {
-      local <- Gen.posNum[Long].map(Seconds.apply[Long])
-      reference <- Gen.posNum[Long].map(Seconds.apply[Long])
-    } yield ElapsedTime(local, reference)
+      moving <- Gen.posNum[Long].map(Seconds.apply[Long])
+      rest <- Gen.posNum[Long].map(Seconds.apply[Long])
+    } yield ElapsedTime(moving, rest)
 
   lazy val trader:Gen[Trader] =
     for {
@@ -72,26 +72,37 @@ package object gen {
       trader <- Gen.option(trader)
     } yield Identity(uuid, ref, moves, trader)
 
-  private lazy val errTooFar:Gen[XenocosmError] =
+  private lazy val errCannotNavigate:Gen[XenocosmError] =
     for {
       distance <- Gen.posNum[Double]
-    } yield TooFar(Meters(distance))
+    } yield CannotNavigate(Meters(distance))
 
-  lazy val error:Gen[XenocosmError] = Gen.oneOf(Gen.const(NoMovesRemaining), errTooFar)
+  private lazy val errNotEnoughFuel:Gen[XenocosmError] =
+    for {
+      volume <- Gen.posNum[Double]
+    } yield NotEnoughFuel(CubicMeters(volume))
+
+  lazy val error:Gen[XenocosmError] = Gen.oneOf(
+    Gen.const(NoMovesRemaining),
+    errCannotNavigate,
+    errNotEnoughFuel
+  )
 
   private lazy val evtTraderCreated:Gen[TraderCreated] =
     for {
-      moves <- Gen.posNum[Int].map(UInt.apply)
       trader <- trader
-    } yield TraderCreated(moves, trader)
+    } yield TraderCreated(trader)
+
+  private lazy val evtTraderSelected:Gen[TraderSelected] =
+    for {
+      trader <- trader
+    } yield TraderSelected(trader)
 
   private lazy val evtShipMoved:Gen[ShipMoved] =
     for {
-      moves <- Gen.posNum[Int].map(UInt.apply)
-      ship <- ship
-      elapsedTime<- elapsedTime
-    } yield ShipMoved(moves, ship, elapsedTime)
+      loc <- cosmicLocation
+    } yield ShipMoved(loc)
 
   lazy val event:Gen[XenocosmEvent] =
-    Gen.oneOf(evtShipMoved, evtTraderCreated)
+    Gen.oneOf(evtShipMoved, evtTraderCreated, evtTraderSelected)
 }
