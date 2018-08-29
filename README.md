@@ -10,7 +10,8 @@ More info in the [documentation](https://robotsnowfall.github.io/xenocosm/).
 ## Run the HTTP service with Docker
 
 ```bash
-docker-compose up
+sbt docker:publishLocal
+docker-compose up -d
 ```
 
 ## Vanilla client
