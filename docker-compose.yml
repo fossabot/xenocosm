@@ -1,0 +1,6 @@
+version: '3'
+services:
+  http:
+    image: 'robotsnowfall/xenocosm-http:latest'
+    ports:
+      - "8080:8080"

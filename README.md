@@ -10,8 +10,7 @@ More info in the [documentation](https://robotsnowfall.github.io/xenocosm/).
 ## Run the HTTP service with Docker
 
 ```bash
-docker pull robotsnowfall/xenocosm-http
-docker run -d -p 8080:8080 robotsnowfall/xenocosm-http:latest
+docker-compose up
 ```
 
 ## Vanilla client
