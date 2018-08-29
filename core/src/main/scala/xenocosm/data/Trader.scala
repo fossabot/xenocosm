@@ -36,7 +36,6 @@ object Trader {
 
     implicit val traderHasFSM:FSM[Trader, XenocosmEvent, XenocosmError] = FSM {
       case (trader, event @ ShipMoved(loc)) =>
-        println(travelTime(trader)(loc))
         val elapsed = trader.elapsed |+| travelTime(trader)(loc)
         trader.ship
           .transition(event)

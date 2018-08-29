@@ -13,6 +13,7 @@ lazy val versions = new {
   val fastparse     = "1.0.0"
   val http4s        = "0.18.16"
   val kindProjector = "0.9.7"
+  val log4s         = "1.6.1"
   val logback       = "1.2.3"
   val monocle       = "1.5.1-cats"
   val pureconfig    = "0.9.1"
@@ -75,8 +76,7 @@ lazy val http = project.in(file("http"))
     "com.github.pureconfig" %% "pureconfig-http4s"   % versions.pureconfig,
     "com.github.pureconfig" %% "pureconfig-squants"  % versions.pureconfig,
     "ch.qos.logback"         % "logback-classic"     % versions.logback,
-
-    "org.http4s"            %% "http4s-circe"        % versions.http4s     % Test
+    "org.log4s"             %% "log4s"               % versions.log4s
   ))
 
 lazy val docs = project.in(file("docs"))
