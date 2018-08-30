@@ -14,7 +14,7 @@ object Identity {
   import Trader.instances._
   import FSM.syntax._
 
-  val startingMoves:UInt = UInt(100)
+  val startingMoves:UInt = UInt(1000)
 
   def apply(ref:ForeignID):Identity =
     Identity(UUID.randomUUID(), Some(ref), startingMoves, None)
