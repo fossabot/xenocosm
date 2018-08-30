@@ -58,7 +58,7 @@ lazy val json = project.in(file("json"))
   ))
 
 lazy val http = project.in(file("http"))
-  .enablePlugins(JavaServerAppPackaging, DockerPlugin)
+  .enablePlugins(JavaServerAppPackaging, DockerPlugin, AshScriptPlugin)
   .dependsOn(core, json, testkit % Test)
   .settings(moduleName := "xenocosm-http")
   .settings(xenocosmSettings ++ dockerSettings)
