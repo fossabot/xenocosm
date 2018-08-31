@@ -2,7 +2,7 @@ package xenocosm.json
 
 import io.circe._
 
-import xenocosm.{ShipMoved, TraderCreated, TraderSelected, XenocosmEvent}
+import xenocosm._
 import xenocosm.data.{CosmicLocation, Trader}
 
 trait XenocosmEventJson {
@@ -26,6 +26,10 @@ trait XenocosmEventJson {
         "event" -> "trader-selected".asJson,
         "trader" -> trader.asJson
       )
+
+      case TraderUnselected => Json.obj(
+        "event" -> "trader-unselected".asJson
+      )
     })
 
   implicit val xenocosmEventHasJsonDecoder:Decoder[XenocosmEvent] =
@@ -45,6 +49,8 @@ trait XenocosmEventJson {
           for {
             trader <- hcur.downField("trader").as[Trader]
           } yield TraderSelected(trader)
+
+        case "trader-unselected" => Right(TraderUnselected)
 
         case event =>
           Left(DecodingFailure.apply(s"unrecognized event type: $event", List.empty[CursorOp]))

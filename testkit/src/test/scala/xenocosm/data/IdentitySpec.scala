@@ -35,27 +35,40 @@ class IdentitySpec extends xenocosm.test.XenocosmFunSuite {
 
   test("FSM: TraderCreated: success") {
     val traderB = gen.trader.sample.get
+    val identityB = identity.copy(trader = None).transition(TraderCreated(traderB))
 
-    identity.copy(trader = None).transition(TraderCreated(traderB)).map(_.moves) shouldBe Right(UInt(1))
+    identityB.map(_.trader) shouldBe Right(Some(traderB))
+    identityB.map(_.moves) shouldBe Right(UInt(1))
   }
 
   test("FSM: TraderSelected: success") {
     val traderB = gen.trader.sample.get
+    val identityB = identity.copy(trader = None).transition(TraderSelected(traderB))
 
-    identity.copy(trader = None).transition(TraderSelected(traderB)).map(_.moves) shouldBe Right(UInt(1))
+    identityB.map(_.trader) shouldBe Right(Some(traderB))
+    identityB.map(_.moves) shouldBe Right(UInt(1))
+  }
+
+  test("FSM: TraderUnselected: success") {
+    val identityB = identity.transition(TraderUnselected)
+
+    identityB.map(_.trader) shouldBe Right(None)
+    identityB.map(_.moves) shouldBe Right(UInt(1))
   }
 
   test("FSM: ShipMoved: no moves remaining") {
     val locSB = locA.locS.map(coords => coords.copy(x = coords.x * 2))
     val locB = locA.copy(locS = locSB)
+    val identityB = identity.copy(moves = UInt(0)).transition(ShipMoved(locB))
 
-    identity.copy(moves = UInt(0)).transition(ShipMoved(locB)) shouldBe Left(NoMovesRemaining)
+    identityB shouldBe Left(NoMovesRemaining)
   }
 
   test("FSM: ShipMoved: success") {
     val locSB = locA.locS.map(coords => coords.copy(x = coords.x * 2))
     val locB = locA.copy(locS = locSB)
+    val identityB = identity.transition(ShipMoved(locB))
 
-    identity.transition(ShipMoved(locB)).map(_.moves) shouldBe Right(UInt(0))
+    identityB.map(_.moves) shouldBe Right(UInt(0))
   }
 }

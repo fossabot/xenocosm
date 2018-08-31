@@ -22,6 +22,9 @@ object Identity {
   val movesPL:Lens[Identity, UInt] =
     GenLens[Identity](_.moves)
 
+  val traderPL:Lens[Identity, Option[Trader]] =
+    GenLens[Identity](_.trader)
+
   val traderPO:Optional[Identity, Trader] =
     Optional[Identity, Trader](_.trader)(trader => _.copy(trader = Some(trader)))
 
@@ -34,6 +37,9 @@ object Identity {
 
       case (identity, TraderSelected(trader)) =>
         Right(traderPO.set(trader)(identity))
+
+      case (identity, TraderUnselected) =>
+        Right(traderPL.set(None)(identity))
 
       case (identity, _) if identity.moves <= UInt(0) =>
         Left(NoMovesRemaining)
