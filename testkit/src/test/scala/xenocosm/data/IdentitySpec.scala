@@ -49,8 +49,8 @@ class IdentitySpec extends xenocosm.test.XenocosmFunSuite {
     identityB.map(_.moves) shouldBe Right(UInt(1))
   }
 
-  test("FSM: TraderUnselected: success") {
-    val identityB = identity.transition(TraderUnselected)
+  test("FSM: TraderDeselected: success") {
+    val identityB = identity.transition(TraderDeselected)
 
     identityB.map(_.trader) shouldBe Right(None)
     identityB.map(_.moves) shouldBe Right(UInt(1))

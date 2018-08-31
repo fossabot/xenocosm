@@ -22,6 +22,15 @@ trait DataStore {
   def selectTrader(identityID:UUID, traderID:UUID):IO[Option[Trader]]
   def updateTrader(identity:Identity, trader:Trader):IO[Unit]
 
+  /**
+    * A helper to store a trader from the currently selected trader of an identity
+   */
+  def createTrader(identity:Identity):IO[Unit] =
+    identity.trader match {
+      case None => IO.unit
+      case Some(trader) => createTrader(identity, trader)
+    }
+
   def deleteTrader(identity:Identity, trader:Trader):IO[Unit] =
     deleteTrader(identity.uuid, trader.uuid)
 }

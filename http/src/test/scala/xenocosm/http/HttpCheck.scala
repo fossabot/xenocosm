@@ -3,6 +3,8 @@ package xenocosm.http
 import cats.effect.IO
 import org.http4s._
 
+import xenocosm.http.middleware.XenocosmAuthentication
+
 trait HttpCheck {
 
   def checkStatus(actual:IO[Response[IO]]):Status =
@@ -17,4 +19,7 @@ trait HttpCheck {
       Some(response.as[A].unsafeRunSync)
     }
   }
+
+  def checkAuthToken(actual:IO[Response[IO]]):Option[Cookie] =
+    actual.unsafeRunSync().cookies.find(_.name == XenocosmAuthentication.cookieName)
 }

@@ -27,8 +27,8 @@ trait XenocosmEventJson {
         "trader" -> trader.asJson
       )
 
-      case TraderUnselected => Json.obj(
-        "event" -> "trader-unselected".asJson
+      case TraderDeselected => Json.obj(
+        "event" -> "trader-deselected".asJson
       )
     })
 
@@ -50,7 +50,7 @@ trait XenocosmEventJson {
             trader <- hcur.downField("trader").as[Trader]
           } yield TraderSelected(trader)
 
-        case "trader-unselected" => Right(TraderUnselected)
+        case "trader-deselected" => Right(TraderDeselected)
 
         case event =>
           Left(DecodingFailure.apply(s"unrecognized event type: $event", List.empty[CursorOp]))

@@ -17,7 +17,6 @@ class AuthAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
 
     "missing Basic Auth credentials" should {
       val data = new MemoryDataStore()
-      data.createIdentity(identity).unsafeRunSync()
       val auth = XenocosmAuthentication("test", data)
       val service:HttpService[IO] = new AuthAPI(auth, data).service
       val request:Request[IO] = Request.apply(method = Method.POST, uri = uri)
@@ -38,7 +37,7 @@ class AuthAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
 
     "provided with existing Basic Auth credentials" should {
       val data = new MemoryDataStore()
-      data.createIdentity(identity).unsafeRunSync()
+      data.createIdentity(identity.copy(ref = Some(ForeignID("foo")))).unsafeRunSync()
       val auth = XenocosmAuthentication("test", data)
       val service:HttpService[IO] = new AuthAPI(auth, data).service
       val basic:Authorization = Authorization(BasicCredentials("foo", ""))
@@ -50,16 +49,23 @@ class AuthAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
       }
 
       "respond with Location in header" in {
-        response
+        val uri = response
           .unsafeRunSync()
           .headers
           .get(Location)
-          .map(_.uri) shouldBe Some(Uri.uri("/"))
+          .map(_.uri)
+
+        if (identity.trader.isDefined) {
+          uri shouldBe Some(Uri.uri("/vX/trader") / ⎈(identity.trader.get.uuid))
+        } else {
+          uri shouldBe Some(Uri.uri("/vX/trader"))
+        }
       }
     }
 
     "provided with unrecognized Basic Auth credentials" should {
       val data = new MemoryDataStore()
+      data.createIdentity(identity.copy(ref = Some(ForeignID("bar")))).unsafeRunSync()
       val auth = XenocosmAuthentication("test", data)
       val service:HttpService[IO] = new AuthAPI(auth, data).service
       val basic:Authorization = Authorization(BasicCredentials("foo", ""))
@@ -69,9 +75,9 @@ class AuthAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
       "create new identity" in {
         response.unsafeRunSync()
         val ref = ForeignID("foo")
-        val identity = data.selectIdentity(ref).unsafeRunSync()
-        identity shouldBe defined
-        identity.get.ref shouldBe Some(ref)
+        val identityB = data.selectIdentity(ref).unsafeRunSync()
+        identityB shouldBe defined
+        identityB.get.ref shouldBe Some(ref)
       }
 
       "respond with 303 status" in {
@@ -79,11 +85,13 @@ class AuthAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
       }
 
       "respond with Location in header" in {
-        response
+        val uri = response
           .unsafeRunSync()
           .headers
           .get(Location)
-          .map(_.uri) shouldBe Some(Uri.uri("/"))
+          .map(_.uri)
+
+        uri shouldBe Some(Uri.uri("/vX/trader"))
       }
     }
   }

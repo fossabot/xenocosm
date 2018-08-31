@@ -3,7 +3,7 @@ package rest
 
 import cats.data.OptionT
 import cats.effect.IO
-import org.http4s.{BasicCredentials, Challenge, HttpService, Request, Response, Uri}
+import org.http4s.{BasicCredentials, Challenge, HttpService, Request, Response}
 import org.http4s.dsl.io._
 import org.http4s.headers.{`WWW-Authenticate`, Authorization, Location}
 import org.log4s.Logger
@@ -13,6 +13,7 @@ import xenocosm.http.middleware.XenocosmAuthentication
 import xenocosm.http.services.DataStore
 
 final class AuthAPI(val auth:XenocosmAuthentication, val data:DataStore) {
+  import xenocosm.http.syntax.trader._
 
   private val failure:IO[Response[IO]] = Unauthorized(`WWW-Authenticate`(Challenge("Basic", "Xenocosm", Map.empty[String, String])))
   private val logger:Logger = org.log4s.getLogger
@@ -35,18 +36,23 @@ final class AuthAPI(val auth:XenocosmAuthentication, val data:DataStore) {
     })
 
   val service:HttpService[IO] = HttpService[IO] {
+    // Authenticate
     case req @ POST -> Root ⇒
       OptionT(IO.pure(basicAuth(req)))
         .semiflatMap(selectOrCreate)
         .value.flatMap({
+          case Some(identity) if identity.trader.isDefined =>
+            logger.debug(s"session created for identity ${identity.uuid}")
+            SeeOther(Location(identity.trader.get.uri)).map(auth.withAuthToken(identity))
           case Some(identity) =>
             logger.debug(s"session created for identity ${identity.uuid}")
-            SeeOther(Location(Uri.uri("/"))).map(auth.withAuthToken(identity))
+            SeeOther(Location(apiTrader)).map(auth.withAuthToken(identity))
           case None =>
             logger.info("no identity selected")
             failure
         })
 
+    // Session heartbeat
     case req @ HEAD -> Root ⇒
       auth.authUserFromRequest(req).flatMap({
         case Right(identity) =>
@@ -57,6 +63,7 @@ final class AuthAPI(val auth:XenocosmAuthentication, val data:DataStore) {
           failure
       })
 
+    // Destroy session
     case DELETE -> Root ⇒
       logger.debug("Session destroyed")
       NoContent()

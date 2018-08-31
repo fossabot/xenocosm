@@ -27,7 +27,7 @@ final class MemoryDataStore extends DataStore {
     IO.pure(identities.get(uuid))
 
   def selectIdentity(ref:ForeignID):IO[Option[Identity]] =
-    IO.pure(identities.find({ case (_, indentity) => indentity.ref.exists(_ === ref) }).map(_._2))
+    IO.pure(identities.find({ case (_, identity) => identity.ref.exists(_ === ref) }).map(_._2))
 
   def updateIdentity(identity:Identity):IO[Unit] = IO.pure {
     identities += (identity.uuid -> identity)
