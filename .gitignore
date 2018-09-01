@@ -2,3 +2,6 @@ target
 xenocosm.txt
 xenocosm-*.sh
 .java-version
+.terraform
+*.tfstate
+*.tfstate.backup
