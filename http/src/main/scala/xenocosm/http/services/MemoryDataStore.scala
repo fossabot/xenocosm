@@ -6,7 +6,7 @@ import cats.effect.IO
 
 import xenocosm.data.{ForeignID, Identity, Trader}
 
-final class MemoryDataStore extends DataStore {
+class MemoryDataStore extends DataStore {
   import cats.implicits._
   import ForeignID.instances._
 

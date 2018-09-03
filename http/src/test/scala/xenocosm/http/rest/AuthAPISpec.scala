@@ -10,6 +10,17 @@ import xenocosm.http.middleware.XenocosmAuthentication
 import xenocosm.http.services.MemoryDataStore
 
 class AuthAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
+
+  private class CannotCreateIdentity extends MemoryDataStore {
+    override def createIdentity(identity:Identity):IO[Unit] =
+      IO.raiseError(new Exception("boom"))
+  }
+
+  private class CannotFindIdentity extends MemoryDataStore {
+    override def selectIdentity(ref:ForeignID):IO[Option[Identity]] =
+      IO.raiseError(new Exception("boom"))
+  }
+
   val identity:Identity = xenocosm.gen.identity.sample.get
 
   "POST /" when {
@@ -32,6 +43,10 @@ class AuthAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
           .headers
           .get(`WWW-Authenticate`)
           .map(_.values.head) shouldBe Some(Challenge("Basic", "Xenocosm", Map.empty[String, String]))
+      }
+
+      "not set auth token" in {
+        checkAuthToken(response) shouldBe empty
       }
     }
 
@@ -60,6 +75,10 @@ class AuthAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
         } else {
           uri shouldBe Some(Uri.uri("/vX/trader"))
         }
+      }
+
+      "set auth token" in {
+        checkAuthToken(response) shouldBe defined
       }
     }
 
@@ -93,6 +112,61 @@ class AuthAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
 
         uri shouldBe Some(Uri.uri("/vX/trader"))
       }
+
+      "set auth token" in {
+        checkAuthToken(response) shouldBe defined
+      }
+    }
+
+    "cannot select identity" should {
+      val data = new CannotFindIdentity()
+      data.createIdentity(identity.copy(ref = Some(ForeignID("bar")))).unsafeRunSync()
+      val auth = XenocosmAuthentication("test", data)
+      val service:HttpService[IO] = new AuthAPI(auth, data).service
+      val basic:Authorization = Authorization(BasicCredentials("foo", ""))
+      val request:Request[IO] = Request.apply(method = Method.POST, uri = uri, headers = Headers.apply(basic))
+      val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
+
+      "respond with 401 status" in {
+        checkStatus(response) shouldBe Status.Unauthorized
+      }
+
+      "respond with Challenge in header" in {
+        response
+          .unsafeRunSync()
+          .headers
+          .get(`WWW-Authenticate`)
+          .map(_.values.head) shouldBe Some(Challenge("Basic", "Xenocosm", Map.empty[String, String]))
+      }
+
+      "not set auth token" in {
+        checkAuthToken(response) shouldBe empty
+      }
+    }
+
+    "cannot create identity" should {
+      val data = new CannotCreateIdentity()
+      val auth = XenocosmAuthentication("test", data)
+      val service:HttpService[IO] = new AuthAPI(auth, data).service
+      val basic:Authorization = Authorization(BasicCredentials("foo", ""))
+      val request:Request[IO] = Request.apply(method = Method.POST, uri = uri, headers = Headers.apply(basic))
+      val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
+
+      "respond with 401 status" in {
+        checkStatus(response) shouldBe Status.Unauthorized
+      }
+
+      "respond with Challenge in header" in {
+        response
+          .unsafeRunSync()
+          .headers
+          .get(`WWW-Authenticate`)
+          .map(_.values.head) shouldBe Some(Challenge("Basic", "Xenocosm", Map.empty[String, String]))
+      }
+
+      "not set auth token" in {
+        checkAuthToken(response) shouldBe empty
+      }
     }
   }
 
@@ -117,6 +191,10 @@ class AuthAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
           .get(`WWW-Authenticate`)
           .map(_.values.head) shouldBe Some(Challenge("Basic", "Xenocosm", Map.empty[String, String]))
       }
+
+      "not set auth token" in {
+        checkAuthToken(response) shouldBe empty
+      }
     }
 
     "authenticated" should {
@@ -130,11 +208,7 @@ class AuthAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
       }
 
       "refresh auth token" in {
-        response
-          .unsafeRunSync()
-          .cookies
-          .find(_.name === XenocosmAuthentication.cookieName)
-          .map(_.name) shouldBe Some(XenocosmAuthentication.cookieName)
+        checkAuthToken(response) shouldBe defined
       }
     }
   }
@@ -152,6 +226,11 @@ class AuthAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
       "respond with 204 status" in {
         checkStatus(response) shouldBe Status.NoContent
       }
+
+      "set expired auth token" in {
+        checkAuthToken(response) shouldBe defined
+        checkAuthToken(response).flatMap(_.expires) shouldBe Some(HttpDate.Epoch)
+      }
     }
 
     "authenticated" should {
@@ -163,11 +242,9 @@ class AuthAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
         checkStatus(response) shouldBe Status.NoContent
       }
 
-      "not return auth token" in {
-        response
-          .unsafeRunSync()
-          .cookies
-          .find(_.name === XenocosmAuthentication.cookieName) shouldBe None
+      "set expired auth token" in {
+        checkAuthToken(response) shouldBe defined
+        checkAuthToken(response).flatMap(_.expires) shouldBe Some(HttpDate.Epoch)
       }
     }
   }

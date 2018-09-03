@@ -38,8 +38,11 @@ object Identity {
       case (identity, TraderSelected(trader)) =>
         Right(traderPO.set(trader)(identity))
 
-      case (identity, TraderDeselected) =>
+      case (identity, TraderDeselected(traderID)) if identity.trader.exists(_.uuid == traderID) =>
         Right(traderPL.set(None)(identity))
+
+      case (identity, TraderDeselected(_)) =>
+        Right(identity)
 
       case (identity, _) if identity.moves <= UInt(0) =>
         Left(NoMovesRemaining)
