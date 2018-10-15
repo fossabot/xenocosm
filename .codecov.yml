@@ -1,7 +1,6 @@
 coverage:
-  notify:
-    gitter:
+  range: 50..90
+  status:
+    project:
       default:
-        url: "https://webhooks.gitter.im/e/d0f51405d738b82c50d4"
-        threshold: 1%
-
+        target: 70%
