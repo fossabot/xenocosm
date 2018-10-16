@@ -3,6 +3,9 @@ options:
   - title: Getting Started
     url: /docs
 
+  - title: REST API
+    url: https://xenocosm.docs.apiary.io/
+
   - title: Xenocosm
     url: /docs/xenocosm
     menu_section: xenocosm
@@ -27,8 +30,8 @@ options:
     url: /docs/cavernetics
     menu_section: cavernetics
 
-  - title: REST API
-    url: https://xenocosm.docs.apiary.io/
-
   - title: Scaladoc
     url: /api
+
+  - title: Contributing
+    url: /docs/contributing.html

@@ -160,7 +160,8 @@ lazy val micrositeSettings = Seq(
     "gray-lighter"    -> "#F4F3F4",
     "white-color"     -> "#FFFFFF"),
   micrositeExtraMdFiles := Map(
-    file("README.md") -> ExtraMdFileConfig("docs/index.md", "docs", Map.empty[String, String])
+    file("README.md") -> ExtraMdFileConfig("docs/index.md", "docs", Map.empty[String, String]),
+    file("CONTRIBUTING.md") -> ExtraMdFileConfig("docs/contributing.md", "docs", Map.empty[String, String])
   ),
   micrositeDocumentationUrl := "/xenocosm/docs/index.html"
 )

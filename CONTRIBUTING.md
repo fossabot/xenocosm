@@ -24,7 +24,7 @@ steps and jump straight to submitting a pull request.
 
  1. [Find something that belongs in xenocosm](#find-something-that-belongs-in-xenocosm)
  2. [Let us know you are working on it](#let-us-know-you-are-working-on-it)
- 3. [Build the project](#build-project)
+ 3. [Build the project](#build-the-project)
  4. [Implement your contribution](#write-code)
  5. [Write tests](#write-tests)
  6. [Write documentation](#write-documentation)
@@ -116,7 +116,7 @@ include the original authors' names and a link to the original work.
    for law checking, and imports all syntax and standard instances for
    convenience.
 
-## Contributing documentation
+## Write documentation
 
 ### Source for the documentation
 
