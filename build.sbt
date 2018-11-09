@@ -7,7 +7,7 @@ inThisBuild(Seq(
 
 lazy val versions = new {
   val cats          = "1.4.0"
-  val circe         = "0.10.0"
+  val circe         = "0.10.1"
   val cryptobits    = "1.2"
   val discipline    = "0.10.0"
   val fastparse     = "1.0.0"
