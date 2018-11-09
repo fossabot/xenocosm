@@ -1,6 +1,7 @@
 package xenocosm.http
 
 import pureconfig.error.ConfigReaderFailures
+import pureconfig.generic.auto._
 
 final case class XenocosmConfig(http:XenocosmConfig.Http)
 
