@@ -20,7 +20,7 @@ lazy val versions = new {
   val scalacheck    = "1.14.0"
   val scalatest     = "3.0.5"
   val spire         = "0.16.0"
-  val squants       = "1.3.0"
+  val squants       = "1.4.0"
 }
 
 lazy val commonDependencies = Seq(

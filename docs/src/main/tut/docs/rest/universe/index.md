@@ -52,7 +52,7 @@ Do not supply a request body with this method.
 ```tut:invisible
 import java.util.UUID
 import io.circe.syntax._
-import squants.space.Parsecs
+import squants.space.{KiloParsecs, Parsecs}
 import galaxique.data._
 import xenocosm.http._
 import xenocosm.http.response.UniverseResponse
@@ -60,7 +60,7 @@ import UniverseResponse.instances._
 
 val universe = Universe(UUID.fromString("00000000-0000-0000-0000-000000000000"))
 val origin = Point3(Parsecs(0), Parsecs(0), Parsecs(0))
-val range = Parsecs(10000)
+val range = KiloParsecs(10)
 val response = UniverseResponse(universe, origin, range)
 ```
 

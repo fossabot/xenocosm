@@ -2,12 +2,12 @@ package xenocosm.http
 
 import galaxique.data.Point3
 import org.http4s.dsl.impl._
-import squants.space.{AstronomicalUnits, Parsecs}
+import squants.space.{AstronomicalUnits, KiloParsecs, Parsecs}
 
 class Point3SegmentSpec extends xenocosm.test.XenocosmFunSuite {
 
   test("Point3Segment.path.unapply.intergalactic") {
-    val loc1 = Point3(Parsecs(10000), Parsecs(10000), Parsecs(10000))
+    val loc1 = Point3(KiloParsecs(1), KiloParsecs(1), KiloParsecs(1))
     val path = Path(s"/1,1,1")
     path match {
       case Root / ✺(loc2) => loc1 shouldBe loc2

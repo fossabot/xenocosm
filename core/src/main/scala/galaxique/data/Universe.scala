@@ -7,7 +7,7 @@ import cats.Eq
 import spire.math.Interval
 import spire.random.{Dist, Generator}
 import spire.random.rng.BurtleRot2
-import squants.space.{Length, Parsecs}
+import squants.space.{GigaParsecs, KiloParsecs, Length, Parsecs}
 
 final case class Universe(uuid:UUID) { self =>
   private val gen:Generator = Universe.gen(self)
@@ -21,7 +21,7 @@ object Universe {
   import interop.squants.instances._
   import interop.java.instances._
 
-  lazy val scale:Length = Parsecs(10000)
+  lazy val scale:Length = KiloParsecs(1)
 
   // scalastyle:off magic.number
   private[data] val bytes:Universe ⇒ Array[Byte] = universe ⇒
@@ -41,8 +41,8 @@ object Universe {
   private lazy val age:Interval[Long] = Interval(ageMin, ageMax)
   private lazy val ageDist:Dist[Long] = age.dist(ageMin, ageMax, ageMin / 1000)
 
-  private lazy val diameterMin:Length = Parsecs(10000000000L)
-  private lazy val diameterMax:Length = Parsecs(30000000000L)
+  private lazy val diameterMin:Length = GigaParsecs(10)
+  private lazy val diameterMax:Length = GigaParsecs(30)
   private lazy val diameter:Interval[Length] = Interval(diameterMin, diameterMax)
   private lazy val diameterDist:Dist[Length] = diameter.dist(diameterMin, diameterMax, diameterMin / 1000)
 

@@ -7,7 +7,7 @@ import spire.random.{Dist, Generator}
 import spire.random.rng.BurtleRot2
 import squants.energy.{Power, SolarLuminosities}
 import squants.mass.{Mass, SolarMasses}
-import squants.space.{Length, Parsecs, SolarRadii}
+import squants.space.{Length, MegaParsecs, Parsecs, SolarRadii}
 
 final case class Galaxy(universe:Universe, loc:Point3) { self =>
   private val gen:Generator = Galaxy.gen(self)
@@ -32,7 +32,7 @@ object Galaxy {
   private lazy val luminosityDist:Dist[Power] = luminosity.dist(luminosityMin, luminosityMax, luminosityMin / 100)
 
   private lazy val diameterMin:Length = Universe.scale
-  private lazy val diameterMax:Length = Parsecs(800000)
+  private lazy val diameterMax:Length = MegaParsecs(1)
   private lazy val diameter:Interval[Length] = Interval(diameterMin, diameterMax)
   private lazy val diameterDist:Dist[Length] = diameter.dist(diameterMin, diameterMax, diameterMin / 100)
 
