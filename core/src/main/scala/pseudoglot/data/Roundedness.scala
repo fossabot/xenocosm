@@ -12,15 +12,16 @@ case object Unrounded extends Roundedness("unrounded")
 
 object Roundedness {
   lazy val all = List(Rounded, Unrounded)
-  def parse(in:String):Either[String, Roundedness] =
-    all.find(_.label === in) match {
+
+  val parse:String => Either[String, Roundedness] =
+    input => all.find(_.label === input) match {
       case Some(success) => Right(success)
-      case None => Left(in)
+      case None => Left(input)
     }
 
   trait Instances {
     implicit val roundednessHasShow: Show[Roundedness] = Show.show[Roundedness](_.label)
-    implicit val roundednessHasOrder: Order[Roundedness] = Order.by(x ⇒ all.indexOf(x))
+    implicit val roundednessHasOrder: Order[Roundedness] = Order.by(all.indexOf)
     implicit val roundednessHasDist: Dist[Roundedness] = Dist.oneOf(all: _*)
     implicit val roundednessHasMetricSpace: MetricSpace[Roundedness, Int] =
       (v: Roundedness, w: Roundedness) ⇒ math.abs(all.indexOf(v) - all.indexOf(w))

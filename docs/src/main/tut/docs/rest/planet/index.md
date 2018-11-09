@@ -5,7 +5,7 @@ title: Planet API
 
 # Planet API
 
-## GET /{uuid}/{loc}/{loc}/{loc}
+## GET /v1/multiverse/{uuid}/{loc}/{loc}/{loc}
 
 Returns a Planet identified by its location within a star system.
 
@@ -32,14 +32,14 @@ Do not supply a request body with this method.
 ```tut:invisible
 import java.util.UUID
 import io.circe.syntax._
-import squants.space.{AstronomicalUnits, Parsecs}
+import squants.space.{AstronomicalUnits, KiloParsecs, Parsecs}
 import galaxique.data._
 import xenocosm.http._
-import xenocosm.http.data.PlanetResponse
+import xenocosm.http.response.PlanetResponse
 import PlanetResponse.instances._
 
 val universe = Universe(UUID.fromString("00000000-0000-0000-0000-000000000000"))
-val galaxy = Galaxy(universe, Point3(Parsecs(-10000), Parsecs(-10000), Parsecs(0)))
+val galaxy = Galaxy(universe, Point3(KiloParsecs(-10), KiloParsecs(-10), Parsecs(0)))
 val star = Star(galaxy, Point3(Parsecs(0), Parsecs(-1), Parsecs(0)))
 val planet = Planet(star, Point3(AstronomicalUnits(-1), AstronomicalUnits(0), AstronomicalUnits(-1)))
 val response = PlanetResponse(planet)
@@ -49,7 +49,7 @@ val response = PlanetResponse(planet)
 
 ```tut:passthrough
 println(s"""```http
-           |GET /${⎈(universe.uuid)}/${✺(galaxy.loc)}/${✨(star.loc)}/${★(planet.loc)} HTTP/1.1
+           |GET /v1/multiverse/${⎈(universe.uuid)}/${✺(galaxy.loc)}/${✨(star.loc)}/${★(planet.loc)} HTTP/1.1
            |Host: xenocosm.com
            |Accept: application/hal+json
            |```""".stripMargin)

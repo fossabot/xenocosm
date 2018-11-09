@@ -33,15 +33,16 @@ object Place {
     Pharyngeal,
     Glottal
   )
-  def parse(in:String):Either[String, Place] =
-    all.find(_.label === in) match {
+
+  val parse:String => Either[String, Place] =
+    input => all.find(_.label === input) match {
       case Some(success) => Right(success)
-      case None => Left(in)
+      case None => Left(input)
     }
 
   trait Instances {
     implicit val placeHasShow: Show[Place] = Show.show[Place](_.label)
-    implicit val placeHasOrder: Order[Place] = Order.by(x ⇒ all.indexOf(x))
+    implicit val placeHasOrder: Order[Place] = Order.by(all.indexOf)
     implicit val placeHasDist: Dist[Place] = Dist.oneOf(all: _*)
     implicit val placeHasMetricSpace: MetricSpace[Place, Int] =
       (v: Place, w: Place) ⇒ math.abs(all.indexOf(v) - all.indexOf(w))

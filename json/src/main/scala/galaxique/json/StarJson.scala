@@ -5,12 +5,7 @@ import galaxique.data.{Galaxy, Point3, Star}
 
 trait StarJson {
   import io.circe.syntax._
-  import interop.density._
-  import interop.length._
-  import interop.mass._
-  import interop.power._
-  import interop.temperature._
-  import interop.volume._
+  import interop.squants.json.instances._
   import galaxy._
   import point3._
   import morganKeenan._

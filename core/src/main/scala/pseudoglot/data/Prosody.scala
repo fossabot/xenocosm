@@ -8,14 +8,23 @@ final case class Prosody(phonology:Phonology)
 object Prosody {
   import PhonotacticRule.syntax._
 
-  def syllableRules(prosody:Prosody):Dist[Seq[PhonotacticRule]] =
-    Phonology.anyRule(prosody.phonology)
-      .flatMap({
-        case rhyme if rhyme.hasVowel => Dist.constant(Seq(rhyme))
-        case onset => Phonology.ruleWithVowel(prosody.phonology).map(rhyme => Seq(onset, rhyme))
-      })
+  def syllableRule(prosody:Prosody):Dist[PhonotacticRule] = {
+    val consonantRules = AnyPulmonic :: prosody.phonology.phonotactics.filterNot(_.hasVowel)
+    val vowelRules = AnyVowel :: prosody.phonology.phonotactics.filter(_.hasVowel)
+    for {
+      cluster <- Dist.oneOf(consonantRules: _*)
+      onset <- Dist.oneOf(Empty, cluster)
+      rhyme <- Dist.oneOf(vowelRules: _*)
+    } yield if (rhyme.startsWithVowel) {
+      Concat(onset, rhyme)
+    } else {
+      rhyme
+    }
+  }
 
-  def syllable(prosody:Prosody):Dist[Seq[Phone]] =
-    syllableRules(prosody)
-      .flatMap(Phonology.applyRules(prosody.phonology, _))
+  def dist(implicit magic:Magic):Dist[Prosody] = Phonology.dist.map(Prosody.apply)
+
+  def syllable(prosody:Prosody):Dist[Phones] =
+    syllableRule(prosody)
+      .flatMap(Phonology.applyRule(prosody.phonology, _))
 }

@@ -8,5 +8,10 @@ package object json {
   object star extends StarJson
   object universe extends UniverseJson
 
-  object implicits extends All
+  object implicits extends GalaxyJson
+                      with MorganKeenanJson
+                      with PlanetJson
+                      with Point3Json
+                      with StarJson
+                      with UniverseJson
 }

@@ -2,41 +2,49 @@ import microsites.ExtraMdFileConfig
 
 inThisBuild(Seq(
   organization in ThisBuild := "com.robotsnowfall",
-  scalaVersion := "2.12.5"
+  scalaVersion := "2.12.7"
 ))
 
 lazy val versions = new {
-  val cats       = "1.1.0"
-  val circe      = "0.9.3"
-  val discipline = "0.9.0"
-  val fastparse  = "1.0.0"
-  val http4s     = "0.18.5"
-  val logback    = "1.2.3"
-  val pureconfig = "0.9.1"
-  val scalacheck = "1.13.5"
-  val scalatest  = "3.0.5"
-  val spire      = "0.15.0"
-  val squants    = "1.3.0"
+  val cats          = "1.4.0"
+  val circe         = "0.10.1"
+  val cryptobits    = "1.2"
+  val discipline    = "0.10.0"
+  val fastparse     = "1.0.0"
+  val http4s        = "0.18.21"
+  val kindProjector = "0.9.8"
+  val log4s         = "1.6.1"
+  val logback       = "1.2.3"
+  val monocle       = "1.5.1-cats"
+  val pureconfig    = "0.10.0"
+  val scalacheck    = "1.14.0"
+  val scalatest     = "3.0.5"
+  val spire         = "0.16.0"
+  val squants       = "1.4.0"
 }
 
 lazy val commonDependencies = Seq(
-  "org.typelevel"  %% "cats-core"  % versions.cats,
-  "org.typelevel"  %% "spire"      % versions.spire,
-  "org.typelevel"  %% "squants"    % versions.squants,
+  "org.typelevel"              %% "cats-core"     % versions.cats,
+  "org.typelevel"              %% "spire"         % versions.spire,
+  "org.typelevel"              %% "squants"       % versions.squants,
+  "com.github.julien-truffaut" %% "monocle-core"  % versions.monocle,
+  "com.github.julien-truffaut" %% "monocle-macro" % versions.monocle,
 
-  "org.typelevel"  %% "cats-laws"  % versions.cats       % Test,
-  "org.typelevel"  %% "spire-laws" % versions.spire      % Test,
-  "org.scalacheck" %% "scalacheck" % versions.scalacheck % Test,
-  "org.scalatest"  %% "scalatest"  % versions.scalatest  % Test
+  "org.typelevel"              %% "cats-laws"   % versions.cats       % Test,
+  "org.typelevel"              %% "spire-laws"  % versions.spire      % Test,
+  "com.github.julien-truffaut" %% "monocle-law" % versions.monocle    % Test,
+  "org.scalacheck"             %% "scalacheck"  % versions.scalacheck % Test,
+  "org.scalatest"              %% "scalatest"   % versions.scalatest  % Test,
+
+  compilerPlugin("org.spire-math" %% "kind-projector" % versions.kindProjector)
 )
 
 lazy val core = project.in(file("core"))
   .enablePlugins(BuildInfoPlugin, GitVersioning)
-  .dependsOn(testkit % Test)
   .settings(moduleName := "xenocosm-core")
   .settings(xenocosmSettings ++ gitSettings ++ buildInfoSettings)
   .settings(libraryDependencies ++= Seq(
-    "com.lihaoyi"   %% "fastparse" % versions.fastparse
+    "com.lihaoyi" %% "fastparse" % versions.fastparse
   ))
 
 lazy val json = project.in(file("json"))
@@ -50,7 +58,7 @@ lazy val json = project.in(file("json"))
   ))
 
 lazy val http = project.in(file("http"))
-  .enablePlugins(JavaServerAppPackaging, DockerPlugin)
+  .enablePlugins(JavaServerAppPackaging, DockerPlugin, AshScriptPlugin)
   .dependsOn(core, json, testkit % Test)
   .settings(moduleName := "xenocosm-http")
   .settings(xenocosmSettings ++ dockerSettings)
@@ -63,12 +71,12 @@ lazy val http = project.in(file("http"))
     "org.http4s"            %% "http4s-blaze-server" % versions.http4s,
     "org.http4s"            %% "http4s-blaze-client" % versions.http4s,
     "org.http4s"            %% "http4s-circe"        % versions.http4s,
+    "org.reactormonk"       %% "cryptobits"          % versions.cryptobits,
     "com.github.pureconfig" %% "pureconfig"          % versions.pureconfig,
     "com.github.pureconfig" %% "pureconfig-http4s"   % versions.pureconfig,
     "com.github.pureconfig" %% "pureconfig-squants"  % versions.pureconfig,
     "ch.qos.logback"         % "logback-classic"     % versions.logback,
-
-    "org.http4s"            %% "http4s-circe"        % versions.http4s     % Test
+    "org.log4s"             %% "log4s"               % versions.log4s
   ))
 
 lazy val docs = project.in(file("docs"))
@@ -78,6 +86,7 @@ lazy val docs = project.in(file("docs"))
   .settings(xenocosmSettings ++ micrositeSettings ++ unidocSettings)
 
 lazy val testkit = project.in(file("testkit"))
+  .dependsOn(core)
   .settings(moduleName := "xenocosm-testkit")
   .settings(xenocosmSettings)
   .settings(Seq(
@@ -92,7 +101,7 @@ lazy val commonSettings = Seq(
   libraryDependencies ++= commonDependencies,
   parallelExecution in Test := false,
   scalacOptions ++= commonScalacOptions
-) ++ consoleScalacOptions
+)
 
 lazy val xenocosmSettings = commonSettings ++ warnUnusedImport ++ scoverageSettings
 
@@ -121,26 +130,15 @@ lazy val warnUnusedImport = Seq(
   scalacOptions in (Test, console) := (scalacOptions in (Compile, console)).value
 )
 
-lazy val consoleScalacOptions = Seq(
-  initialCommands in console := """
-    |import cats.implicits._
-    |import io.circe.syntax._
-    |import spire.random.rng.BurtleRot2
-    |
-    |val seed = BurtleRot2.randomSeed
-    |val gen = BurtleRot2.fromSeed(seed)
-    |""".stripMargin
-)
-
 lazy val scoverageSettings = Seq(
-  coverageMinimum := 0,
+  coverageMinimum := 70,
   coverageFailOnMinimum := true,
   coverageHighlighting := true
 )
 
 lazy val gitSettings = Seq(
   git.useGitDescribe := true,
-  git.baseVersion := "40.0"
+  git.baseVersion := "0.0"
 )
 
 lazy val micrositeSettings = Seq(
@@ -162,7 +160,8 @@ lazy val micrositeSettings = Seq(
     "gray-lighter"    -> "#F4F3F4",
     "white-color"     -> "#FFFFFF"),
   micrositeExtraMdFiles := Map(
-    file("README.md") -> ExtraMdFileConfig("docs/index.md", "docs", Map.empty[String, String])
+    file("README.md") -> ExtraMdFileConfig("docs/index.md", "docs", Map.empty[String, String]),
+    file("CONTRIBUTING.md") -> ExtraMdFileConfig("docs/contributing.md", "docs", Map.empty[String, String])
   ),
   micrositeDocumentationUrl := "/xenocosm/docs/index.html"
 )
@@ -205,7 +204,7 @@ lazy val dockerSettings = Seq(
   dockerUpdateLatest := true
 )
 
-addCommandAlias("validateCore", ";coverage;core/compile;core/test;core/coverageReport")
-addCommandAlias("validateJson", ";coverage;json/compile;json/test;json/coverageReport")
-addCommandAlias("validateHttp", ";coverage;http/compile;http/test;http/coverageReport")
-addCommandAlias("validate", ";clean;scalastyle;validateCore;validateJson;validateHttp;coverageAggregate;makeMicrosite")
+addCommandAlias("testCore", ";coverage;core/compile;testkit/test;core/coverageReport")
+addCommandAlias("testJson", ";coverage;json/compile;json/test;json/coverageReport")
+addCommandAlias("testHttp", ";coverage;http/compile;http/test;http/coverageReport")
+addCommandAlias("validate", ";clean;scalastyle;testCore;testJson;testHttp;coverageAggregate")

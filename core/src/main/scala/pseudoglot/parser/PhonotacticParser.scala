@@ -22,14 +22,27 @@ object PhonotacticParser extends PhoneParser {
   private lazy val phoneRule:Parser[PhonotacticRule] =
     P(anyPulmonic | anyVowel | literalPulmonic | literalVowel)
 
-  private lazy val concat:Parser[Concat] =
-    P("(" ~ rules.rep ~ ")").map(xs ⇒ Concat(xs.toList))
+  private val toConcat:List[PhonotacticRule] => PhonotacticRule = {
+    case Nil => Empty
+    case x :: Nil => x
+    case x :: y :: Nil => Concat(x, y)
+    case x :: ys => Concat(x, toConcat(ys))
+  }
+
+  private lazy val concat:Parser[PhonotacticRule] =
+    P("(" ~ rules.rep ~ ")").map(xs => toConcat(xs.toList))
+
+  private val toChoose:List[PhonotacticRule] => PhonotacticRule = {
+    case Nil => Empty
+    case x :: Nil => x
+    case x :: y :: Nil => Choose(x, y)
+    case x :: ys => Choose(x, toChoose(ys))
+  }
 
   private lazy val choose:Parser[PhonotacticRule] =
-    P("(" ~ rules ~ ("|" ~ rules).rep.? ~ ")").map({
-      case (x, None) ⇒ x
-      case (x, Some(xs)) ⇒ Choose((x +: xs).toList)
-    })
+    P("(" ~ rules ~ ("|" ~ rules).rep.? ~ ")")
+      .map(t => t._1 :: t._2.getOrElse(Seq.empty[PhonotacticRule]).toList)
+      .map(toChoose)
 
   private lazy val rules:Parser[PhonotacticRule] =
     P(phoneRule | concat | choose)

@@ -6,7 +6,7 @@ import galaxique.data.Universe
 
 trait UniverseJson {
   import io.circe.syntax._
-  import interop.length._
+  import interop.squants.json.instances._
 
   implicit val universeHasJsonEncode:Encoder[Universe] =
     Encoder.instance(a => Json.obj(

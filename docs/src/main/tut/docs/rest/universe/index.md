@@ -5,7 +5,7 @@ title: Universe API
 
 # Universe API
 
-## GET /{uuid}
+## GET /v1/multiverse/{uuid}
 
 Returns a Universe identified by a UUID in a URL-safe Base64 encoding with
 padding removed. This will always be 22 characters in length.
@@ -52,15 +52,15 @@ Do not supply a request body with this method.
 ```tut:invisible
 import java.util.UUID
 import io.circe.syntax._
-import squants.space.Parsecs
+import squants.space.{KiloParsecs, Parsecs}
 import galaxique.data._
 import xenocosm.http._
-import xenocosm.http.data.UniverseResponse
+import xenocosm.http.response.UniverseResponse
 import UniverseResponse.instances._
 
 val universe = Universe(UUID.fromString("00000000-0000-0000-0000-000000000000"))
 val origin = Point3(Parsecs(0), Parsecs(0), Parsecs(0))
-val range = Parsecs(10000)
+val range = KiloParsecs(10)
 val response = UniverseResponse(universe, origin, range)
 ```
 
@@ -68,7 +68,7 @@ val response = UniverseResponse(universe, origin, range)
 
 ```tut:passthrough
 println(s"""```http
-           |GET /${⎈(universe.uuid)} HTTP/1.1
+           |GET /v1/multiverse/${⎈(universe.uuid)} HTTP/1.1
            |Host: xenocosm.com
            |Accept: application/hal+json
            |```""".stripMargin)

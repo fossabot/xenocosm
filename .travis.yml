@@ -4,7 +4,7 @@ jdk:
   - openjdk8
 
 scala:
-  - 2.12.5
+  - 2.12.7
 
 services:
   - docker
@@ -12,17 +12,20 @@ services:
 before_install:
   - if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then bash scripts/decrypt-keys.sh; fi
   - export PATH=${PATH}:./vendor/bundle
+  - npm install dredd@5.2.0 --no-optional --global
 
 install:
   - rvm use 2.2.8 --install --fuzzy
   - gem update --system
-  - gem install sass -v 3.5.7
-  - gem install jekyll -v 3.8.3
+  - gem install sass
+  - gem install jekyll -v 3.2.1
 
 script:
   - sbt ++$TRAVIS_SCALA_VERSION validate
+  - sbt ++$TRAVIS_SCALA_VERSION makeMicrosite
 
 after_success:
+  - dredd ./xenocosm.apib http://127.0.0.1 --dry-run
   - bash <(curl -s https://codecov.io/bash)
   - if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then bash scripts/publishMicrosite.sh; fi
 

@@ -2,7 +2,6 @@ package galaxique
 package data
 
 import cats.Eq
-import spire.math.Interval
 import spire.random.{Dist, Generator}
 import spire.random.rng.BurtleRot2
 import squants.energy.{Power, SolarLuminosities}
@@ -26,30 +25,34 @@ final case class Star(galaxy:Galaxy, loc:Point3) { self =>
 }
 
 object Star {
-  import interop.length._
-  import Galaxy.instances._
+  lazy val scale:Length = AstronomicalUnits(1)
 
   private[data] val bytes:Star => Array[Byte] = star =>
     Galaxy.bytes(star.galaxy) ++ Point3.bytes(Parsecs)(star.loc)
   private val gen:Star => Generator = BurtleRot2.fromBytes _ compose bytes
 
+  // Scale a double from [0.0, 1.0) to correspond to a point within the stellar region
+  //FIXME: Calculate the heliopause
+  private val toCoordinate:Star => Double => Length = star => d =>
+    scale * ((AstronomicalUnits(121) * ((2 * d) - 1)) / scale).floor
+
+  //FIXME: Calculate z-axis
+  val point:Star => Dist[Point3] = star =>
+    for {
+      x <- Dist.double
+      y <- Dist.double
+    } yield Point3(
+      toCoordinate(star)(x),
+      toCoordinate(star)(y),
+      AstronomicalUnits(0)
+    )
+
   trait Instances {
     implicit val starHasEq:Eq[Star] = Eq.fromUniversalEquals[Star]
-    implicit val starHasDist:Dist[Star] =
-      for {
-        galaxy <- Dist[Galaxy]
-        interval = Interval(-galaxy.radius, galaxy.radius)
-        dist = interval.dist(-galaxy.radius, galaxy.radius, galaxy.radius / 1000)
-        x0 <- dist
-        y0 <- dist
-        z0 <- dist
-        x = x0.in(Parsecs).floor
-        y = y0.in(Parsecs).floor
-        z = z0.in(Parsecs).floor
-      } yield Star(galaxy, Point3(x, y, z))
 
+    //FIXME: Incorporate the roche limit into `locate()`
     implicit val starHasSparseSpace:SparseSpace3[Star, Planet] =
-      SparseSpace3.fromStandardProof[Star, Planet](AstronomicalUnits, AstronomicalUnits(1))(Planet.apply)(bytes)
+      SparseSpace3.fromStandardProof[Star, Planet](AstronomicalUnits, Star.scale)(Planet.apply)(bytes)
   }
   object instances extends Instances
 }

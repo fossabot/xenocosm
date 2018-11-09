@@ -7,7 +7,7 @@ import cats.Eq
 import spire.math.Interval
 import spire.random.{Dist, Generator}
 import spire.random.rng.BurtleRot2
-import squants.space.{Length, Parsecs}
+import squants.space.{GigaParsecs, KiloParsecs, Length, Parsecs}
 
 final case class Universe(uuid:UUID) { self =>
   private val gen:Generator = Universe.gen(self)
@@ -18,8 +18,10 @@ final case class Universe(uuid:UUID) { self =>
 
 object Universe {
   import spire.implicits._
-  import interop.length._
-  import interop.uuid._
+  import interop.squants.instances._
+  import interop.java.instances._
+
+  lazy val scale:Length = KiloParsecs(1)
 
   // scalastyle:off magic.number
   private[data] val bytes:Universe ⇒ Array[Byte] = universe ⇒
@@ -39,10 +41,25 @@ object Universe {
   private lazy val age:Interval[Long] = Interval(ageMin, ageMax)
   private lazy val ageDist:Dist[Long] = age.dist(ageMin, ageMax, ageMin / 1000)
 
-  private lazy val diameterMin:Length = Parsecs(10000000000L)
-  private lazy val diameterMax:Length = Parsecs(30000000000L)
+  private lazy val diameterMin:Length = GigaParsecs(10)
+  private lazy val diameterMax:Length = GigaParsecs(30)
   private lazy val diameter:Interval[Length] = Interval(diameterMin, diameterMax)
   private lazy val diameterDist:Dist[Length] = diameter.dist(diameterMin, diameterMax, diameterMin / 1000)
+
+  // Scale a double from [0.0, 1.0) to correspond to a point within the universe
+  private val toCoordinate:Universe => Double => Length = universe => d =>
+    scale * ((universe.diameter * ((2 * d) - 1)) / scale).floor
+
+  //FIXME: Calculate z-axis
+  val point:Universe => Dist[Point3] = universe =>
+    for {
+      x <- Dist.double
+      y <- Dist.double
+    } yield Point3(
+      toCoordinate(universe)(x),
+      toCoordinate(universe)(y),
+      Parsecs(0)
+    )
 
   trait Instances {
     implicit val universeHasEq:Eq[Universe] = Eq.fromUniversalEquals[Universe]
@@ -51,7 +68,7 @@ object Universe {
       Dist[UUID].map(Universe.apply)
 
     implicit val universeHasSparseSpace:SparseSpace3[Universe, Galaxy] =
-      SparseSpace3.fromStandardProof[Universe, Galaxy](Parsecs, Parsecs(10000))(Galaxy.apply)(bytes)
+      SparseSpace3.fromStandardProof[Universe, Galaxy](Parsecs, scale)(Galaxy.apply)(bytes)
   }
   object instances extends Instances
 }

@@ -1,15 +1,17 @@
 # Xenocosm
 
+[![GitHub tag](https://img.shields.io/github/tag/robotsnowfall/xenocosm.svg)](https://github.com/robotsnowfall/xenocosm/tags)
 [![Build Status](https://travis-ci.org/robotsnowfall/xenocosm.svg?branch=master)](https://travis-ci.org/robotsnowfall/xenocosm)
 [![codecov](https://codecov.io/gh/robotsnowfall/xenocosm/branch/master/graph/badge.svg)](https://codecov.io/gh/robotsnowfall/xenocosm)
+[![Docker Pulls](https://img.shields.io/docker/pulls/robotsnowfall/xenocosm-http.svg)](https://hub.docker.com/r/robotsnowfall/xenocosm-http)
 
 More info in the [documentation](https://robotsnowfall.github.io/xenocosm/).
 
 ## Run the HTTP service with Docker
 
 ```bash
-docker pull robotsnowfall/xenocosm-http
-docker run -d -p 8080:8080 robotsnowfall/xenocosm-http:latest
+sbt docker:publishLocal
+docker-compose up -d
 ```
 
 ## Vanilla client

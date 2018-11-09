@@ -6,7 +6,7 @@ import galaxique.data.Point3
 
 trait Point3Json {
   import io.circe.syntax._
-  import interop.length._
+  import interop.squants.json.instances._
 
   implicit val point3HasJsonEncode:Encoder[Point3] =
     Encoder.instance(loc => Json.arr(loc.x.asJson, loc.y.asJson, loc.z.asJson))
