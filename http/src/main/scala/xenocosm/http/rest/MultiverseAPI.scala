@@ -7,19 +7,27 @@ import io.circe.syntax._
 import org.http4s.AuthedService
 import org.http4s.circe._
 import org.http4s.dsl.io._
-import galaxique.data._
+import org.http4s.headers.Location
+import org.log4s.Logger
 
-import xenocosm.data.{CosmicLocation, Identity}
+import galaxique.data._
+import xenocosm._
+import xenocosm.data.{CosmicLocation, Identity, Trader}
 import xenocosm.http.middleware.XenocosmAuthentication
 import xenocosm.http.response._
 import xenocosm.http.services.DataStore
 
 final class MultiverseAPI(val auth:XenocosmAuthentication, val data:DataStore) {
+  import cavernetics.FSM.syntax._
   import CosmicLocationResponse.instances._
   import Universe.instances._
   import Galaxy.instances._
   import Star.instances._
   import Planet.instances._
+  import Trader.instances._
+  import ErrorResponse.instances._
+
+  private val logger:Logger = org.log4s.getLogger
 
   val service:AuthedService[Identity, IO] = AuthedService[Identity, IO] {
 
@@ -61,6 +69,26 @@ final class MultiverseAPI(val auth:XenocosmAuthentication, val data:DataStore) {
           Ok(response.asJson, jsonHal).map(auth.withAuthToken(identity))
         case _ =>
           Forbidden().map(auth.withAuthToken(identity))
+      }
+
+    case POST -> Root / ⎈(uuid) / ✺(locU) / ✨(locG) / ★(locS) as identity ⇒
+      val loc = CosmicLocation(uuid, Some(locU), Some(locG), Some(locS))
+      identity.trader match {
+        case Some(trader) =>
+          trader transition ShipMoved(loc) match {
+            case Right(updated) =>
+              data.updateTrader(identity, updated)
+              val response = CosmicLocationResponse(loc)
+              Ok(response.asJson, jsonHal).map(auth.withAuthToken(identity))
+            case Left(WrappedThrowable(throwable)) =>
+              logger.error(throwable)("Unexpected exception")
+              InternalServerError().map(auth.withAuthToken(identity))
+            case Left(error) =>
+              val response = ErrorResponse(trader, error)
+              Forbidden(response.asJson, jsonHal).map(auth.withAuthToken(identity))
+          }
+        case _ =>
+          SeeOther(Location(apiTrader)).map(auth.withAuthToken(identity))
       }
   }
 }

@@ -3,7 +3,9 @@ package response
 
 import io.circe.{Decoder, Encoder, Json}
 
+import galaxique.json.implicits._
 import xenocosm.data.CosmicLocation
+import xenocosm.json.cosmicLocation._
 
 final case class CosmicLocationResponse(loc:CosmicLocation)
 
@@ -22,12 +24,31 @@ object CosmicLocationResponse {
 
   trait Instances {
     implicit val cosmicLocationResponseHasJsonEncoder:Encoder[CosmicLocationResponse] =
-      Encoder.instance(res => Json.obj(
-        "_links" -> Json.obj(
-          "self" -> Json.obj("href" -> s"$apiMultiverse/${toPath(res.loc)}".asJson),
-          "curies" -> Json.arr(apiCurie)
+      Encoder.instance(res => {
+        val meta = Json.obj(
+          "_links" -> Json.obj(
+            "self" -> Json.obj("href" -> s"$apiMultiverse/${toPath(res.loc)}".asJson),
+            "curies" -> Json.arr(apiCurie)
+          )
         )
-      ))
+
+        val loc = (res.loc.galaxy, res.loc.star, res.loc.planet) match {
+          case (_, _, Some(planet)) =>
+            Json.obj("planet" -> planet.asJson)
+          case (_, Some(star), _) =>
+            Json.obj("star" -> star.asJson)
+          case (Some(galaxy), _, _) =>
+            Json.obj("galaxy" -> galaxy.asJson)
+          case _ if res.loc.inIntergalacticSpace =>
+            Json.obj("intergalactic" -> res.loc.asJson)
+          case _ if res.loc.inInterstellarSpace =>
+            Json.obj("interstellar" -> res.loc.asJson)
+          case _ if res.loc.inInterplanetarySpace =>
+            Json.obj("interplanetary" -> res.loc.asJson)
+        }
+
+        meta deepMerge loc
+      })
 
     implicit val cosmicLocationResponseHasJsonDecoder:Decoder[CosmicLocationResponse] =
       Decoder.instance { hcur =>
