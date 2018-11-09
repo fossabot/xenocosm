@@ -99,7 +99,7 @@ do it.
 
 + Response 204
 
-## Universe [/verse/{universe_id}]
+## Universe [/multiverse/{universe_id}]
 
 + Parameters
     + universe_id: AAAAAAAAAAAAAAAAAAAAAA (string) - ID of the Universe, a 22-character string representing a base64-encoded UUID
@@ -108,11 +108,11 @@ do it.
 
 + Response 200 (application/hal+json)
 
-+ Response 401
++ Response 403
 
     If the current trader is not located in this universe.
 
-## Galaxy [/verse/{universe_id}/{x0},{y0},{z0}]
+## Galaxy [/multiverse/{universe_id}/{x0},{y0},{z0}]
 
 + Parameters
     + universe_id: AAAAAAAAAAAAAAAAAAAAAA (string) - ID of the Universe, a 22-character string representing a base64-encoded UUID
@@ -124,11 +124,11 @@ do it.
 
 + Response 200 (application/hal+json)
 
-+ Response 401
++ Response 403
 
     If the current trader is not located in this galaxy.
 
-## Star System [/verse/{universe_id}/{x0},{y0},{z0}/{x1},{y1},{z1}]
+## Star System [/multiverse/{universe_id}/{x0},{y0},{z0}/{x1},{y1},{z1}]
 
 + Parameters
     + universe_id: AAAAAAAAAAAAAAAAAAAAAA (string) - ID of the Universe, a 22-character string representing a base64-encoded UUID
@@ -143,11 +143,11 @@ do it.
 
 + Response 200 (application/hal+json)
 
-+ Response 401
++ Response 403
 
     If the current trader is not located in this star system.
 
-## Planet [/verse/{universe_id}/{x0},{y0},{z0}/{x1},{y1},{z1}/{x2},{y2},{z2}]
+## Planet [/multiverse/{universe_id}/{x0},{y0},{z0}/{x1},{y1},{z1}/{x2},{y2},{z2}]
 
 + Parameters
     + universe_id: AAAAAAAAAAAAAAAAAAAAAA (string) - ID of the Universe, a 22-character string representing a base64-encoded UUID
@@ -165,6 +165,15 @@ do it.
 
 + Response 200 (application/hal+json)
 
-+ Response 401
++ Response 403
 
     If the current trader is not located at this planet.
+
+### Move to a location in interplanetary space [POST]
+
++ Response 200 (application/hal+json)
+
++ Response 403
+
+    If the current ship cannot navigate the needed distance.
+    If the current ship has insufficient fuel to travel the distance.
