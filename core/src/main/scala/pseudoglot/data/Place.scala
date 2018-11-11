@@ -4,7 +4,6 @@ package data
 import cats.{Order, Show}
 import cats.implicits._
 import spire.algebra.MetricSpace
-import spire.random.Dist
 
 sealed abstract class Place(val label:String) extends Product with Serializable
 case object Alveolar extends Place("alveolar")
@@ -43,7 +42,6 @@ object Place {
   trait Instances {
     implicit val placeHasShow: Show[Place] = Show.show[Place](_.label)
     implicit val placeHasOrder: Order[Place] = Order.by(all.indexOf)
-    implicit val placeHasDist: Dist[Place] = Dist.oneOf(all: _*)
     implicit val placeHasMetricSpace: MetricSpace[Place, Int] =
       (v: Place, w: Place) ⇒ math.abs(all.indexOf(v) - all.indexOf(w))
   }

@@ -207,4 +207,5 @@ lazy val dockerSettings = Seq(
 addCommandAlias("testCore", ";coverage;core/compile;testkit/test;core/coverageReport")
 addCommandAlias("testJson", ";coverage;json/compile;json/test;json/coverageReport")
 addCommandAlias("testHttp", ";coverage;http/compile;http/test;http/coverageReport")
-addCommandAlias("validate", ";clean;scalastyle;testCore;testJson;testHttp;coverageAggregate")
+addCommandAlias("testAll", ";testCore;testJson;testHttp;coverageAggregate")
+addCommandAlias("validate", ";clean;scalastyle;testAll;makeMicrosite")

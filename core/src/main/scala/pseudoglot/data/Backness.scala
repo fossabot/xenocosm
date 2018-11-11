@@ -4,7 +4,6 @@ package data
 import cats.{Order, Show}
 import cats.implicits._
 import spire.algebra.MetricSpace
-import spire.random.Dist
 
 sealed abstract class Backness(val label:String) extends Product with Serializable
 case object Front extends Backness("front")
@@ -25,7 +24,6 @@ object Backness {
   trait Instances {
     implicit val backnessHasShow: Show[Backness] = Show.show[Backness](_.label)
     implicit val backnessHasOrder: Order[Backness] = Order.by(all.indexOf)
-    implicit val backnessHasDist: Dist[Backness] = Dist.oneOf(all: _*)
     implicit val backnessHasMetricSpace: MetricSpace[Backness, Int] =
       (v: Backness, w: Backness) ⇒ math.abs(all.indexOf(v) - all.indexOf(w))
   }

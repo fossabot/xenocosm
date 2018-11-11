@@ -4,7 +4,6 @@ package data
 import cats.{Eq, Show}
 import cats.implicits._
 import spire.algebra.MetricSpace
-import spire.random.Dist
 import spire.syntax.metricSpace._
 
 sealed trait Phone extends Any with Product with Serializable
@@ -27,9 +26,6 @@ object Phone {
     implicit val nullPhonemeHasEq:Eq[NullPhoneme.type] =
       Eq.fromUniversalEquals[NullPhoneme.type]
 
-    implicit val nullPhonemeHasDist:Dist[NullPhoneme.type] =
-      Dist.constant(NullPhoneme)
-
     implicit val nullPhonemeHasShow:Show[NullPhoneme.type] =
       Show.show(_ => "")
 
@@ -41,10 +37,6 @@ object Phone {
   trait PulmonicInstances {
     implicit val pulmonicHasEq: Eq[Pulmonic] =
       Eq.fromUniversalEquals[Pulmonic]
-
-    // Only IPA Pulmonics by default
-    implicit val pulmonicHasDist: Dist[Pulmonic] =
-      Dist.oneOf(IPA.pulmonics.keys.toSeq:_*)
 
     implicit val pulmonicHasShow: Show[Pulmonic] =
       Show.show(p => Seq(p.voicing.show, p.place.show, p.manner.show).mkString(":"))
@@ -61,10 +53,6 @@ object Phone {
   trait VowelInstances {
     implicit val vowelHasEq: Eq[Vowel] =
       Eq.fromUniversalEquals[Vowel]
-
-    // Only IPA Vowels by default
-    implicit val vowelHasDist: Dist[Vowel] =
-      Dist.oneOf(IPA.vowels.keys.toSeq:_*)
 
     implicit val vowelHasShow: Show[Vowel] =
       Show.show(v => Seq(v.roundedness.show, v.height.show, v.backness.show).mkString(":"))

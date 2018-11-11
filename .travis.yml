@@ -22,7 +22,6 @@ install:
 
 script:
   - sbt ++$TRAVIS_SCALA_VERSION validate
-  - sbt ++$TRAVIS_SCALA_VERSION makeMicrosite
 
 after_success:
   - dredd ./xenocosm.apib http://127.0.0.1 --dry-run

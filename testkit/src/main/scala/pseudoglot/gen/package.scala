@@ -67,6 +67,4 @@ package object gen {
       vowels <- Gen.nonEmptyListOf(vowel).map(NonEmptyList.fromListUnsafe)
       phonotacticRules <- phonotacticRules
     } yield Phonology(pulmonics, vowels, phonotacticRules)
-
-  lazy val prosody:Gen[Prosody] = phonology.map(Prosody.apply)
 }

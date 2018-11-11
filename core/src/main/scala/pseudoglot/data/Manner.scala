@@ -4,7 +4,6 @@ package data
 import cats.{Order, Show}
 import cats.implicits._
 import spire.algebra.MetricSpace
-import spire.random.Dist
 
 sealed abstract class Manner(val label:String) extends Product with Serializable
 case object Approximant extends Manner("approximant")
@@ -37,7 +36,6 @@ object Manner {
   trait Instances {
     implicit val mannerHasShow: Show[Manner] = Show.show[Manner](_.label)
     implicit val mannerHasOrder: Order[Manner] = Order.by(all.indexOf)
-    implicit val mannerHasDist: Dist[Manner] = Dist.oneOf(all: _*)
     implicit val mannerHasMetricSpace: MetricSpace[Manner, Int] =
       (v: Manner, w: Manner) ⇒ math.abs(all.indexOf(v) - all.indexOf(w))
   }
