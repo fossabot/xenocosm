@@ -37,60 +37,14 @@ val phonology = Phonology.dist(rng)
 
 ## Provide a transcription
 
-Pseudoglot does not provide an instance of `Transcription` other than for the
-International Phonetic Alphabet. However, here is a simple instance of
-`Transcription` which encodes the American English tables and charts found in
-_The Handbook of the International Phonetic Association_, p.41-44.
+Pseudoglot provides an instance of `Transcription` for the International
+Phonetic Alphabet. However, one often needs a romanization (phonemic
+transcription) of `Phones` into a non-academic orthography for practical use. As
+such, pseudoglot also provides a way of generating a `Transcription` with
+`pseudoglot.Romanization.dist`.
 
 ```tut
-object USEnglish {
-
-  val pulmonics:Map[Pulmonic, String] = Map(
-    Pulmonic(Voiceless, Bilabial, Plosive) -> "p",
-    Pulmonic(Voiced, Bilabial, Plosive) -> "b",
-    Pulmonic(Voiced, Bilabial, Nasal) -> "m",
-    Pulmonic(Voiceless, LabioDental, Fricative) -> "f",
-    Pulmonic(Voiced, LabioDental, Fricative) -> "v",
-    Pulmonic(Voiceless, Dental, Fricative) -> "th",
-    Pulmonic(Voiced, Dental, Fricative) -> "th",
-    Pulmonic(Voiceless, Alveolar, Plosive) -> "t",
-    Pulmonic(Voiced, Alveolar, Plosive) -> "d",
-    Pulmonic(Voiced, Alveolar, Nasal) -> "n",
-    Pulmonic(Voiceless, Alveolar, Fricative) -> "s",
-    Pulmonic(Voiced, Alveolar, Fricative) -> "z",
-    Pulmonic(Voiced, Alveolar, Approximant) -> "r",
-    Pulmonic(Voiced, Alveolar, LateralApproximant) -> "l",
-    Pulmonic(Voiceless, PostAlveolar, Fricative) -> "sh",
-    Pulmonic(Voiced, PostAlveolar, Fricative) -> "zh",
-    Pulmonic(Voiced, Palatal, Approximant) -> "y",
-    Pulmonic(Voiceless, Velar, Plosive) -> "k",
-    Pulmonic(Voiced, Velar, Plosive) -> "g",
-    Pulmonic(Voiced, Velar, Nasal) -> "ng",
-    Pulmonic(Voiced, Velar, Approximant) -> "w",
-    Pulmonic(Voiceless, Glottal, Fricative) -> "h"
-  )
-
-  val vowels:Map[Vowel, String] = Map[Vowel, String](
-    Vowel(Unrounded, Close, Front) -> "ee",
-    Vowel(Unrounded, NearClose, NearFront) -> "i",
-    Vowel(Unrounded, CloseMid, Front) -> "ay",
-    Vowel(Unrounded, OpenMid, Front) -> "e",
-    Vowel(Unrounded, NearOpen, Front) -> "a",
-    Vowel(Unrounded, Open, Back) -> "o",
-    Vowel(Rounded, CloseMid, Back) -> "ow",
-    Vowel(Rounded, NearClose, NearBack) -> "oo",
-    Vowel(Rounded, Close, Back) -> "ew",
-    Vowel(Unrounded, OpenMid, Back) -> "u",
-    Vowel(Unrounded, Mid, Central) -> "u"
-  )
-
-  trait Instances {
-    implicit val usEnglishTranscription:Transcription =
-      Transcription(pulmonics) |+| Transcription(vowels)
-  }
-  object instances extends Instances
-}
-import USEnglish.instances._
+implicit val xlit = pseudoglot.Romanization.dist(rng)
 ```
 
 ## Transcribe the phonology
