@@ -70,7 +70,16 @@ Next, we'll use our `Phonology` to generate some monosyllabic "words".
 
 ```tut
 val syllableGen = phonology.syllable.map(_.transcribe)
-syllableGen.pack(20).apply(rng).foreach(println)
+syllableGen.pack(10).apply(rng).foreach(println)
+```
+
+## The Morphology
+
+Next, we'll create a `Morphology` from our `Phonology` to generate morphemes.
+
+```tut
+val morphemeGen = Morphology(phonology).morpheme.map(_.transcribe)
+morphemeGen.pack(10).apply(rng).foreach(println)
 ```
 
 ## What's in a name
@@ -80,14 +89,11 @@ our names. We'll replace the underscores with the more trendy apostrophe and
 provide capitalization as well.
 
 ```tut
-val syllable2 = syllableGen.pack(2).map(_.mkString)
-val syllable3 = syllableGen.pack(3).map(_.mkString)
-val syllable4 = syllableGen.pack(4).map(_.mkString)
 val nameGen = for {
-  s1 <- syllableGen.map(_.capitalize)
-  s2 <- syllable2.map(_.capitalize)
-  s3 <- syllable3.map(_.capitalize)
-  s4 <- syllable4.map(_.capitalize)
+  s1 <- morphemeGen.map(_.capitalize)
+  s2 <- morphemeGen.map(_.capitalize)
+  s3 <- morphemeGen.map(_.capitalize)
+  s4 <- morphemeGen.map(_.capitalize)
   s1_2 = List(s1, s2).mkString(" ")
   s2_1 = List(s2, s1).mkString(" ")
   s1_3 = List(s1, s3).mkString(" ")
