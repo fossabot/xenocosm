@@ -5,7 +5,7 @@ import cats.Eq
 import cats.data.NonEmptyList
 import spire.random.Dist
 
-final case class Phonology(pulmonics:NonEmptyList[Pulmonic], vowels:NonEmptyList[Vowel], phonotactics:PhonotacticRules) { self =>
+final case class Phonology(pulmonics:NonEmptyList[Pulmonic], vowels:NonEmptyList[Vowel], phonotactics:NonEmptyList[PhonotacticRule]) { self =>
   lazy private val indexedPulmonics = Phonology.normalIndex(pulmonics)
   lazy private val indexedVowels = Phonology.normalIndex(vowels)
   lazy private val indexedRules = Phonology.normalIndex(phonotactics)

@@ -59,7 +59,7 @@ package object gen {
     } yield PhonotacticRule.minimize(Choose(lhs, rhs))
 
   lazy val phonotacticRule:Gen[PhonotacticRule] = Gen.oneOf(rulePhone, ruleConcat, ruleChoose)
-  lazy val phonotacticRules:Gen[PhonotacticRules] = Gen.nonEmptyListOf(phonotacticRule).map(NonEmptyList.fromListUnsafe)
+  lazy val phonotacticRules:Gen[NonEmptyList[PhonotacticRule]] = Gen.nonEmptyListOf(phonotacticRule).map(NonEmptyList.fromListUnsafe)
 
   lazy val phonology:Gen[Phonology] =
     for {
