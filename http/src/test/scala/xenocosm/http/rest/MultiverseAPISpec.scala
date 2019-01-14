@@ -50,7 +50,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
 
     "trader is in the same universe" should {
       val identity = makeIdentity()
-      val uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA")
+      val uri = Uri.uri("/00000000-0000-0000-0000-000000000000")
       val request:AuthedRequest[IO, Identity] = AuthedRequest(identity, Request(method = Method.GET, uri = uri))
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
@@ -67,7 +67,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
 
     "trader is in a different universe" should {
       val identity = makeIdentity()
-      val uri = Uri.uri("/0000000000000000000000")
+      val uri = Uri.uri("/00000000-0000-0000-0000-000000000001")
       val request:AuthedRequest[IO, Identity] = AuthedRequest(identity, Request(method = Method.GET, uri = uri))
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
@@ -86,7 +86,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
 
     "trader is in the same galaxy" should {
       val identity = makeIdentity()
-      val uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA/-10,-10,0")
+      val uri = Uri.uri("/00000000-0000-0000-0000-000000000000/-10,-10,0")
       val request:AuthedRequest[IO, Identity] = AuthedRequest(identity, Request(method = Method.GET, uri = uri))
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
@@ -103,7 +103,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
 
     "trader is in a different galaxy" should {
       val identity = makeIdentity()
-      val uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA/0,0,0")
+      val uri = Uri.uri("/00000000-0000-0000-0000-000000000000/0,0,0")
       val request:AuthedRequest[IO, Identity] = AuthedRequest(identity, Request(method = Method.GET, uri = uri))
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
@@ -122,7 +122,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
 
     "trader is in the same star system" should {
       val identity = makeIdentity()
-      val uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA/-10,-10,0/0,-1,0")
+      val uri = Uri.uri("/00000000-0000-0000-0000-000000000000/-10,-10,0/0,-1,0")
       val request:AuthedRequest[IO, Identity] = AuthedRequest(identity, Request(method = Method.GET, uri = uri))
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
@@ -139,7 +139,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
 
     "trader is in a different star system" should {
       val identity = makeIdentity()
-      val uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA/-10,-10,0/0,0,0")
+      val uri = Uri.uri("/00000000-0000-0000-0000-000000000000/-10,-10,0/0,0,0")
       val request:AuthedRequest[IO, Identity] = AuthedRequest(identity, Request(method = Method.GET, uri = uri))
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
@@ -158,7 +158,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
 
     "trader is at the same planet" should {
       val identity = makeIdentity()
-      val uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA/-10,-10,0/0,-1,0/-1,0,-1")
+      val uri = Uri.uri("/00000000-0000-0000-0000-000000000000/-10,-10,0/0,-1,0/-1,0,-1")
       val request:AuthedRequest[IO, Identity] = AuthedRequest(identity, Request(method = Method.GET, uri = uri))
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
@@ -175,7 +175,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
 
     "trader is at a different planet" should {
       val identity = makeIdentity()
-      val uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA/-10,-10,0/0,-1,0/0,0,0")
+      val uri = Uri.uri("/00000000-0000-0000-0000-000000000000/-10,-10,0/0,-1,0/0,0,0")
       val request:AuthedRequest[IO, Identity] = AuthedRequest(identity, Request(method = Method.GET, uri = uri))
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
@@ -194,7 +194,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
 
     "ship can make it to the destination" should {
       val identity = makeIdentity()
-      val uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA/-10,-10,0/0,-1,0/-1,0,0")
+      val uri = Uri.uri("/00000000-0000-0000-0000-000000000000/-10,-10,0/0,-1,0/-1,0,0")
       val request:AuthedRequest[IO, Identity] = AuthedRequest(identity, Request(method = Method.POST, uri = uri))
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
@@ -216,7 +216,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
         Engine(AstronomicalUnits(1) / Seconds(.01), CubicMetersPerSecond(1))
       )
       val identity = makeIdentity(modules=modules)
-      val uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA/-10,-10,0/0,-1,0/-1,0,0")
+      val uri = Uri.uri("/00000000-0000-0000-0000-000000000000/-10,-10,0/0,-1,0/-1,0,0")
       val request:AuthedRequest[IO, Identity] = AuthedRequest(identity, Request(method = Method.POST, uri = uri))
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 
@@ -239,7 +239,7 @@ class MultiverseAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
         Engine(AstronomicalUnits(1) / Seconds(.01), CubicMetersPerSecond(1))
       )
       val identity = makeIdentity(modules=modules)
-      val uri = Uri.uri("/AAAAAAAAAAAAAAAAAAAAAA/-10,-10,0/0,-1,0/-1,0,0")
+      val uri = Uri.uri("/00000000-0000-0000-0000-000000000000/-10,-10,0/0,-1,0/-1,0,0")
       val request:AuthedRequest[IO, Identity] = AuthedRequest(identity, Request(method = Method.POST, uri = uri))
       val response:IO[Response[IO]] = service.run(request).getOrElse(Response.notFound)
 

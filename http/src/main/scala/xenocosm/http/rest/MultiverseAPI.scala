@@ -4,7 +4,7 @@ package rest
 import cats.effect.IO
 import cats.implicits._
 import io.circe.syntax._
-import org.http4s.AuthedService
+import org.http4s.{AuthedService, Uri}
 import org.http4s.circe._
 import org.http4s.dsl.io._
 import org.http4s.headers.Location
@@ -88,7 +88,7 @@ final class MultiverseAPI(val auth:XenocosmAuthentication, val data:DataStore) {
               Forbidden(response.asJson, jsonHal).map(auth.withAuthToken(identity))
           }
         case _ =>
-          SeeOther(Location(apiTrader)).map(auth.withAuthToken(identity))
+          SeeOther(Location(Uri.unsafeFromString("/trader"))).map(auth.withAuthToken(identity))
       }
   }
 }
