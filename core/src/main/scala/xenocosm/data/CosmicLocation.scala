@@ -1,15 +1,25 @@
 package xenocosm
 package data
 
+import java.nio.ByteBuffer
+import java.security.MessageDigest
 import java.util.UUID
 import cats.data.EitherT
 import cats.kernel.Eq
-import galaxique.data._
 import spire.random.Dist
-import squants.space.{Length, Parsecs}
+import squants.space.{AstronomicalUnits, KiloParsecs, Length, Parsecs}
+import galaxique.data._
+import pseudoglot.data.{Language, Transcription}
+import pseudoglot.Romanization
+import spire.random.rng.BurtleRot3
 
 final case class CosmicLocation(uuid:UUID, locU:Option[Point3], locG:Option[Point3], locS:Option[Point3]) { self =>
+  val seed:Array[Byte] = CosmicLocation.locSeed(self)
   def distance(to:CosmicLocation):Length = CosmicLocation.distance(self, to)
+
+  lazy val xlit:Transcription = CosmicLocation.findTranscription(self)
+  lazy val language:Language = CosmicLocation.findLanguage(self)
+  lazy val placeName: String = Language.transcribeName(language.nameFor("here"))(xlit)
   lazy val universe:Universe = Universe(uuid)
   lazy val galaxy:Option[Galaxy] = CosmicLocation.findGalaxy(self)
   lazy val star:Option[Star] = CosmicLocation.findStar(self)
@@ -25,6 +35,69 @@ object CosmicLocation {
   import Galaxy.instances._
   import Star.instances._
   import Universe.instances._
+
+  private def md:MessageDigest = MessageDigest.getInstance("MD5")
+
+  private val bytes:CosmicLocation => Array[Byte] = {
+    case CosmicLocation(uuid, Some(locU), Some(locG), Some(locS)) =>
+      md.digest {
+        ByteBuffer
+          .allocate(88)
+          .putLong(uuid.getMostSignificantBits)
+          .putLong(uuid.getLeastSignificantBits)
+          .putDouble(locU.x to KiloParsecs)
+          .putDouble(locU.y to KiloParsecs)
+          .putDouble(locU.z to KiloParsecs)
+          .putDouble(locG.x to Parsecs)
+          .putDouble(locG.y to Parsecs)
+          .putDouble(locG.z to Parsecs)
+          .putDouble(locS.x to AstronomicalUnits)
+          .putDouble(locS.y to AstronomicalUnits)
+          .putDouble(locS.z to AstronomicalUnits)
+          .array()
+      }
+    case CosmicLocation(uuid, Some(locU), Some(locG), _) =>
+      md.digest {
+        ByteBuffer
+          .allocate(64)
+          .putLong(uuid.getMostSignificantBits)
+          .putLong(uuid.getLeastSignificantBits)
+          .putDouble(locU.x to KiloParsecs)
+          .putDouble(locU.y to KiloParsecs)
+          .putDouble(locU.z to KiloParsecs)
+          .putDouble(locG.x to Parsecs)
+          .putDouble(locG.y to Parsecs)
+          .putDouble(locG.z to Parsecs)
+          .array()
+      }
+    case CosmicLocation(uuid, Some(locU), _, _) =>
+      md.digest {
+        ByteBuffer
+          .allocate(40)
+          .putLong(uuid.getMostSignificantBits)
+          .putLong(uuid.getLeastSignificantBits)
+          .putDouble(locU.x to KiloParsecs)
+          .putDouble(locU.y to KiloParsecs)
+          .putDouble(locU.z to KiloParsecs)
+          .array()
+      }
+    case CosmicLocation(uuid, _, _, _) =>
+      md.digest {
+        ByteBuffer
+          .allocate(16)
+          .putLong(uuid.getMostSignificantBits)
+          .putLong(uuid.getLeastSignificantBits)
+          .array()
+      }
+  }
+
+  private def locSeed(loc:CosmicLocation): Array[Byte] = bytes(loc)
+
+  val findLanguage:CosmicLocation => Language =
+    loc => Language.dist(BurtleRot3.fromBytes(loc.seed))
+
+  val findTranscription:CosmicLocation => Transcription =
+    loc => Romanization.dist(BurtleRot3.fromBytes(loc.seed))
 
   val findGalaxy:CosmicLocation => Option[Galaxy] =
     loc => loc.locU.flatMap(loc.universe.locate)

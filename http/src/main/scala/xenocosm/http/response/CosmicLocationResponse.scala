@@ -52,7 +52,7 @@ object CosmicLocationResponse {
             Json.obj("interplanetary" -> res.loc.asJson)
         }
 
-        meta deepMerge loc
+        meta deepMerge loc deepMerge Json.obj("placeName" -> res.loc.placeName.asJson)
       })
 
     implicit val cosmicLocationResponseHasJsonDecoder:Decoder[CosmicLocationResponse] =

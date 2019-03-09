@@ -31,6 +31,7 @@ final class MultiverseAPI(val auth:XenocosmAuthentication, val data:DataStore) {
 
   val service:AuthedService[Identity, IO] = AuthedService[Identity, IO] {
 
+    // Show Current Universe
     case GET -> Root / ⎈(uuid) as identity ⇒
       val loc = CosmicLocation(uuid, None, None, None)
       identity.trader match {
@@ -41,6 +42,7 @@ final class MultiverseAPI(val auth:XenocosmAuthentication, val data:DataStore) {
           Forbidden().map(auth.withAuthToken(identity))
       }
 
+    // Show Current Galaxy
     case GET -> Root / ⎈(uuid) / ✺(locU) as identity ⇒
       val loc = CosmicLocation(uuid, Some(locU), None, None)
       identity.trader match {
@@ -51,6 +53,7 @@ final class MultiverseAPI(val auth:XenocosmAuthentication, val data:DataStore) {
           Forbidden().map(auth.withAuthToken(identity))
       }
 
+    // Show Current Star
     case GET -> Root / ⎈(uuid) / ✺(locU) / ✨(locG) as identity ⇒
       val loc = CosmicLocation(uuid, Some(locU), Some(locG), None)
       identity.trader match {
@@ -61,6 +64,7 @@ final class MultiverseAPI(val auth:XenocosmAuthentication, val data:DataStore) {
           Forbidden().map(auth.withAuthToken(identity))
       }
 
+    // Show Current Planet
     case GET -> Root / ⎈(uuid) / ✺(locU) / ✨(locG) / ★(locS) as identity ⇒
       val loc = CosmicLocation(uuid, Some(locU), Some(locG), Some(locS))
       identity.trader match {
@@ -71,6 +75,7 @@ final class MultiverseAPI(val auth:XenocosmAuthentication, val data:DataStore) {
           Forbidden().map(auth.withAuthToken(identity))
       }
 
+    // Move to Planet
     case POST -> Root / ⎈(uuid) / ✺(locU) / ✨(locG) / ★(locS) as identity ⇒
       val loc = CosmicLocation(uuid, Some(locU), Some(locG), Some(locS))
       identity.trader match {
