@@ -24,7 +24,6 @@ script:
   - sbt ++$TRAVIS_SCALA_VERSION validate
 
 after_success:
-  - dredd ./xenocosm.apib http://127.0.0.1 --dry-run
   - bash <(curl -s https://codecov.io/bash)
   - if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then bash scripts/publishMicrosite.sh; fi
 
