@@ -42,7 +42,7 @@ object Phonology {
           case Literal(NullPhoneme) ⇒ acc
           case Literal(x:Pulmonic) ⇒ x :: acc
           case Literal(x:Vowel) ⇒ x :: acc
-          case Choose(lhs, rhs) ⇒ loop(acc, gen.chooseFromArray(Array(lhs, rhs)))
+          case Choose(lhs, rhs) ⇒ loop(acc, gen.chooseFromArray(Array(lhs, rhs))(gen))
           case Concat(lhs, rhs) ⇒ loop(Nil, lhs) ++ loop(Nil, rhs) ++ acc
         }
 

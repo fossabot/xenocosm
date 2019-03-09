@@ -88,20 +88,16 @@ val morphemeGen = morphology.morpheme.map(_.transcribe)
 morphemeGen.pack(10).apply(rng).foreach(println)
 ```
 
-## What's in a name
+## What's in a name?
 
 Finally, now that we can generate words of varying length, let's combine them to
-make some names. We'll use the built-in `OnomasticRule` facility to do this.
+make some names. We'll use the built-in `OnomasticRule` facility to do this and
+finally instantiate our naming `Language`.
 
 ```tut
-val onomasticRules = OnomasticRule.dist(morphology).pack(5).apply(rng).distinct
-val nameGen = for {
-  rule <- Dist.oneOf(onomasticRules:_*)
-  applied <- rule(morphology)
-} yield applied.map(_.transcribe match {
-  case xs if xs.length > 3 => xs.capitalize
-  case xs => xs
-}).mkString(" ").capitalize
+val onomastics = NonEmptyList.fromListUnsafe(OnomasticRule.dist.pack(3).apply(rng).distinct.toList)
+val language = Language(morphology, onomastics)
+val nameGen = language.anyName.map(Language.transcribeName)
 
 nameGen.pack(20).apply(rng).foreach(println)
 ```

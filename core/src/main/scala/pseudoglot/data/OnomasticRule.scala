@@ -1,42 +1,41 @@
 package pseudoglot
 package data
 
-import cats.data.NonEmptyList
+import cats.Eq
 import spire.random.{Dist, Generator}
 
 sealed trait OnomasticRule { self =>
   def apply(morphology: Morphology):Dist[List[Phones]] =
-    Dist.gen(OnomasticRule.applyRule(morphology, self))
+    Dist.gen(gen => OnomasticRule.applyRule(morphology, self)(gen))
 }
 case object Mononym extends OnomasticRule
-final case class Particle(vowel: Vowel) extends OnomasticRule
 final case class Polynym(lhs: OnomasticRule, rhs: OnomasticRule) extends OnomasticRule
 
 object OnomasticRule {
 
-  private def elaborateRule(particle: Particle)(current: OnomasticRule)(gen: Generator): OnomasticRule =
-    current match {
-      case Mononym if gen.nextBoolean() =>
-        elaborateRule(particle)(Polynym(Mononym, Mononym))(gen)
-      case Polynym(Mononym, rhs) if gen.nextBoolean() =>
-        elaborateRule(particle)(Polynym(Polynym(Mononym, particle), rhs))(gen)
-      case Polynym(lhs, Mononym) if gen.nextBoolean() =>
-        elaborateRule(particle)(Polynym(lhs, Polynym(particle, Mononym)))(gen)
-      case Polynym(Polynym(lhs, _:Particle), Polynym(_:Particle, rhs)) =>
-        elaborateRule(particle)(Polynym(lhs, Polynym(Mononym, rhs)))(gen)
-      case x => x
+  private def elaborateRule(current: OnomasticRule)(gen: Generator): OnomasticRule =
+    if (gen.nextBoolean()) {
+      current match {
+        case Mononym =>
+          elaborateRule(Polynym(Mononym, Mononym))(gen)
+        case Polynym(lhs, rhs) =>
+          elaborateRule(Polynym(lhs, Polynym(Mononym, rhs)))(gen)
+      }
+    } else {
+      current
     }
 
-  def dist(morphology: Morphology): Dist[OnomasticRule] =
-    for {
-      particle <- morphology.phonology.anyVowel.map(Particle.apply)
-      rule <- Dist.gen(elaborateRule(particle)(Mononym))
-    } yield rule
+  def dist:Dist[OnomasticRule] = Dist.gen(elaborateRule(Mononym))
 
   private def applyRule(morphology: Morphology, rule:OnomasticRule)(gen:Generator):List[Phones] =
     rule match {
       case Mononym ⇒ List(morphology.morpheme(gen))
-      case Particle(v) ⇒ List(NonEmptyList.one(v))
       case Polynym(lhs, rhs) ⇒ applyRule(morphology, lhs)(gen) ++ applyRule(morphology, rhs)(gen)
     }
+
+  trait Instances {
+    implicit val onomasticRuleHasEq:Eq[OnomasticRule] =
+      Eq.fromUniversalEquals[OnomasticRule]
+  }
+  object instances extends Instances
 }

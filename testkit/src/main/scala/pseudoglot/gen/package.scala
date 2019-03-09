@@ -60,11 +60,23 @@ package object gen {
 
   lazy val phonotacticRule:Gen[PhonotacticRule] = Gen.oneOf(rulePhone, ruleConcat, ruleChoose)
   lazy val phonotacticRules:Gen[NonEmptyList[PhonotacticRule]] = Gen.nonEmptyListOf(phonotacticRule).map(NonEmptyList.fromListUnsafe)
+  lazy val pulmonics:Gen[NonEmptyList[Pulmonic]] = Gen.nonEmptyListOf(pulmonic).map(NonEmptyList.fromListUnsafe)
+  lazy val vowels:Gen[NonEmptyList[Vowel]] = Gen.nonEmptyListOf(vowel).map(NonEmptyList.fromListUnsafe)
 
   lazy val phonology:Gen[Phonology] =
     for {
-      pulmonics <- Gen.nonEmptyListOf(pulmonic).map(NonEmptyList.fromListUnsafe)
-      vowels <- Gen.nonEmptyListOf(vowel).map(NonEmptyList.fromListUnsafe)
+      pulmonics <- pulmonics
+      vowels <- vowels
       phonotacticRules <- phonotacticRules
     } yield Phonology(pulmonics, vowels, phonotacticRules)
+
+  lazy val morphology:Gen[Morphology] = phonology.map(Morphology.apply)
+
+  lazy val onomasticRule:Gen[OnomasticRule] = Gen.oneOf[OnomasticRule](Mononym, Polynym(Mononym, Mononym))
+
+  lazy val language:Gen[Language] =
+    for {
+      morphology <- morphology
+      onomastics <- Gen.listOfN(3, onomasticRule)
+    } yield Language(morphology, NonEmptyList.fromListUnsafe(onomastics))
 }

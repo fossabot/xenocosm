@@ -62,13 +62,21 @@ object PhonotacticRule {
 
   private def elaborateRule(gen: Generator, pulmonics: List[Pulmonic], vowels: List[Vowel])(model: PhonotacticRule): PhonotacticRule = {
     val f = elaborateRule(gen, pulmonics, vowels)(_)
-    val p = gen.nextBoolean()
-    model match {
-      case AnyPulmonic if p => Concat(Literal(gen.chooseFromSeq(pulmonics)), Literal(gen.chooseFromSeq(pulmonics)))
-      case AnyVowel if p => Concat(Literal(gen.chooseFromSeq(vowels)), Literal(gen.chooseFromSeq(vowels)))
-      case Concat(lhs, rhs) => Concat(f(lhs), f(rhs))
-      case Choose(lhs, rhs) => Choose(f(lhs), f(rhs))
-      case _ => model
+
+    if (gen.nextBoolean()) {
+      val p1 = gen.chooseFromSeq(pulmonics)(gen)
+      val p2 = gen.chooseFromSeq(pulmonics)(gen)
+      val v1 = gen.chooseFromSeq(vowels)(gen)
+      val v2 = gen.chooseFromSeq(vowels)(gen)
+      model match {
+        case AnyPulmonic => Concat(Literal(p1), Literal(p2))
+        case AnyVowel => Concat(Literal(v1), Literal(v2))
+        case Concat(lhs, rhs) => Concat(f(lhs), f(rhs))
+        case Choose(lhs, rhs) => Choose(f(lhs), f(rhs))
+        case _ => model
+      }
+    } else {
+      model
     }
   }
 

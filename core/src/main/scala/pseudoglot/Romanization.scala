@@ -10,46 +10,62 @@ import spire.random.Dist
 object Romanization {
   import cats.implicits._
 
-  private val simplePulmonics:Map[Pulmonic, String] = Map(
-    Pulmonic(Voiceless, Bilabial, Plosive)         -> "p",
-    Pulmonic(Voiced, Bilabial, Plosive)            -> "b",
-    Pulmonic(Voiced, Bilabial, Nasal)              -> "m",
-    Pulmonic(Voiceless, LabioDental, Fricative)    -> "f",
-    Pulmonic(Voiced, LabioDental, Fricative)       -> "v",
-    Pulmonic(Voiceless, Dental, Fricative)         -> "th",
-    Pulmonic(Voiced, Dental, Fricative)            -> "th",
-    Pulmonic(Voiceless, Alveolar, Plosive)         -> "t",
-    Pulmonic(Voiced, Alveolar, Plosive)            -> "d",
-    Pulmonic(Voiced, Alveolar, Nasal)              -> "n",
-    Pulmonic(Voiceless, Alveolar, Fricative)       -> "s",
-    Pulmonic(Voiced, Alveolar, Fricative)          -> "z",
-    Pulmonic(Voiced, Alveolar, Approximant)        -> "r",
-    Pulmonic(Voiced, Alveolar, LateralApproximant) -> "l",
-    Pulmonic(Voiceless, PostAlveolar, Fricative)   -> "sh",
-    Pulmonic(Voiced, PostAlveolar, Fricative)      -> "zh",
-    Pulmonic(Voiced, Palatal, Approximant)         -> "y",
-    Pulmonic(Voiceless, Velar, Plosive)            -> "k",
-    Pulmonic(Voiced, Velar, Plosive)               -> "g",
-    Pulmonic(Voiced, Velar, Nasal)                 -> "ng",
-    Pulmonic(Voiced, Velar, Approximant)           -> "w",
-    Pulmonic(Voiceless, Glottal, Fricative)        -> "h"
+  private val simplePulmonics:Map[Pulmonic, List[String]] = Map(
+    Pulmonic(Voiceless, Bilabial, Plosive)         -> List("p"),
+    Pulmonic(Voiced, Bilabial, Plosive)            -> List("b"),
+    Pulmonic(Voiced, Bilabial, Nasal)              -> List("m"),
+    Pulmonic(Voiceless, LabioDental, Fricative)    -> List("f", "ph"),
+    Pulmonic(Voiced, LabioDental, Fricative)       -> List("v"),
+    Pulmonic(Voiceless, Dental, Fricative)         -> List("th"),
+    Pulmonic(Voiced, Dental, Fricative)            -> List("th"),
+    Pulmonic(Voiceless, Alveolar, Plosive)         -> List("t"),
+    Pulmonic(Voiced, Alveolar, Plosive)            -> List("d"),
+    Pulmonic(Voiced, Alveolar, Nasal)              -> List("n"),
+    Pulmonic(Voiceless, Alveolar, Fricative)       -> List("s", "c"),
+    Pulmonic(Voiceless, Alveolar, Fricative)       -> List("ts"),
+    Pulmonic(Voiced, Alveolar, Fricative)          -> List("z"),
+    Pulmonic(Voiced, Alveolar, Approximant)        -> List("r"),
+    Pulmonic(Voiced, Alveolar, LateralApproximant) -> List("l", "ll"),
+    Pulmonic(Voiceless, PostAlveolar, Fricative)   -> List("sh", "š"),
+    Pulmonic(Voiced, PostAlveolar, Fricative)      -> List("zh", "ž"),
+    Pulmonic(Voiced, Palatal, Approximant)         -> List("y"),
+    Pulmonic(Voiceless, Velar, Plosive)            -> List("k", "c"),
+    Pulmonic(Voiced, Velar, Plosive)               -> List("g"),
+    Pulmonic(Voiced, Velar, Nasal)                 -> List("ng"),
+    Pulmonic(Voiced, Velar, Approximant)           -> List("w"),
+    Pulmonic(Voiceless, Glottal, Fricative)        -> List("h")
   )
 
-  private val simpleVowels:Map[Vowel, String] = Map[Vowel, String](
-    Vowel(Unrounded, Close, Front)                 -> "ee",
-    Vowel(Unrounded, NearClose, NearFront)         -> "i",
-    Vowel(Unrounded, CloseMid, Front)              -> "ay",
-    Vowel(Unrounded, OpenMid, Front)               -> "e",
-    Vowel(Unrounded, NearOpen, Front)              -> "a",
-    Vowel(Unrounded, Open, Back)                   -> "o",
-    Vowel(Rounded, CloseMid, Back)                 -> "ow",
-    Vowel(Rounded, NearClose, NearBack)            -> "oo",
-    Vowel(Rounded, Close, Back)                    -> "ew",
-    Vowel(Unrounded, OpenMid, Back)                -> "u",
-    Vowel(Unrounded, Mid, Central)                 -> "u"
+  private val simpleVowels:Map[Vowel, List[String]] = Map(
+    Vowel(Unrounded, Close, Front)                 -> List("ee", "ä"),
+    Vowel(Unrounded, NearClose, NearFront)         -> List("i"),
+    Vowel(Unrounded, CloseMid, Front)              -> List("ay", "ö"),
+    Vowel(Unrounded, OpenMid, Front)               -> List("e"),
+    Vowel(Unrounded, NearOpen, Front)              -> List("a"),
+    Vowel(Unrounded, Open, Back)                   -> List("o"),
+    Vowel(Rounded, CloseMid, Back)                 -> List("ow"),
+    Vowel(Rounded, NearClose, NearBack)            -> List("oo"),
+    Vowel(Rounded, Close, Back)                    -> List("ew"),
+    Vowel(Unrounded, OpenMid, Back)                -> List("u"),
+    Vowel(Unrounded, Mid, Central)                 -> List("u")
   )
 
-  private val base: Transcription = Transcription(simplePulmonics) |+| Transcription(simpleVowels)
+  private val xscribeNull:Map[NullPhoneme.type, List[String]] =
+    Map(NullPhoneme -> List("'", "-", " ", ""))
 
-  val dist: Dist[Transcription] = Dist.constant(base)
+  private def mkDist[T <: Phone]: Map[T, List[String]] => Dist[Transcription] =
+    xs => Dist.gen(gen => Transcription {
+      xs.mapValues {
+        case Nil => ""
+        case y :: Nil => y
+        case ys => gen.chooseFromSeq(ys)(gen)
+      }
+    })
+
+  val dist: Dist[Transcription] =
+    for {
+      pulmonics <- mkDist(simplePulmonics)
+      vowels <- mkDist(simpleVowels)
+      nulls <- mkDist(xscribeNull)
+    } yield pulmonics |+| vowels |+| nulls
 }
