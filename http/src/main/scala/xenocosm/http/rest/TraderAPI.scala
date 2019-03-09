@@ -43,7 +43,7 @@ final class TraderAPI(val auth:XenocosmAuthentication, val data:DataStore, val g
             InternalServerError().map(auth.withAuthToken(identity))
         })
 
-    // Create and select a Trader
+    // Create and Select a Trader
     case POST -> Root as identity ⇒
       EitherT.right[XenocosmError](IO.pure(TraderCreated(Dist[Trader].apply(gen))))
         .subflatMap(identity.transition)

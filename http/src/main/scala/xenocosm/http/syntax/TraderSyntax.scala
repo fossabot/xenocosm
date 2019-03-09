@@ -7,6 +7,6 @@ import xenocosm.data.Trader
 
 trait TraderSyntax {
   implicit class TraderOps(underlying:Trader) {
-    val uri:Uri = apiTrader / ⎈(underlying.uuid)
+    val uri:Uri = Uri.unsafeFromString("/trader") / ⎈(underlying.uuid)
   }
 }

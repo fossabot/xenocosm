@@ -71,9 +71,9 @@ class AuthAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
           .map(_.uri)
 
         if (identity.trader.isDefined) {
-          uri shouldBe Some(Uri.uri("/vX/trader") / ⎈(identity.trader.get.uuid))
+          uri shouldBe Some(Uri.uri("/trader") / ⎈(identity.trader.get.uuid))
         } else {
-          uri shouldBe Some(Uri.uri("/vX/trader"))
+          uri shouldBe Some(Uri.uri("/trader"))
         }
       }
 
@@ -110,7 +110,7 @@ class AuthAPISpec extends xenocosm.test.XenocosmWordSpec with HttpCheck {
           .get(Location)
           .map(_.uri)
 
-        uri shouldBe Some(Uri.uri("/vX/trader"))
+        uri shouldBe Some(Uri.uri("/trader"))
       }
 
       "set auth token" in {

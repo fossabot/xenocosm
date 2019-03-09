@@ -17,7 +17,7 @@ object TradersResponse {
     implicit val tradersResponseHasJsonEncoder:Encoder[TradersResponse] =
       Encoder.instance(res => Json.obj(
         "_links" -> Json.obj(
-          "self" -> Json.obj("href" -> s"$apiTrader".asJson),
+          "self" -> Json.obj("href" -> s"/trader".asJson),
           "curies" -> Json.arr(apiCurie),
           "api:trader" -> res.traders.map(x => Map("href" -> x.uri.toString())).asJson
         ),

@@ -5,24 +5,21 @@ import java.util.UUID
 import cats.kernel.laws.discipline.EqTests
 import galaxique.data.Point3
 import org.scalacheck.Arbitrary
-import spire.random.{Dist, Random, Seed}
+import spire.random.{Dist, Generator}
 import squants.space.Meters
 
 class CosmicLocationSpec extends xenocosm.test.XenocosmFunSuite {
   import CosmicLocation.instances._
 
   implicit val arbCosmicLocation:Arbitrary[CosmicLocation] = Arbitrary(gen.cosmicLocation)
-  implicit val arbSeed:Arbitrary[Seed] = Arbitrary(interop.gen.seed)
 
   checkAll("Eq[CosmicLocation]", EqTests[CosmicLocation].eqv)
 
   test("generated location has a planet") {
-    forAll { seed:Seed =>
-      val gen = Random.generatorFromSeed(seed)
-      val loc = implicitly[Dist[CosmicLocation]].apply(gen)
+    val rng:Generator = spireRNG
+    val loc = implicitly[Dist[CosmicLocation]].apply(rng)
 
-      loc.planet should not be empty
-    }
+    loc.planet should not be empty
   }
 
   test("CosmicLocation.distance.missing-coordinates") {

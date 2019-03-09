@@ -2,32 +2,37 @@ package xenocosm.http
 package response
 
 import io.circe.{Decoder, Encoder, Json}
-
 import galaxique.json.implicits._
+
 import xenocosm.data.CosmicLocation
 import xenocosm.json.cosmicLocation._
 
-final case class CosmicLocationResponse(loc:CosmicLocation)
+final case class CosmicLocationResponse(loc:CosmicLocation) {
+  def path: String = CosmicLocationResponse.toPath(loc)
+}
 
 object CosmicLocationResponse {
   import org.http4s.dsl.io._
   import io.circe.syntax._
 
   def toPath(loc:CosmicLocation):String =
-    (loc.galaxy.map(_.loc), loc.galaxy.map(_.loc), loc.galaxy.map(_.loc)) match {
-      case (Some(locU), Some(locG), Some(locS)) => s"/${✺(locU)}/${✨(locG)}/${★(locS)}"
-      case (Some(locU), Some(locG), None) => s"/${✺(locU)}/${✨(locG)}}"
-      case (Some(locU), None, _) => s"/${✺(locU)}}"
-      case _ => ""
+    (loc.locU, loc.locG, loc.locS) match {
+      case (Some(locU), Some(locG), Some(locS)) =>
+        s"/multiverse/${⎈(loc.universe.uuid)}/${✺(locU)}/${✨(locG)}/${★(locS)}"
+      case (Some(locU), Some(locG), _) =>
+        s"/multiverse/${⎈(loc.universe.uuid)}/${✺(locU)}/${✨(locG)}}"
+      case (Some(locU), _, _) =>
+        s"/multiverse/${⎈(loc.universe.uuid)}/${✺(locU)}}"
+      case _ =>
+        s"/multiverse/${⎈(loc.universe.uuid)}"
     }
-
 
   trait Instances {
     implicit val cosmicLocationResponseHasJsonEncoder:Encoder[CosmicLocationResponse] =
       Encoder.instance(res => {
         val meta = Json.obj(
           "_links" -> Json.obj(
-            "self" -> Json.obj("href" -> s"$apiMultiverse/${toPath(res.loc)}".asJson),
+            "self" -> Json.obj("href" -> res.path.asJson),
             "curies" -> Json.arr(apiCurie)
           )
         )
@@ -47,7 +52,7 @@ object CosmicLocationResponse {
             Json.obj("interplanetary" -> res.loc.asJson)
         }
 
-        meta deepMerge loc
+        meta deepMerge loc deepMerge Json.obj("placeName" -> res.loc.placeName.asJson)
       })
 
     implicit val cosmicLocationResponseHasJsonDecoder:Decoder[CosmicLocationResponse] =
@@ -59,18 +64,17 @@ object CosmicLocationResponse {
           .as[String]
           .map(Path.apply)
           .map({
-            case Root / ⎈(uuid) / ✺(locU) / ✨(locG) / ★(locS) =>
+            case Root / "multiverse" / ⎈(uuid) / ✺(locU) / ✨(locG) / ★(locS) =>
               CosmicLocation(uuid, Some(locU), Some(locG), Some(locS))
-            case Root / ⎈(uuid) / ✺(locU) / ✨(locG) =>
+            case Root / "multiverse" / ⎈(uuid) / ✺(locU) / ✨(locG) =>
               CosmicLocation(uuid, Some(locU), Some(locG), None)
-            case Root / ⎈(uuid) / ✺(locU) =>
+            case Root / "multiverse" / ⎈(uuid) / ✺(locU) =>
               CosmicLocation(uuid, Some(locU), None, None)
-            case Root / ⎈(uuid) =>
+            case Root / "multiverse" / ⎈(uuid) =>
               CosmicLocation(uuid, None, None, None)
           })
           .map(CosmicLocationResponse.apply)
       }
-
   }
   object instances extends Instances
 }

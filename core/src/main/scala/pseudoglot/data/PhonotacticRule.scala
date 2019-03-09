@@ -1,11 +1,9 @@
 package pseudoglot
 package data
 
-import scala.annotation.tailrec
 import cats.{Eq, Show}
-import cats.data.NonEmptyList
 import cats.implicits._
-import spire.random.Dist
+import spire.random.{Dist, Generator}
 
 sealed trait PhonotacticRule extends Product with Serializable
 case object Empty extends PhonotacticRule
@@ -17,7 +15,8 @@ final case class Concat(lhs:PhonotacticRule, rhs:PhonotacticRule) extends Phonot
 
 object PhonotacticRule {
   import Phone.instances._
-  import Phones.syntax._
+
+  val root:PhonotacticRule = Concat(AnyPulmonic, Concat(AnyVowel, AnyPulmonic))
 
   val ruleHasVowel:PhonotacticRule => Boolean = {
       case AnyVowel => true
@@ -53,12 +52,6 @@ object PhonotacticRule {
       case Choose(lhs, rhs) ⇒ toNotation("|", List(lhs, rhs))
     }
 
-  val literalPulmonic:Phones => Dist[PhonotacticRule] =
-    phones => Dist.oneOf(phones.pulmonics:_*).map(Literal.apply)
-
-  val literalVowel:Phones => Dist[PhonotacticRule] =
-    phones => Dist.oneOf(phones.vowels:_*).map(Literal.apply)
-
   val minimize:PhonotacticRule => PhonotacticRule = {
     case Choose(Empty, rule) => minimize(rule)
     case Choose(rule, Empty) => minimize(rule)
@@ -67,30 +60,39 @@ object PhonotacticRule {
     case rule => rule
   }
 
-  // scalastyle:off cyclomatic.complexity
-  def ruleFromPhones(phones:Phones)(implicit magic:Magic):Dist[PhonotacticRule] = Dist.gen { gen ⇒
-    val pulmonicDist = literalPulmonic(phones)
-    val vowelDist = literalVowel(phones)
+  private def elaborateRule(gen: Generator, pulmonics: List[Pulmonic], vowels: List[Vowel])(model: PhonotacticRule): PhonotacticRule = {
+    val f = elaborateRule(gen, pulmonics, vowels)(_)
 
-    @tailrec
-    def loop(acc:PhonotacticRule):PhonotacticRule = (acc, gen.nextDouble()) match {
-      case (AnyVowel, d)            if d > magic.literal ⇒ loop(vowelDist(gen))
-      case (AnyPulmonic, d)         if d > magic.literal ⇒ loop(pulmonicDist(gen))
-      case (Literal(x:Vowel), d)    if d > magic.concat ⇒ loop(Concat(AnyPulmonic, Literal(x)))
-      case (Literal(x:Pulmonic), d) if d > magic.concat ⇒ loop(Concat(AnyVowel, Literal(x)))
-      case (Concat(lhs, rhs), d)    if d > magic.choose ⇒ Choose(lhs, rhs)
-      case _ ⇒ acc
+    if (gen.nextBoolean()) {
+      val p1 = gen.chooseFromSeq(pulmonics)(gen)
+      val p2 = gen.chooseFromSeq(pulmonics)(gen)
+      val v1 = gen.chooseFromSeq(vowels)(gen)
+      val v2 = gen.chooseFromSeq(vowels)(gen)
+      model match {
+        case AnyPulmonic => Concat(Literal(p1), Literal(p2))
+        case AnyVowel => Concat(Literal(v1), Literal(v2))
+        case Concat(lhs, rhs) => Concat(f(lhs), f(rhs))
+        case Choose(lhs, rhs) => Choose(f(lhs), f(rhs))
+        case _ => model
+      }
+    } else {
+      model
     }
-
-    minimize(loop(gen.oneOf(AnyPulmonic, AnyVowel)))
   }
-  // scalastyle:on cyclomatic.complexity
 
-  def ruleFromPhones(phones:List[Phone])(implicit magic:Magic):Dist[PhonotacticRule] =
-    phones match {
-      case Nil => Dist.constant(AnyVowel)
-      case x :: xs => ruleFromPhones(NonEmptyList(x, xs))
+  private def elaborateRules(gen: Generator, pulmonics: List[Pulmonic], vowels: List[Vowel])(current: Vector[PhonotacticRule]): Vector[PhonotacticRule] = {
+    val f = elaborateRule(gen, pulmonics, vowels)(_)
+    val g = elaborateRules(gen, pulmonics, vowels)(_)
+
+    if (gen.nextBoolean()) {
+      g(f(current.head) +: current :+ f(current.last))
+    } else {
+      current
     }
+  }
+
+  def rulesFromPhones(pulmonics:List[Pulmonic], vowels:List[Vowel]):Dist[List[PhonotacticRule]] =
+    Dist.gen(elaborateRules(_, pulmonics, vowels)(Vector(root)).distinct.toList)
 
   trait Instances {
     implicit val phonotacticRuleHasEq:Eq[PhonotacticRule] =

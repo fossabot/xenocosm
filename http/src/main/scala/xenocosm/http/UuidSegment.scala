@@ -1,28 +1,12 @@
 package xenocosm.http
 
-import java.nio.ByteBuffer
-import java.nio.charset.StandardCharsets
-import java.util.{Base64, UUID}
+import java.util.UUID
 import scala.util.Try
 
 object UuidSegment {
-  lazy val decoder:Base64.Decoder = Base64.getUrlDecoder
-  lazy val encoder:Base64.Encoder = Base64.getUrlEncoder.withoutPadding
-
   def unapply(str:String):Option[UUID] =
-    Try({
-      val buffer = ByteBuffer.allocate(24).put((str + "==").getBytes(StandardCharsets.UTF_8))
-      buffer.rewind()
-      val decoded = decoder.decode(buffer)
-      new UUID(decoded.getLong(), decoded.getLong())
-    }).toOption
+    Try(UUID.fromString(str)).toOption
 
-  def apply(uuid:UUID):String = {
-    val buffer =
-      ByteBuffer
-        .allocate(16)
-        .putLong(uuid.getMostSignificantBits)
-        .putLong(uuid.getLeastSignificantBits)
-    encoder.encodeToString(buffer.array())
-  }
+  def apply(uuid:UUID):String =
+    uuid.toString
 }

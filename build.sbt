@@ -2,21 +2,21 @@ import microsites.ExtraMdFileConfig
 
 inThisBuild(Seq(
   organization in ThisBuild := "com.robotsnowfall",
-  scalaVersion := "2.12.7"
+  scalaVersion := "2.12.8"
 ))
 
 lazy val versions = new {
-  val cats          = "1.4.0"
-  val circe         = "0.10.1"
+  val cats          = "1.5.0"
+  val circe         = "0.11.0"
   val cryptobits    = "1.2"
   val discipline    = "0.10.0"
   val fastparse     = "1.0.0"
   val http4s        = "0.18.21"
-  val kindProjector = "0.9.8"
+  val kindProjector = "0.9.9"
   val log4s         = "1.6.1"
   val logback       = "1.2.3"
   val monocle       = "1.5.1-cats"
-  val pureconfig    = "0.10.0"
+  val pureconfig    = "0.10.1"
   val scalacheck    = "1.14.0"
   val scalatest     = "3.0.5"
   val spire         = "0.16.0"
@@ -207,4 +207,5 @@ lazy val dockerSettings = Seq(
 addCommandAlias("testCore", ";coverage;core/compile;testkit/test;core/coverageReport")
 addCommandAlias("testJson", ";coverage;json/compile;json/test;json/coverageReport")
 addCommandAlias("testHttp", ";coverage;http/compile;http/test;http/coverageReport")
-addCommandAlias("validate", ";clean;scalastyle;testCore;testJson;testHttp;coverageAggregate")
+addCommandAlias("testAll", ";testCore;testJson;testHttp;coverageAggregate")
+addCommandAlias("validate", ";clean;scalastyle;testAll;makeMicrosite")

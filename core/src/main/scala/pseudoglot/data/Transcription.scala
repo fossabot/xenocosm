@@ -25,24 +25,34 @@ object Transcription {
       case (acc, _) => acc
     })
 
-  def closestIn[T <: Phone](t:T, in:Int, mapping:Map[T, String])(implicit ms:MetricSpace[T, Int]):String =
+  def empty(xscript:Transcription):String =
+    xscript.getOrElse(NonEmptyList.one(NullPhoneme), "")
+
+  def closestIn[T <: Phone](t:T, in:Int, mapping:Map[T, String], orElse:String)(implicit ms:MetricSpace[T, Int]):String =
     mapping.toVector
       .map({ case (k, v) ⇒ (k, v, k.distance[Int](t)) })
       .sortBy(_._3)
       .headOption
       .filter(_._3 < in)
       .map(_._2)
-      .getOrElse("_")
+      .getOrElse(orElse)
 
   def transcribeWith(ts:Phones, xscript:Transcription):String =
     (ts, xscript.get(ts)) match {
       case (_, Some(str)) => str
       case (NonEmptyList(NullPhoneme, Nil), None) => ""
-      case (NonEmptyList(NullPhoneme, x :: xs), None) => transcribeWith(NonEmptyList(x, xs), xscript)
-      case (NonEmptyList(x:Pulmonic, Nil), None) => closestIn[Pulmonic](x, 3, pulmonics(xscript))
-      case (NonEmptyList(x:Pulmonic, y :: ys), None) => closestIn[Pulmonic](x, 3, pulmonics(xscript)) ++ transcribeWith(NonEmptyList(y, ys), xscript)
-      case (NonEmptyList(x:Vowel, Nil), None) => closestIn[Vowel](x, 3, vowels(xscript))
-      case (NonEmptyList(x:Vowel, y :: ys), None) => closestIn[Vowel](x, 3, vowels(xscript)) ++ transcribeWith(NonEmptyList(y, ys), xscript)
+      case (NonEmptyList(NullPhoneme, x :: xs), None) =>
+        transcribeWith(NonEmptyList(x, xs), xscript)
+      case (NonEmptyList(x:Pulmonic, Nil), None) =>
+        closestIn[Pulmonic](x, 3, pulmonics(xscript), empty(xscript))
+      case (NonEmptyList(x:Pulmonic, y :: ys), None) =>
+        closestIn[Pulmonic](x, 3, pulmonics(xscript), empty(xscript)) ++
+          transcribeWith(NonEmptyList(y, ys), xscript)
+      case (NonEmptyList(x:Vowel, Nil), None) =>
+        closestIn[Vowel](x, 3, vowels(xscript), empty(xscript))
+      case (NonEmptyList(x:Vowel, y :: ys), None) =>
+        closestIn[Vowel](x, 3, vowels(xscript), empty(xscript)) ++
+          transcribeWith(NonEmptyList(y, ys), xscript)
     }
 
   trait Instances {

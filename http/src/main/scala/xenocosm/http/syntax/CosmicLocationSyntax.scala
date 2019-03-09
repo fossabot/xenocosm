@@ -7,7 +7,7 @@ import xenocosm.data.CosmicLocation
 
 trait CosmicLocationSyntax {
   implicit class CosmicLocationOps(underlying:CosmicLocation) {
-    val uri:Uri = apiMultiverse / ⎈(underlying.uuid) /
+    val uri:Uri = Uri.unsafeFromString("multiverse") / ⎈(underlying.uuid) /
       underlying.locU.map(✺(_)).getOrElse("") /
       underlying.locG.map(✨(_)).getOrElse("") /
       underlying.locS.map(★(_)).getOrElse("")

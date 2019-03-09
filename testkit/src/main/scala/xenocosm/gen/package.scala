@@ -3,20 +3,29 @@ package xenocosm
 import org.scalacheck.Gen
 import spire.math.UInt
 import squants.motion.{CubicMetersPerSecond, MetersPerSecond, SpeedOfLight}
-import squants.space.{CubicMeters, Meters, Volume}
+import squants.space._
 import squants.time.Seconds
+import squants.UnitOfMeasure
+import galaxique.data.Point3
 
 import xenocosm.data._
 
 package object gen {
   lazy val foreignID:Gen[ForeignID] = Gen.alphaNumStr.map(ForeignID.apply)
 
+  lazy val scaledPoint3:UnitOfMeasure[Length] => Gen[Point3] = uom =>
+    for {
+      x <- Gen.chooseNum(-1000, 1000)
+      y <- Gen.chooseNum(-1000, 1000)
+      z <- Gen.chooseNum(-1000, 1000)
+    } yield Point3(uom(x), uom(y), uom(z))
+
   lazy val cosmicLocation:Gen[CosmicLocation] =
     for {
       uuid <- Gen.uuid
-      locU <- galaxique.gen.point3
-      locG <- galaxique.gen.point3
-      locS <- galaxique.gen.point3
+      locU <- scaledPoint3(KiloParsecs)
+      locG <- scaledPoint3(Parsecs)
+      locS <- scaledPoint3(AstronomicalUnits)
     } yield CosmicLocation(uuid, Some(locU), Some(locG), Some(locS))
 
   lazy val cargo:Gen[Cargo] = Gen.const(Vacuum)

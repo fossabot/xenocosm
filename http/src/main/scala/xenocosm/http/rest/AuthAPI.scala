@@ -3,7 +3,7 @@ package rest
 
 import cats.data.EitherT
 import cats.effect.IO
-import org.http4s.{BasicCredentials, Challenge, HttpService, Request, Response}
+import org.http4s.{BasicCredentials, Challenge, HttpService, Request, Response, Uri}
 import org.http4s.dsl.io._
 import org.http4s.headers.{`WWW-Authenticate`, Authorization, Location}
 import org.log4s.Logger
@@ -48,7 +48,7 @@ final class AuthAPI(val auth:XenocosmAuthentication, val data:DataStore) {
             SeeOther(Location(identity.trader.get.uri)).map(auth.withAuthToken(identity))
           case Right(identity) =>
             logger.debug(s"session created for identity ${identity.uuid}")
-            SeeOther(Location(apiTrader)).map(auth.withAuthToken(identity))
+            SeeOther(Location(Uri.unsafeFromString("/trader"))).map(auth.withAuthToken(identity))
           case Left(WrappedThrowable(throwable)) =>
             logger.error(throwable)("wrapped throwable")
             failure
