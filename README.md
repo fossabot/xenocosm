@@ -11,10 +11,14 @@ More info in the [documentation](https://robotsnowfall.github.io/xenocosm/).
 
 ```bash
 sbt docker:publishLocal
-docker-compose up -d
+docker-compose up
 ```
 
-## Vanilla client
+## Connect to the HTTP service
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/13b9b46acd596d72d7cd)
+
+### Vanilla client
 
 ```bash
 #!/bin/bash
@@ -28,7 +32,7 @@ curl --include \
 echo
 ```
 
-## Collector's Edition client (GOTY version)
+### Collector's Edition client (GOTY version)
 
 ```bash
 #!/bin/bash
