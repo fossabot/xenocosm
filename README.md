@@ -4,6 +4,7 @@
 [![Build Status](https://travis-ci.org/robotsnowfall/xenocosm.svg?branch=master)](https://travis-ci.org/robotsnowfall/xenocosm)
 [![codecov](https://codecov.io/gh/robotsnowfall/xenocosm/branch/master/graph/badge.svg)](https://codecov.io/gh/robotsnowfall/xenocosm)
 [![Docker Pulls](https://img.shields.io/docker/pulls/robotsnowfall/xenocosm-http.svg)](https://hub.docker.com/r/robotsnowfall/xenocosm-http)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frobotsnowfall%2Fxenocosm.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Frobotsnowfall%2Fxenocosm?ref=badge_shield)
 
 More info in the [documentation](https://robotsnowfall.github.io/xenocosm/).
 
@@ -48,3 +49,7 @@ curl --silent \
 ## Implementors
 
 * [Doug Hurst](https://github.com/robotsnowfall)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frobotsnowfall%2Fxenocosm.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Frobotsnowfall%2Fxenocosm?ref=badge_large)
